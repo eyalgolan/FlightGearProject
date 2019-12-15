@@ -1,7 +1,7 @@
 #include <iostream>
+#include "lexer.h"
 int main() {
-  std::cout << "Hello, World!" << std::endl;
-  int i=8;
-  std::cout << i << std::endl;
+  lexer l("/home/yair/CLionProjects/FlightGearProject/fly.txt");
   return 0;
+
 }
