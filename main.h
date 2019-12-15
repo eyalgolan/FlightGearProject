@@ -1,0 +1,8 @@
+//
+// Created by eyal on 15/12/19.
+//
+
+#ifndef FLIGHTGEARPROJECT_MAIN_H
+#define FLIGHTGEARPROJECT_MAIN_H
+
+#endif //FLIGHTGEARPROJECT_MAIN_H
