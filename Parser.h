@@ -6,3 +6,12 @@
 #define FLIGHTGEARPROJECT_PARSER_H
 
 #endif //FLIGHTGEARPROJECT_PARSER_H
+
+#include "map"
+#include "Command.h"
+using namespace std;
+
+class parser {
+ public:
+  map<string, Command> commandMap;
+};

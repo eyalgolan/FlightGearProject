@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include "lexer.h"
+#include "Lexer.h"
 #include <algorithm>
 using namespace std;
  lexer::lexer(string filename)  {
