@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Lexer.h"
 int main() {
-  lexer l("/home/yair/CLionProjects/FlightGearProject/fly.txt");
+  Lexer l("/home/eyal/Desktop/AP1/FlightGearProject/fly.txt");
   return 0;
 
 }

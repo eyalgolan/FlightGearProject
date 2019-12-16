@@ -3,4 +3,4 @@ project(FlightGearProject)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(FlightGearProject main.cpp main.h Lexer.cpp Lexer.h Parser.cpp Parser.h Command.cpp Command.h)
+add_executable(FlightGearProject main.cpp main.h Lexer.cpp Lexer.h Parser.cpp Parser.h Command.cpp Command.h OpenServerCommand.cpp OpenServerCommand.h ConnectCommand.cpp ConnectCommand.h DefineVarCommand.cpp DefineVarCommand.h)

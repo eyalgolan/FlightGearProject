@@ -5,10 +5,11 @@
 #ifndef FLIGHTGEARPROJECT_COMMAND_H
 #define FLIGHTGEARPROJECT_COMMAND_H
 
-#endif //FLIGHTGEARPROJECT_COMMAND_H
-
 using namespace std;
 
 class Command {
  public:
+  virtual void exec(){}
 };
+
+#endif //FLIGHTGEARPROJECT_COMMAND_H

@@ -8,10 +8,10 @@ using namespace std;
 #ifndef FLIGHTGEARPROJECT_LEXER_H
 #define FLIGHTGEARPROJECT_LEXER_H
 
-class lexer{
+class Lexer{
 public: vector<string> vect;
 public:  string afterlerx;
-public:  lexer(string filename);
+public:  Lexer(string filename);
 };
 
 

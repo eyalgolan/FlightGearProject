@@ -9,9 +9,22 @@
 
 #include "map"
 #include "Command.h"
+#include "OpenServerCommand.h"
+#include "ConnectCommand.h"
+#include "DefineVarCommand.h"
 using namespace std;
 
-class parser {
+class Parser {
  public:
-  map<string, Command> commandMap;
+  static map<string, Command*> commandMap;
+  OpenServerCommand* openServerCommand = new OpenServerCommand;
+  ConnectCommand* connectCommand;
+  DefineVarCommand* defineVarCommand;
+
+  Parser(){
+    commandMap["openDataServer"] = openServerCommand;
+    commandMap["connectControlClient"] = connectCommand;
+    commandMap["var"] = defineVarCommand;
+  }
+  ~Parser(){}
 };
