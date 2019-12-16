@@ -3,3 +3,8 @@
 //
 
 #include "OpenServerCommand.h"
+
+int OpenServerCommand::exec() {
+
+  return this->numParams;
+}

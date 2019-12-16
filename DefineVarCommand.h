@@ -10,7 +10,7 @@ using namespace std;
 
 class DefineVarCommand : public Command {
  public:
-  virtual void exec(){}
+  int exec() override;
 };
 
 #endif //FLIGHTGEARPROJECT_DEFINEVARCOMMAND_H

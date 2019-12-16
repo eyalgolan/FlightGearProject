@@ -10,7 +10,7 @@ using namespace std;
 
 class ConnectCommand : public Command {
  public:
-  virtual void exec(){}
+  int exec() override;
 };
 
 #endif //FLIGHTGEARPROJECT_CONNECTCOMMAND_H

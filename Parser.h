@@ -17,10 +17,10 @@ using namespace std;
 class Parser {
  public:
   vector<string> inputVector;
-  static map<string, Command*> commandMap;
-  OpenServerCommand* openServerCommand;
-  ConnectCommand* connectCommand;
-  DefineVarCommand* defineVarCommand;
+  map<string, Command*> commandMap;
+  Command* openServerCommand;
+  Command* connectCommand;
+  Command* defineVarCommand;
 
   Parser(vector<string> inputFromLexer){
     inputVector = inputFromLexer;

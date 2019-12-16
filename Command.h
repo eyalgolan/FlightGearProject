@@ -9,7 +9,7 @@ using namespace std;
 
 class Command {
  public:
-  virtual void exec(){}
+  virtual int exec(){}
 };
 
 #endif //FLIGHTGEARPROJECT_COMMAND_H

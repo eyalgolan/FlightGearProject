@@ -9,8 +9,10 @@
 using namespace std;
 
 class OpenServerCommand : public Command {
+ private:
+  int numParams = 1;
  public:
-  virtual void exec(){}
+  int exec() override;
 };
 
 #endif //FLIGHTGEARPROJECT_OPENDATASERVERCOMMAND_H
