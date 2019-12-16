@@ -3,3 +3,8 @@
 //
 
 #include "DefineVarCommand.h"
+
+int DefineVarCommand::exec() {
+
+  return this->numParams;
+}

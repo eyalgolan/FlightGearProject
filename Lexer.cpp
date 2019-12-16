@@ -32,12 +32,7 @@ if (file.is_open()){
     replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
 
     cout<<this->afterlerx<<endl;
-
-
-
-
-
-}
+  }
 }
 
 

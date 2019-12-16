@@ -9,6 +9,8 @@
 using namespace std;
 
 class DefineVarCommand : public Command {
+ private:
+  int numParams = 1;
  public:
   int exec() override;
 };

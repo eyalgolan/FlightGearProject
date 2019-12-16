@@ -9,6 +9,8 @@
 using namespace std;
 
 class ConnectCommand : public Command {
+ private:
+  int numParams = 2;
  public:
   int exec() override;
 };

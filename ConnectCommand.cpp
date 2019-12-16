@@ -3,3 +3,8 @@
 //
 
 #include "ConnectCommand.h"
+
+int ConnectCommand::exec() {
+
+  return this->numParams;
+}

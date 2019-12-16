@@ -16,7 +16,9 @@ void Parser::runCommands() {
   int index = 0;
   while(index < this->inputVector.size()) {
     Command* c = this->commandMap.find(this->inputVector[index])->second;
-    index += c->exec();
+    if(c != nullptr) {
+      index += c->exec();
+    }
   }
 }
 
