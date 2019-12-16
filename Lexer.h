@@ -9,9 +9,11 @@ using namespace std;
 #define FLIGHTGEARPROJECT_LEXER_H
 
 class Lexer{
-public: vector<string> vect;
-public:  string afterlerx;
-public:  Lexer(string filename);
+ public:
+  vector<string> vect;
+  string afterlerx;
+  Lexer(string filename);
+  ~Lexer(){}
 };
 
 

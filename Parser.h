@@ -5,26 +5,38 @@
 #ifndef FLIGHTGEARPROJECT_PARSER_H
 #define FLIGHTGEARPROJECT_PARSER_H
 
-#endif //FLIGHTGEARPROJECT_PARSER_H
-
 #include "map"
 #include "Command.h"
 #include "OpenServerCommand.h"
 #include "ConnectCommand.h"
 #include "DefineVarCommand.h"
+#include "Lexer.h"
+#include "string"
 using namespace std;
 
 class Parser {
  public:
+  vector<string> inputVector;
   static map<string, Command*> commandMap;
-  OpenServerCommand* openServerCommand = new OpenServerCommand;
+  OpenServerCommand* openServerCommand;
   ConnectCommand* connectCommand;
   DefineVarCommand* defineVarCommand;
 
-  Parser(){
+  Parser(vector<string> inputFromLexer){
+    inputVector = inputFromLexer;
+    openServerCommand = new OpenServerCommand;
+    connectCommand = new ConnectCommand;
+    defineVarCommand = new DefineVarCommand;
     commandMap["openDataServer"] = openServerCommand;
     commandMap["connectControlClient"] = connectCommand;
     commandMap["var"] = defineVarCommand;
   }
-  ~Parser(){}
+  ~Parser(){
+    delete openServerCommand;
+    delete connectCommand;
+    delete defineVarCommand;
+  }
+  void runCommands();
 };
+
+#endif //FLIGHTGEARPROJECT_PARSER_H

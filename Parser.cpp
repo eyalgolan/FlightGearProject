@@ -7,5 +7,7 @@
 
 using namespace std;
 
+void Parser::runCommands() {
 
+}
 
