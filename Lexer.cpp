@@ -30,6 +30,12 @@ if (file.is_open()){
 
     this->afterlerx[j]='\0';
     replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
+    size_t start_pos = 0;
+    while ((start_pos = afterlerx.find("var", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 3, "var,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
+    }
 
     cout<<this->afterlerx<<endl;
   }
