@@ -13,6 +13,7 @@ class Lexer{
   vector<string> vect;
   string afterlerx;
   Lexer(string filename);
+ vector<string> getvecor();
   ~Lexer(){}
 };
 

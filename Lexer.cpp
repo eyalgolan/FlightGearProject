@@ -33,7 +33,20 @@ if (file.is_open()){
 
     cout<<this->afterlerx<<endl;
   }
+
+     char *ve;
+     char *cop;
+     ve= new char[this->afterlerx.size()+1];
+strcpy(ve,this->afterlerx.c_str());
+     cop=strtok(ve,",");
+     while (cop){
+         this->vect.push_back(cop);
+         cop=strtok(NULL,",");
+     }
+
+
 }
-
-
+vector<string> Lexer::getvecor() {
+    return this->vect;
+ }
 
