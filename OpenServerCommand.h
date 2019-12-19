@@ -14,6 +14,7 @@ using namespace std;
 class OpenServerCommand : public Command {
  private:
   int numParams = 1;
+  void readFromClient();
  public:
   int exec(vector<string> params) override;
 };
