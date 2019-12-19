@@ -12,7 +12,7 @@ class ConnectCommand : public Command {
  private:
   int numParams = 2;
  public:
-  int exec() override;
+  int exec(vector<string> params) override;
 };
 
 #endif //FLIGHTGEARPROJECT_CONNECTCOMMAND_H

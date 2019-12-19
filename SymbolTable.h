@@ -11,8 +11,25 @@ using namespace std;
 
 class SymbolTable {
  public:
-  map<string, pair<double, string>> controlVars;
-  map<string, pair<double, string>> instrumentationVars;
+  static SymbolTable& getInstance() {
+    static SymbolTable instance;
+    return instance;
+  }
+  map<string, pair<string, double>> getNameMap() {
+    return this->nameMap;
+  }
+  map<string, pair<string, double>> getSimMap() {
+    return this->simMap;
+  }
+  void set(string name, string path, double value) {
+
+  }
+  SymbolTable(SymbolTable const&) = delete;
+  void operator=(SymbolTable const&) = delete;
+ private:
+  SymbolTable(){}
+  map<string, pair<string, double>> nameMap;
+  map<string, pair<string, double>> simMap;
 
 };
 #endif //FLIGHTGEARPROJECT_SYMBOLTABLE_H

@@ -4,7 +4,7 @@
 
 #include "DefineVarCommand.h"
 
-int DefineVarCommand::exec() {
+int DefineVarCommand::exec(vector<string> params) {
 
   return this->numParams;
 }

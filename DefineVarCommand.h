@@ -12,7 +12,7 @@ class DefineVarCommand : public Command {
  private:
   int numParams = 1;
  public:
-  int exec() override;
+  int exec(vector<string> params) override;
 };
 
 #endif //FLIGHTGEARPROJECT_DEFINEVARCOMMAND_H

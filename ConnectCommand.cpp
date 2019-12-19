@@ -4,7 +4,7 @@
 
 #include "ConnectCommand.h"
 
-int ConnectCommand::exec() {
+int ConnectCommand::exec(vector<string> params) {
 
   return this->numParams;
 }
