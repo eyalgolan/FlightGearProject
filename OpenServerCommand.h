@@ -6,13 +6,16 @@
 #define FLIGHTGEARPROJECT_OPENDATASERVERCOMMAND_H
 
 #include "Command.h"
+#include "string"
+#include <vector>
+
 using namespace std;
 
 class OpenServerCommand : public Command {
  private:
   int numParams = 1;
  public:
-  int exec() override;
+  int exec(vector<string> params) override;
 };
 
 #endif //FLIGHTGEARPROJECT_OPENDATASERVERCOMMAND_H

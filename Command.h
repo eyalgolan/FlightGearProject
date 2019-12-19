@@ -5,11 +5,14 @@
 #ifndef FLIGHTGEARPROJECT_COMMAND_H
 #define FLIGHTGEARPROJECT_COMMAND_H
 
+#import "vector"
+#include "string"
+
 using namespace std;
 
 class Command {
  public:
-  virtual int exec(){}
+  virtual int exec(vector<string> params){}
 };
 
 #endif //FLIGHTGEARPROJECT_COMMAND_H
