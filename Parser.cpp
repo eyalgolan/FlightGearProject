@@ -6,6 +6,10 @@
 #include "Parser.h"
 #include "Command.h"
 #include "map"
+#include "typeinfo"
+#include <string>
+#include <stdio.h>
+#include <cstring>
 
 using namespace std;
 
@@ -14,10 +18,15 @@ using namespace std;
  */
 void Parser::runCommands() {
   int index = 0;
+  vector<string> inputParams;
+  int i = 1;
   while(index < this->inputVector.size()) {
     Command* c = this->commandMap.find(this->inputVector[index])->second;
     if(c != nullptr) {
-      index += c->exec();
+      if(strcmp(typeid(c).name(),"OpenDataServer") != 0) {
+        inputParams[0] = inputVector[i];
+      }
+      index += c->exec(inputParams);
     }
   }
 }
