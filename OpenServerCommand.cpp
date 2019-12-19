@@ -45,10 +45,15 @@ int OpenServerCommand::exec(vector<string> params) {
     cerr<<"Error accepting client"<<endl;
     return -4;
   }
-  thread thread1(&OpenServerCommand::readFromClient, this);
+  //    cheak !!
+  thread thread1(&OpenServerCommand::readFromClient, this, client_socket);
   return this->numParams;
 }
 
-void OpenServerCommand::readFromClient() {
+void OpenServerCommand::readFromClient(int client_socket ) {
+     char buffer[1024]={0};
+    int valread = read( client_socket  , buffer, 1024);
+
+    std::cout<<buffer<<std::endl;
 
 }
