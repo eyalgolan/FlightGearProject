@@ -21,7 +21,10 @@ class SymbolTable {
   map<string, pair<string, double>> getSimMap() {
     return this->simMap;
   }
-  void set(string name, string path, double value) {
+  void setNameMap(string name, string path, double value) {
+
+  }
+  void setSimMap(string name, string path, double value) {
 
   }
   SymbolTable(SymbolTable const&) = delete;

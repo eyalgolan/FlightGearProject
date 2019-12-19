@@ -96,8 +96,14 @@ void OpenServerCommand::readFromClient(int client_socket, vector<string, pair<st
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  for(int i=0 ; i< 35 ; i++) {
-
+  vector<string, pair<string, double>>::iterator itr;
+  for(itr = xmlFormat.begin(); itr != xmlFormat.end(); itr++) {
+    // check !!
+    string name = itr.first;
+    string sim = itr.second.first;
+    double value = itr.second.second;
+    symblTbl.setNameMap(name, sim, value);
+    symblTbl.setSimMap(sim, name, value);
   }
 
   std::cout<<buffer<<std::endl;
