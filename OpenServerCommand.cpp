@@ -96,7 +96,9 @@ int OpenServerCommand::exec(vector<string> params) {
 
   //check !!
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket, names, sims);
-  return this->numParams;
+    thread1.join();
+
+    return this->numParams;
 }
 
 void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
@@ -122,7 +124,6 @@ void OpenServerCommand::readFromClient(int client_socket, string names[36], stri
     symblTbl.setSimMap(sim, name, value);
     strValue = "";
   }
-
   std::cout<<buffer<<std::endl;
 
 }
