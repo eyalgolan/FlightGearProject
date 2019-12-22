@@ -20,7 +20,109 @@ using namespace std;
 
 int OpenServerCommand::exec(vector<string> params) {
 
-  vector<string, pair<string, double>> xmlFormat;
+  string names[36] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13",
+                      "14","15","16","17","18","19","20","21","22","23","24",
+                      "25","26","27","28","29","30","31","32","33","34","35"};
+//  for(int i=0 ; i<names->size() ; i++) {
+//    names[i] = to_string(i);
+//  }
+  string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
+                     "/sim/time/warp", "/controls/switches/magnetos",
+                     "/instrumentation/heading-indicator/offset-deg",
+                     "/instrumentation/altimeter/indicated-altitude-ft",
+                     "/instrumentation/altimeter/pressure-alt-ft",
+                     "/instrumentation/attitude-indicator/indicated-pitch-deg",
+                     "/instrumentation/attitude-indicator/internal-pitch-deg",
+                     "/instrumentation/attitude-indicator/internal-roll-deg",
+                     "instrumentation/attitude-indicator/internal-pitch-deg",
+                     "/instrumentation/attitude-indicator/internal-roll-deg",
+                     "/instrumentation/encoder/indicated-altitude-ft",
+                     "/instrumentation/encoder/pressure-alt-ft",
+                     "/instrumentation/gps/indicated-altitude-ft",
+                     "/instrumentation/gps/indicated-ground-speed-kt",
+                     "/instrumentation/heading-indicator/indicated-heading-deg",
+                     "/instrumentation/magnetic-compass/indicated-heading-deg",
+                     "/instrumentation/slip-skid-ball/indicated-slip-skid",
+                     "/instrumentation/turn-indicator/indicated-turn-rate",
+                     "instrumentation/vertical-speed-indicator/indicated-speed-fpm",
+                     "/controls/flight/aileron",
+                     "/controls/flight/elevator",
+                     "/controls/flight/rudder",
+                     "/controls/flight/flaps",
+                     "/controls/engines/engine/throttle",
+                     "/controls/engines/current-engine/throttle",
+                     "/controls/switches/master-avionics",
+                     "/controls/switches/starter",
+                     "/engines/active-engine/auto-start",
+                     "/controls/flight/speedbrake",
+                     "/sim/model/c172p/brake-parking",
+                     "/controls/engines/engine/primer",
+                     "/controls/engines/current-engine/mixture",
+                     "/controls/switches/master-bat",
+                     "/controls/switches/master-alt",
+                     "/engines/engine/rpm"};
+
+  int socketfd = socket(AF_INET, SOCK_STREAM, 0);
+  if(socketfd == -1) {
+    cerr << "Could not create a socket" << endl;
+    return -1;
+  }
+
+  sockaddr_in address;
+  address.sin_family = AF_INET;
+  address.sin_addr.s_addr = INADDR_ANY;
+  address.sin_port = htons((uint16_t)stoi(params[0]));
+
+  if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
+    cerr<<"Could not bind the sockert to an IP"<<endl;
+    return -2;
+  }
+
+  if(listen(socketfd, 2) == -1) {
+    cerr<<"Error during listening command"<<endl;
+    return -3;
+  }
+  int addressSize = sizeof(address);
+  int client_socket = accept(socketfd, (struct sockaddr *)&address,
+                           (socklen_t*)&addressSize);
+
+  if(client_socket == -1) {
+    cerr<<"Error accepting client"<<endl;
+    return -4;
+  }
+
+  //check !!
+  thread thread1(&OpenServerCommand::readFromClient, this, client_socket, names, sims);
+  return this->numParams;
+}
+
+void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
+  char buffer[1024]={0};
+  int valread = read(client_socket, buffer, 1024);
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  int i=0;
+  string strValue;
+  int index=0;
+  for(int i = 0; i<36 ; i++) {
+    // check !!
+    string name = names[i];
+    string sim = sims[i];
+    while(buffer[index] != ',' && buffer[index] != '\0') {
+      strValue += buffer[index];
+      index++;
+    }
+    index++;
+
+    double value = stod(strValue);
+    symblTbl.setNameMap(name, sim, value);
+    symblTbl.setSimMap(sim, name, value);
+    strValue = "";
+  }
+
+  std::cout<<buffer<<std::endl;
+
+}
+
 //  double defaultValue = 0;
 //  xmlFormat.push_back("airspeed-indicator_indicated-speed-kt", make_pair("/instrumentation/airspeed-indicator/indicated-speed-kt", defaultValue));
 //  xmlFormat.push_back("time_warp", make_pair("/sim/time/warp", defaultValue));
@@ -58,57 +160,3 @@ int OpenServerCommand::exec(vector<string> params) {
 //  xmlFormat.push_back("switches_master-bat", make_pair("/controls/switches/master-bat", defaultValue));
 //  xmlFormat.push_back("switches_master-alt", make_pair("/controls/switches/master-alt", defaultValue));
 //  xmlFormat.push_back("engine_rpm", make_pair("/engines/engine/rpm", defaultValue));
-
-  int socketfd = socket(AF_INET, SOCK_STREAM, 0);
-  if(socketfd == -1) {
-    cerr << "Could not create a socket" << endl;
-    return -1;
-  }
-
-  sockaddr_in address;
-  address.sin_family = AF_INET;
-  address.sin_addr.s_addr = INADDR_ANY;
-  address.sin_port = htons((uint16_t)stoi(params[1]));
-
-  if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
-    cerr<<"Could not bind the sockert to an IP"<<endl;
-    return -2;
-  }
-
-  if(listen(socketfd, 2) == -1) {
-    cerr<<"Error during listening command"<<endl;
-    return -3;
-  }
-  int addressSize = sizeof(address);
-  int client_socket = accept(socketfd, (struct sockaddr *)&address,
-                           (socklen_t*)&addressSize);
-
-  if(client_socket == -1) {
-    cerr<<"Error accepting client"<<endl;
-    return -4;
-  }
-
-  //check !!
-  thread thread1(&OpenServerCommand::readFromClient, this, client_socket, xmlFormat);
-  return this->numParams;
-}
-
-void OpenServerCommand::readFromClient(int client_socket, vector<string, pair<string, double>> xmlFormat) {
-  char buffer[1024]={0};
-  int valread = read(client_socket, buffer, 1024);
-  SymbolTable &symblTbl = SymbolTable::getInstance();
-  vector<string, pair<string, double>>::iterator itr;
-  int i=0;
-  for(itr = xmlFormat.begin(); itr != xmlFormat.end(); itr++) {
-    // check !!
-    string name = itr.first;
-    string sim = itr.second.first;
-    double value = buffer[i];
-    symblTbl.setNameMap(name, sim, value);
-    symblTbl.setSimMap(sim, name, value);
-    i+=2;
-  }
-
-  std::cout<<buffer<<std::endl;
-
-}

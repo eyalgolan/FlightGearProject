@@ -24,9 +24,10 @@ void Parser::runCommands() {
     Command* c = this->commandMap.find(this->inputVector[index])->second;
     if(c != nullptr) {
       if(strcmp(typeid(c).name(),"OpenDataServer") != 0) {
-        inputParams[0] = inputVector[i];
+        inputParams.push_back(inputVector[i]);
       }
       index += c->exec(inputParams);
+      inputParams.clear();
     }
   }
 }
