@@ -83,8 +83,9 @@ int OpenServerCommand::exec(vector<string> params) {
     cerr<<"Error during listening command"<<endl;
     return -3;
   }
-  int addressSize = sizeof(address);
-  int client_socket = accept(socketfd, (struct sockaddr *)&address, (socklen_t*)&addressSize);
+  socklen_t addrlen = sizeof(sockaddr_in);
+  //int addressSize = sizeof(address);
+  int client_socket = accept(socketfd, (struct sockaddr *)&address, &addrlen);
 
   if(client_socket == -1) {
     cerr<<"Error accepting client"<<endl;
