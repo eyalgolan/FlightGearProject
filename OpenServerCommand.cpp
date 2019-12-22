@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "SymbolTable.h"
+#include "cstring"
 
 using namespace std;
 
@@ -74,22 +75,23 @@ int OpenServerCommand::exec(vector<string> params) {
   address.sin_port = htons((uint16_t)stoi(params[0]));
 
   if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
-    cerr<<"Could not bind the sockert to an IP"<<endl;
+    cerr<<"Could not bind the socket to an IP"<<endl;
     return -2;
   }
 
-  if(listen(socketfd, 2) == -1) {
+  if(listen(socketfd,1) == -1) {
     cerr<<"Error during listening command"<<endl;
     return -3;
   }
   int addressSize = sizeof(address);
-  int client_socket = accept(socketfd, (struct sockaddr *)&address,
-                           (socklen_t*)&addressSize);
+  int client_socket = accept(socketfd, (struct sockaddr *)&address, (socklen_t*)&addressSize);
 
   if(client_socket == -1) {
     cerr<<"Error accepting client"<<endl;
     return -4;
   }
+
+  close(socketfd);
 
   //check !!
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket, names, sims);
@@ -99,6 +101,7 @@ int OpenServerCommand::exec(vector<string> params) {
 void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
+  cout<<buffer<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   int i=0;
   string strValue;

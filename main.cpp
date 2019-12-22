@@ -1,6 +1,12 @@
 #include <iostream>
 #include "Lexer.h"
 #include "Parser.h"
+
+#include <sys/socket.h>
+#include <cstring>
+#include <iostream>
+#include <unistd.h>
+
 using namespace std;
 
 int main() {
@@ -12,6 +18,7 @@ int main() {
   vector<string> emulateLexerResulttest=l.getvecor();
   Parser p(emulateLexerResulttest);
   p.runCommands();
+
   return 0;
 
 }
