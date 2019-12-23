@@ -67,6 +67,7 @@ int OpenServerCommand::exec(vector<string> params) {
   if(socketfd == -1) {
     cerr << "Could not create a socket" << endl;
     return -1;
+    
   }
 
   sockaddr_in address;
