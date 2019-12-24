@@ -23,10 +23,6 @@ using namespace std;
 
 int OpenServerCommand::exec(vector<string> params) {
   cout<<"I'm trying to be a server"<<endl;
-  string names[36] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13",
-                      "14","15","16","17","18","19","20","21","22","23","24",
-                      "25","26","27","28","29","30","31","32","33","34","35"};
-
   string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
                      "/sim/time/warp", "/controls/switches/magnetos",
                      "/instrumentation/heading-indicator/offset-deg",
@@ -96,12 +92,12 @@ int OpenServerCommand::exec(vector<string> params) {
   close(socketfd);
 
   //check !!
-  thread thread1(&OpenServerCommand::readFromClient, this, client_socket, names, sims);
+  thread thread1(&OpenServerCommand::readFromClient, this, client_socket, sims);
   thread1.detach();
   return this->numParams;
 }
 
-void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
+void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
   cout<<"Im in server"<<endl;
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
@@ -112,7 +108,6 @@ void OpenServerCommand::readFromClient(int client_socket, string names[36], stri
     int index=0;
     for(int i = 0; i<36 ; i++) {
       // check !!
-      string name = names[i];
       string sim = sims[i];
       while(buffer[index] != ',' && buffer[index] != '\0') {
         strValue += buffer[index];
@@ -121,6 +116,7 @@ void OpenServerCommand::readFromClient(int client_socket, string names[36], stri
       index++;
 
       double value = stod(strValue);
+      string name = symblTbl.getSimMap()[sim].first;
       symblTbl.setNameMap(name, sim, value);
       symblTbl.setSimMap(sim, name, value);
       strValue = "";
