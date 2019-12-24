@@ -26,7 +26,12 @@ void Parser::runCommands() {
       if(strcmp(typeid(c).name(),"OpenDataServer") != 0) {
         inputParams.push_back(inputVector[i]);
       }
+      else if(strcmp(typeid(c).name(), "connectControlClient") != 0) {
+        inputParams.push_back(inputVector[i]);
+        inputParams.push_back(inputVector[i+1]);
+      }
       index += c->exec(inputParams);
+      cout<<typeid(c).name()<<endl;
       inputParams.clear();
     }
   }
