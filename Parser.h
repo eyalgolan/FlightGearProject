@@ -22,6 +22,7 @@ class Parser {
   Command* openServerCommand;
   Command* connectCommand;
   Command* defineVarCommand;
+  Command* setVarCommand;
 
   Parser(vector<string> inputFromLexer){
     inputVector = inputFromLexer;
@@ -31,11 +32,13 @@ class Parser {
     commandMap["openDataServer"] = openServerCommand;
     commandMap["connectControlClient"] = connectCommand;
     commandMap["var"] = defineVarCommand;
+    commandMap["setVarCommand"] = setVarCommand;
   }
   ~Parser(){
     delete openServerCommand;
     delete connectCommand;
     delete defineVarCommand;
+    delete setVarCommand;
   }
   void runCommands();
 };

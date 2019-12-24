@@ -1,0 +1,12 @@
+//
+// Created by eyal on 24/12/19.
+//
+
+#ifndef FLIGHTGEARPROJECT_SETVARCOMMAND_H
+#define FLIGHTGEARPROJECT_SETVARCOMMAND_H
+
+class SetVarCommand {
+
+};
+
+#endif //FLIGHTGEARPROJECT_SETVARCOMMAND_H
