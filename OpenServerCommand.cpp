@@ -97,35 +97,36 @@ int OpenServerCommand::exec(vector<string> params) {
 
   //check !!
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket, names, sims);
-    thread1.join();
-
-    return this->numParams;
+  thread1.join();
+  return this->numParams;
 }
 
 void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
-  cout<<buffer<<endl;
-  SymbolTable &symblTbl = SymbolTable::getInstance();
-  int i=0;
-  string strValue;
-  int index=0;
-  for(int i = 0; i<36 ; i++) {
-    // check !!
-    string name = names[i];
-    string sim = sims[i];
-    while(buffer[index] != ',' && buffer[index] != '\0') {
-      strValue += buffer[index];
+  while(buffer[0] != '\n') {
+    cout<<buffer<<endl;
+    SymbolTable &symblTbl = SymbolTable::getInstance();
+    int i=0;
+    string strValue;
+    int index=0;
+    for(int i = 0; i<36 ; i++) {
+      // check !!
+      string name = names[i];
+      string sim = sims[i];
+      while(buffer[index] != ',' && buffer[index] != '\0') {
+        strValue += buffer[index];
+        index++;
+      }
       index++;
-    }
-    index++;
 
-    double value = stod(strValue);
-    symblTbl.setNameMap(name, sim, value);
-    symblTbl.setSimMap(sim, name, value);
-    strValue = "";
+      double value = stod(strValue);
+      symblTbl.setNameMap(name, sim, value);
+      symblTbl.setSimMap(sim, name, value);
+      strValue = "";
+    }
+    valread = read(client_socket, buffer, 1024);
   }
-  std::cout<<buffer<<std::endl;
 
 }
 
