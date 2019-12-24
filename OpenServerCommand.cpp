@@ -26,9 +26,7 @@ int OpenServerCommand::exec(vector<string> params) {
   string names[36] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13",
                       "14","15","16","17","18","19","20","21","22","23","24",
                       "25","26","27","28","29","30","31","32","33","34","35"};
-//  for(int i=0 ; i<names->size() ; i++) {
-//    names[i] = to_string(i);
-//  }
+
   string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
                      "/sim/time/warp", "/controls/switches/magnetos",
                      "/instrumentation/heading-indicator/offset-deg",
@@ -110,7 +108,6 @@ void OpenServerCommand::readFromClient(int client_socket, string names[36], stri
   while(buffer[0] != '\n') {
     cout<<buffer<<endl;
     SymbolTable &symblTbl = SymbolTable::getInstance();
-    int i=0;
     string strValue;
     int index=0;
     for(int i = 0; i<36 ; i++) {

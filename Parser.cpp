@@ -37,7 +37,14 @@ void Parser::runCommands() {
         index += c->exec(inputParams);
         inputParams.clear();
       }
-      else if(commandName.compare("var")==0) {
+      else if(commandName.compare("var") == 0 && inputVector[index+2].compare("=") != 0) {
+        inputParams.push_back(inputVector[index+1]);
+        inputParams.push_back(inputVector[index+2]);
+        inputParams.push_back(inputVector[index+3]);
+        inputParams.push_back(inputVector[index+4]);
+        cout<<commandName<<endl;
+        index += c->exec(inputParams);
+        inputParams.clear();
       //  cout<<"I'm in var command"<<endl;
       }
 //     cout<<"parser next command"<<endl;
