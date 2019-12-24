@@ -9,15 +9,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include "string"
+#include "Lock.h"
 
 using namespace std;
 int ConnectCommand::exec(vector<string> params) {
+  cout<<"I'm trying to be a client"<<endl;
   int client_socket = socket(AF_INET, SOCK_STREAM, 0);
   if(client_socket == -1) {
     cerr<<"Could not create a socket"<<endl;
     return -1;
   }
-
+  cout<<params[0].c_str()<<endl;
+  cout<<params[1]<<endl;
   sockaddr_in address;
   address.sin_family = AF_INET;
   const char* ip = params[0].c_str();

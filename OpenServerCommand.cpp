@@ -14,13 +14,15 @@
 #include <stdio.h>
 #include "SymbolTable.h"
 #include "cstring"
+#include "Parser.h"
+#include "Lock.h"
 
 using namespace std;
 
 
 
 int OpenServerCommand::exec(vector<string> params) {
-
+  cout<<"I'm trying to be a server"<<endl;
   string names[36] = {"0","1","2","3","4","5","6","7","8","9","10","11","12","13",
                       "14","15","16","17","18","19","20","21","22","23","24",
                       "25","26","27","28","29","30","31","32","33","34","35"};
@@ -102,6 +104,7 @@ int OpenServerCommand::exec(vector<string> params) {
 }
 
 void OpenServerCommand::readFromClient(int client_socket, string names[36], string sims[36]) {
+  cout<<"Im in server"<<endl;
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
   while(buffer[0] != '\n') {

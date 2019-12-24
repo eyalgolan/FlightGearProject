@@ -10,7 +10,7 @@ using namespace std;
 
 class ConnectCommand : public Command {
  private:
-  int numParams = 2;
+  int numParams = 3;
  public:
   int exec(vector<string> params) override;
 };
