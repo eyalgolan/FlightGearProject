@@ -117,8 +117,6 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
 
       double value = stod(strValue);
 
-      //symblTbl.setNameMap(name, sim, value);
-      //symblTbl.setSimMap(sim, name, value);
       symblTbl.update("", sim, value, "server");
       strValue = "";
     }

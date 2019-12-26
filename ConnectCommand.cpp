@@ -38,3 +38,7 @@ int ConnectCommand::exec(vector<string> params) {
 
   return this->numParams;
 }
+
+//void ConnectCommand::updateSimulator() {
+//
+//}
