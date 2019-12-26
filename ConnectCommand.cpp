@@ -59,6 +59,8 @@ void ConnectCommand::writeToClient(int client_socket) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   if(!symblTbl.getQueue().empty()) {
     string update = this->readFromQueue();
+    cout<<"trying to write to client also quee no empty "<<endl;
+
     int is_sent =
         send(client_socket, update.c_str(), strlen(update.c_str()), 0);
     if (is_sent == -1) {
