@@ -23,10 +23,12 @@ class SymbolTable {
   }
   void setNameMap(string name, string sim, double value);
   void setSimMap(string sim, string name, double value);
-  void update(string name, string sim, double value);
+  void update(string name, string sim, double value, string calledFrom);
   SymbolTable(SymbolTable const&) = delete;
   void operator=(SymbolTable const&) = delete;
  private:
+  void updateFromServer(string name, string sim, double value);
+  void updateFromVar(string name, string sim, double value);
   SymbolTable() {
     string buffer =
         "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36";
