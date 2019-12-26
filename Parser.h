@@ -15,6 +15,7 @@
 
 using namespace std;
 
+
 class Parser {
  public:
   vector<string> inputVector;

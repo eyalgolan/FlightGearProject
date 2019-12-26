@@ -12,6 +12,5 @@ class SetVarCommand : public Command{
  public:
   int exec(vector<string> params) override;
 };
-};
 
 #endif //FLIGHTGEARPROJECT_SETVARCOMMAND_H

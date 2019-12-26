@@ -7,13 +7,15 @@
 
 #import "map"
 #import "string"
+#import "Parser.h"
 #import "mutex"
 
 using namespace std;
-mutex g_updateLock;
+
 
 class SymbolTable {
  public:
+  mutex g_updateLock;
   static SymbolTable& getInstance() {
     static SymbolTable instance;
     return instance;
