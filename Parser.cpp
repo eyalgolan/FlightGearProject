@@ -38,7 +38,8 @@ void Parser::runCommands() {
           cout << commandName << endl;
           index += c->exec(inputParams);
           inputParams.clear();
-        } else if (commandName.compare("print") == 0) {
+        } else if (commandName.compare("Print") == 0) {
+          cout<<"try print command"<<endl;
           inputParams.push_back(inputVector[index + 1]);
           cout << commandName << endl;
           index += c->exec(inputParams);
@@ -54,8 +55,16 @@ void Parser::runCommands() {
           inputParams.clear();
           //  cout<<"I'm in var command"<<endl;
         }
+        else if(commandName.compare("Sleep") == 0) {
+          inputParams.push_back(inputVector[index + 1]);
+          cout << commandName << endl;
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
       }
       else {
+        cout<<"didn't identify command"<<endl;
+        cout<<commandName<<endl;
         c = this->commandMap.find("setVarCommand")->second;
         inputParams.push_back(inputVector[index]);
         inputParams.push_back(inputVector[index+2]);

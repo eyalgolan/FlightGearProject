@@ -55,6 +55,7 @@ void ConnectCommand::writeToClient(int client_socket) {
   string update = this->readFromQueue();
   int is_sent = send(client_socket, update.c_str(), strlen(update.c_str()), 0);
   if(is_sent == -1) {
+    cout<<update.c_str()<<endl;
     cout<<"Error sending message"<<endl;
   }
   else {
