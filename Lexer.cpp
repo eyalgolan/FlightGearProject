@@ -22,13 +22,13 @@ if (file.is_open()){
    int j=0;
     replace(this->afterlerx.begin(),this->afterlerx.end(),')',' ');
 
-    for(i=0;this->afterlerx[i]!='\0';++i)
-    {
-        if(this->afterlerx[i]!=' ')
-            this->afterlerx[j++]=this->afterlerx[i];
-    }
+ //   for(i=0;this->afterlerx[i]!='\0';++i)
+//    {
+ //       if(this->afterlerx[i]!=' ')
+ //           this->afterlerx[j++]=this->afterlerx[i];
+  //  }
 
-    this->afterlerx[j]='\0';
+  // this->afterlerx[j]='\0';
     replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
     size_t start_pos = 0;
     while ((start_pos = afterlerx.find("var", start_pos)) != string::npos)
