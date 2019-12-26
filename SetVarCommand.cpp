@@ -11,7 +11,20 @@ int SetVarCommand::exec(vector<string> params) {
 
   string name = params[0];
   double value = stod(params[1]);
+  symblTbl.g_updateLock.lock();
+  string sim = symblTbl.getNameMap()[name].first;
+  symblTbl.g_updateLock.unlock();
+  string command = "set " + sim + " " + params[1];
   symblTbl.updateTable(name, "", value, "setVar");
-
+  writeToQueue(command);
   return numParams;
+}
+
+void SetVarCommand::writeToQueue(string input) {
+  cout<<"trying to write to queue"<<endl;
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  symblTbl.g_updateLock.lock();
+  symblTbl.getQueue().push(input);
+  symblTbl.g_updateLock.unlock();
+  cout<<"success in writing to queue"<<endl;
 }

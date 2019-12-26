@@ -9,6 +9,7 @@
 #import "string"
 #import "Parser.h"
 #import "mutex"
+#import "queue"
 
 using namespace std;
 
@@ -25,6 +26,9 @@ class SymbolTable {
   }
   map<string, pair<string, double>> getSimMap() {
     return this->simMap;
+  }
+  queue<string> getQueue() {
+    return this->commandsToSimulator;
   }
   void setNameMap(string name, string sim, double value);
   void setSimMap(string sim, string name, double value);
@@ -98,8 +102,9 @@ class SymbolTable {
         strValue = "";
       }
     }
-  map<string, pair<string, double>> nameMap;
-  map<string, pair<string, double>> simMap;
+    queue<string> commandsToSimulator;
+    map<string, pair<string, double>> nameMap;
+    map<string, pair<string, double>> simMap;
 
 };
 #endif //FLIGHTGEARPROJECT_SYMBOLTABLE_H

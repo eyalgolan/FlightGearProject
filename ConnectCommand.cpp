@@ -12,6 +12,7 @@
 #include "string"
 #include "Lock.h"
 #include "thread"
+#include "SymbolTable.h"
 
 using namespace std;
 int ConnectCommand::exec(vector<string> params) {
@@ -43,23 +44,30 @@ int ConnectCommand::exec(vector<string> params) {
   return this->numParams;
 }
 
-void ConnectCommand::writeToQueue(string update) {
-  this->sendQueue.push(update);
-}
 string ConnectCommand::readFromQueue() {
-  string update = this->sendQueue.front();
-  this->sendQueue.pop();
+  cout<<"trying to read from queue"<<endl;
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  symblTbl.g_updateLock.lock();
+  string update = symblTbl.getQueue().front();
+  symblTbl.getQueue().pop();
+  symblTbl.g_updateLock.unlock();
+  cout<<"success reading from queue"<<endl;
   return update;
 }
 void ConnectCommand::writeToClient(int client_socket) {
-  string update = this->readFromQueue();
-  int is_sent = send(client_socket, update.c_str(), strlen(update.c_str()), 0);
-  if(is_sent == -1) {
-    cout<<update.c_str()<<endl;
-    cout<<"Error sending message"<<endl;
-  }
-  else {
-    cout<<"message send to simulator"<<endl;
+  cout<<"trying to write to client"<<endl;
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  if(!symblTbl.getQueue().empty()) {
+    string update = this->readFromQueue();
+    int is_sent =
+        send(client_socket, update.c_str(), strlen(update.c_str()), 0);
+    if (is_sent == -1) {
+      cout << update.c_str() << endl;
+      cout << "Error sending message" << endl;
+    } else {
+      cout << "message send to simulator" << endl;
+    }
+    cout << "success writing to client" << endl;
   }
 }
 

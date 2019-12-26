@@ -11,6 +11,7 @@ class SetVarCommand : public Command{
   int numParams = 2;
  public:
   int exec(vector<string> params) override;
+  void writeToQueue(string input);
 };
 
 #endif //FLIGHTGEARPROJECT_SETVARCOMMAND_H

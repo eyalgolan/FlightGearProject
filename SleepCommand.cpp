@@ -5,12 +5,15 @@
 #include "SleepCommand.h"
 #include "unistd.h"
 #include "iostream"
+#include "chrono"
+#include "thread"
+
 using namespace std;
 
 int SleepCommand::exec(vector<string> params) {
   int time = stoi(params[0]);
-  auto unsignedTime = (unsigned int)time;
   cout<<"trying to sleep"<<endl;
-  sleep(unsignedTime);
+  this_thread::sleep_for(chrono::milliseconds(time));
+  cout<<"after sleep"<<endl;
   return numParams;
 }
