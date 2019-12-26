@@ -8,8 +8,10 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <cstring>
 #include "string"
 #include "Lock.h"
+#include "thread"
 
 using namespace std;
 int ConnectCommand::exec(vector<string> params) {
@@ -34,9 +36,30 @@ int ConnectCommand::exec(vector<string> params) {
   }
   else {
     cout<<"Client is now connected to server"<<endl;
+    thread thread2(&ConnectCommand::writeToClient, this, client_socket);
+    thread2.detach();
   }
 
   return this->numParams;
+}
+
+void ConnectCommand::writeToQueue(string update) {
+  this->sendQueue.push(update);
+}
+string ConnectCommand::readFromQueue() {
+  string update = this->sendQueue.front();
+  this->sendQueue.pop();
+  return update;
+}
+void ConnectCommand::writeToClient(int client_socket) {
+  string update = this->readFromQueue();
+  int is_sent = send(client_socket, update.c_str(), strlen(update.c_str()), 0);
+  if(is_sent == -1) {
+    cout<<"Error sending message"<<endl;
+  }
+  else {
+    cout<<"message send to simulator"<<endl;
+  }
 }
 
 //void ConnectCommand::updateSimulator() {
