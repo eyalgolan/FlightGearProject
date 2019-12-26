@@ -10,6 +10,7 @@
 #include <string>
 #include <stdio.h>
 #include <cstring>
+#include "SymbolTable.h"
 
 using namespace std;
 
@@ -23,16 +24,22 @@ void Parser::runCommands() {
     Command* c = this->commandMap.find(this->inputVector[index])->second;
     string commandName = this->inputVector[index];
     if(c != nullptr) {
-      if(commandName.compare("openDataServer") ==0) {
+      if(commandName.compare("openDataServer") == 0) {
         inputParams.push_back(inputVector[index+1]);
         cout<<commandName<<endl;
         index += c->exec(inputParams);
         inputParams.clear();
 
       }
-      else if(commandName.compare("connectControlClient")==0) {
+      else if(commandName.compare("connectControlClient") == 0) {
         inputParams.push_back(inputVector[index+1]);
         inputParams.push_back(inputVector[index+2]);
+        cout<<commandName<<endl;
+        index += c->exec(inputParams);
+        inputParams.clear();
+      }
+      else if(commandName.compare("print") == 0) {
+        inputParams.push_back(inputVector[index+1]);
         cout<<commandName<<endl;
         index += c->exec(inputParams);
         inputParams.clear();
@@ -46,6 +53,17 @@ void Parser::runCommands() {
         index += c->exec(inputParams);
         inputParams.clear();
       //  cout<<"I'm in var command"<<endl;
+      }
+      else {
+        SymbolTable &symblTbl = SymbolTable::getInstance();
+        symblTbl.g_updateLock.lock();
+        if(symblTbl.getNameMap().find(commandName) != symblTbl.getNameMap().end()) {
+          inputParams.push_back(inputVector[index]);
+          inputParams.push_back(inputVector[index+2]);
+          cout<<commandName<<endl;
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
       }
 //     cout<<"parser next command"<<endl;
     }
