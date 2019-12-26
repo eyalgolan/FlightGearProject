@@ -101,9 +101,9 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
   cout<<"Im in server"<<endl;
   char buffer[1024]={0};
   int valread = read(client_socket, buffer, 1024);
+  SymbolTable &symblTbl = SymbolTable::getInstance();
   while(buffer[0] != '\n') {
     cout<<buffer<<endl;
-    SymbolTable &symblTbl = SymbolTable::getInstance();
     string strValue;
     int index=0;
     for(int i = 0; i<36 ; i++) {
@@ -117,8 +117,9 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
 
       double value = stod(strValue);
       string name = symblTbl.getSimMap()[sim].first;
-      symblTbl.setNameMap(name, sim, value);
-      symblTbl.setSimMap(sim, name, value);
+      symblTbl.update(name, sim, value);
+      //symblTbl.setNameMap(name, sim, value);
+      //symblTbl.setSimMap(sim, name, value);
       strValue = "";
     }
     valread = read(client_socket, buffer, 1024);

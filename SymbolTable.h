@@ -23,7 +23,7 @@ class SymbolTable {
   }
   void setNameMap(string name, string sim, double value);
   void setSimMap(string sim, string name, double value);
-
+  void update(string name, string sim, double value);
   SymbolTable(SymbolTable const&) = delete;
   void operator=(SymbolTable const&) = delete;
  private:
