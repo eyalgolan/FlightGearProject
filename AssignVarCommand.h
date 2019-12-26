@@ -5,8 +5,13 @@
 #ifndef FLIGHTGEARPROJECT_ASSIGNVARCOMMAND_H
 #define FLIGHTGEARPROJECT_ASSIGNVARCOMMAND_H
 
-class AssignVarCommand {
+#import "Command.h"
 
+class AssignVarCommand : public Command{
+ private:
+  int numParams = 2;
+ public:
+  int exec(vector<string> params) override;
 };
 
 #endif //FLIGHTGEARPROJECT_ASSIGNVARCOMMAND_H

@@ -4,7 +4,17 @@
 
 #include "PrintCommand.h"
 #include "iostream"
+#import "SymbolTable.h"
+
 int PrintCommand::exec(vector<string> params) {
-  cout<<""<<endl;
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  g_updateLock.lock();
+  if(symblTbl.getNameMap().find(params[0]) != symblTbl.getNameMap().end()) {
+    cout<<symblTbl.getNameMap()[params[0]].second<<endl;
+  }
+  else {
+    cout<<params[0]<<endl;
+  }
+  g_updateLock.unlock();
   return this->numParams;
 }

@@ -13,7 +13,7 @@ int DefineVarCommand::exec(vector<string> params) {
 
   string name = params[0];
   string simPath = params[3];
-  symblTbl.update(name, simPath, 0, "client");
+  symblTbl.updateTable(name, simPath, 0, "defineVar");
 
   return this->numParams;
 }
