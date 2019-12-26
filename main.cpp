@@ -19,11 +19,11 @@ int main() {
   vector<string> notspace;
   int i =0;
   while ( i < emulateLexerResulttest.size()){
-      if (emulateLexerResulttest[i].compare("print")!=0){
+      if (emulateLexerResulttest[i].compare("print")==0){
           notspace.push_back(emulateLexerResulttest[i]);
           i++;
       }
-      else if (emulateLexerResulttest[i].compare("print")==0){
+      else if (emulateLexerResulttest[i].compare("print")!=0){
           int start_pos = 0;
           while ((start_pos = emulateLexerResulttest[i].find(" ", start_pos)) != string::npos)
           {
