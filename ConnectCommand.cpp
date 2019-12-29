@@ -16,28 +16,42 @@
 
 using namespace std;
 int ConnectCommand::exec(vector<string> params) {
-  cout<<"I'm trying to be a client"<<endl;
+
   int client_socket = socket(AF_INET, SOCK_STREAM, 0);
   if(client_socket == -1) {
-    cerr<<"Could not create a socket"<<endl;
+    cout<<"Could not create a socket"<<endl;
     return -1;
   }
-  cout<<params[0].c_str()<<endl;
-  cout<<params[1]<<endl;
   sockaddr_in address;
   address.sin_family = AF_INET;
-  const char* ip = params[0].c_str();
-  address.sin_addr.s_addr = inet_addr(ip);
-  address.sin_port = htons((uint16_t)stoi(params[1]));
+  address.sin_addr.s_addr = inet_addr("127.0.0.1");
+  address.sin_port = htons(5402);
 
   int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
-  if(is_connect == 0) {
-    cerr<<address.sin_addr.s_addr<<endl;
-    cerr<<address.sin_port<<endl;
+
+  if(is_connect == -1) {
     cerr<<"Could not connect to host server"<<endl;
     return -2;
   }
+//  else {
+//    cout<<"Client is now connected to server"<<endl;
+//  }
+//  const char* ip = params[0].c_str();
+//
+//  address.sin_addr.s_addr = inet_addr(ip);
+//  address.sin_port = htons((uint16_t)stoi(params[1]));
+//
+//
+//  int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
+
+//  if(is_connect == -1) {
+//    cerr<<address.sin_addr.s_addr<<endl;
+//    cerr<<address.sin_port<<endl;
+//    cerr<<"Could not connect to host server"<<endl;
+//    //return -2;
+//  }
   else {
+    cout<< is_connect <<endl;
     cout<<"Client is now connected to server"<<endl;
     thread thread2(&ConnectCommand::writeToClient, this, client_socket);
     thread2.detach();
@@ -57,23 +71,31 @@ string ConnectCommand::readFromQueue() {
   return update;
 }
 void ConnectCommand::writeToClient(int client_socket) {
-  cout<<"trying to write to client"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  if(!symblTbl.getQueue().empty()) {
-    string update = this->readFromQueue();
-    cout<<"trying to write to client also quee no empty "<<endl;
-    cout<<update.c_str()<<endl;
-    cout<<client_socket<<endl;
-    int is_sent =
-        send(client_socket, update.c_str(), strlen(update.c_str()), 0);
-    cout<<update.c_str()<<endl;
-    if (is_sent == -1) {
+  while (true) {
+    symblTbl.g_updateLock.lock();
+    bool queueState = !symblTbl.getQueue().empty();
+    symblTbl.g_updateLock.unlock();
+    while (queueState) {
+      cout << "trying to write to client" << endl;
+      string update = this->readFromQueue();
+      cout << "trying to write to client also queue no empty " << endl;
       cout << update.c_str() << endl;
-      cout << "Error sending message" << endl;
-    } else {
-      cout << "message send to simulator" << endl;
+      cout << client_socket << endl;
+      int is_sent =
+          send(client_socket, update.c_str(), strlen(update.c_str()), 0);
+      cout << update.c_str() << endl;
+      if (is_sent == -1) {
+        cout << update.c_str() << endl;
+        cout << "Error sending message" << endl;
+      } else {
+        cout << "message send to simulator" << endl;
+      }
+      cout << "success writing to client" << endl;
+      symblTbl.g_updateLock.lock();
+      queueState = !symblTbl.getQueue().empty();
+      symblTbl.g_updateLock.unlock();
     }
-    cout << "success writing to client" << endl;
   }
 }
 

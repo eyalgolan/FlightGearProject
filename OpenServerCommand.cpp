@@ -83,7 +83,6 @@ int OpenServerCommand::exec(vector<string> params) {
     return -3;
   }
   socklen_t addrlen = sizeof(sockaddr_in);
-  //int addressSize = sizeof(address);
   int client_socket = accept(socketfd, (struct sockaddr *)&address, &addrlen);
 
   if(client_socket == -1) {
@@ -95,14 +94,14 @@ int OpenServerCommand::exec(vector<string> params) {
 
   //check !!
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket, sims);
-  thread1.join();
+  thread1.detach();
   return this->numParams;
 }
 
 void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
   cout<<"Im in server"<<endl;
   char buffer[1024]={0};
-  int valread = read(client_socket, buffer, 1024);
+  ssize_t valread = read(client_socket, buffer, 1024);
   SymbolTable &symblTbl = SymbolTable::getInstance();
   while(buffer[0] != '\n') {
     cout<<buffer<<endl;
@@ -110,7 +109,13 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
     int index=0;
     for(int i = 0; i<36 ; i++) {
       // check !!
-      string sim = sims[i];
+      string sim;
+      try {
+        sim = sims[i];
+      }
+      catch (const char* e) {
+        throw "error in sim in place"+to_string(i);
+      }
       while(buffer[index] != ',' && buffer[index] != '\0') {
         strValue += buffer[index];
         index++;
@@ -119,8 +124,13 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
 
       double value = stod(strValue);
       cout<<"server trying to update symbltable"<<endl;
-      symblTbl.updateTable("", sim, value, "server");
-      strValue = "";
+      try {
+        symblTbl.updateTable("", sim, value, "server");
+        strValue = "";
+      }
+      catch (const char* e) {
+        throw "error is updating symbltable with " + sim + "," + to_string(value);
+      }
     }
     cout<<"finished server part"<<endl;
     valread = read(client_socket, buffer, 1024);
