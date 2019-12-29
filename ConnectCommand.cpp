@@ -71,9 +71,11 @@ string ConnectCommand::readFromQueue() {
   return update;
 }
 void ConnectCommand::writeToClient(int client_socket) {
+ cout<<"i am in writing clientet before whiles"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   while (true) {
-    symblTbl.g_updateLock.lock();
+      cout<<"i am in writing clientet after first while"<<endl;
+      symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.getQueue().empty();
     symblTbl.g_updateLock.unlock();
     while (queueState) {
