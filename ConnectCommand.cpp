@@ -65,7 +65,7 @@ string ConnectCommand::readFromQueue() {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   symblTbl.g_updateLock.lock();
   string update = symblTbl.getQueue().front();
-  symblTbl.getQueue().pop();
+  symblTbl.popFromQueue();
   symblTbl.g_updateLock.unlock();
   cout<<"success reading from queue"<<endl;
   return update;

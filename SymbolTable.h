@@ -34,6 +34,9 @@ class SymbolTable {
   void pushToQueue(string command) {
     this->commandsToSimulator.push(command);
   }
+  void popFromQueue() {
+    this->commandsToSimulator.pop();
+  }
   void setNameMap(string name, string sim, double value);
   void setSimMap(string sim, string name, double value);
   void updateTable(string name, string sim, double value, string calledFrom);
