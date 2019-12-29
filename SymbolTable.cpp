@@ -38,9 +38,9 @@ void SymbolTable::updateFromServer(string name, string sim, double value) {
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
   string origName = this->getSimMap()[sim].first;
   double origValue = this->getSimMap()[sim].second;
-  this->getNameMap().erase(origName);
+  this->nameMap.erase(origName);
   this->setNameMap(name, sim, origValue);
-  this->getSimMap().erase(sim);
+  this->nameMap.erase(sim);
   this->setSimMap(sim, name, origValue);
 }
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {

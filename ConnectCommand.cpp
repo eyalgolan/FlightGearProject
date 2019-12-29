@@ -23,9 +23,13 @@ int ConnectCommand::exec(vector<string> params) {
     return -1;
   }
   sockaddr_in address;
+  int  length = params[0].size();
+  char ip[length+1];
+  strcpy(ip, params[0].c_str());
+  cout<<ip<<endl;
   address.sin_family = AF_INET;
-  address.sin_addr.s_addr = inet_addr("127.0.0.1");
-  address.sin_port = htons(5402);
+  address.sin_addr.s_addr = inet_addr(ip);
+  address.sin_port = htons(stoi(params[1]));
 
   int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
 
@@ -33,23 +37,7 @@ int ConnectCommand::exec(vector<string> params) {
     cerr<<"Could not connect to host server"<<endl;
     return -2;
   }
-//  else {
-//    cout<<"Client is now connected to server"<<endl;
-//  }
-//  const char* ip = params[0].c_str();
-//
-//  address.sin_addr.s_addr = inet_addr(ip);
-//  address.sin_port = htons((uint16_t)stoi(params[1]));
-//
-//
-//  int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
 
-//  if(is_connect == -1) {
-//    cerr<<address.sin_addr.s_addr<<endl;
-//    cerr<<address.sin_port<<endl;
-//    cerr<<"Could not connect to host server"<<endl;
-//    //return -2;
-//  }
   else {
     cout<< is_connect <<endl;
     cout<<"Client is now connected to server"<<endl;
@@ -99,7 +87,3 @@ void ConnectCommand::writeToClient(int client_socket) {
     }
   }
 }
-
-//void ConnectCommand::updateSimulator() {
-//
-//}
