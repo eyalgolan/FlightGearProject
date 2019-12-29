@@ -49,41 +49,47 @@ int ConnectCommand::exec(vector<string> params) {
 }
 
 string ConnectCommand::readFromQueue() {
-  cout<<"trying to read from queue"<<endl;
+  //cout<<"trying to read from queue"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   symblTbl.g_updateLock.lock();
   string update = symblTbl.getQueue().front();
   symblTbl.popFromQueue();
   symblTbl.g_updateLock.unlock();
-  cout<<"success reading from queue"<<endl;
+  //cout<<"success reading from queue"<<endl;
   return update;
 }
 void ConnectCommand::writeToClient(int client_socket) {
-  cout<<"i am in writing clientet before whiles"<<endl;
+  //cout<<"i am in writing client before whiles"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
+  string update;
   while (true) {
-      symblTbl.g_updateLock.lock();
+
+    symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.getQueue().empty();
     symblTbl.g_updateLock.unlock();
     while (queueState) {
-      cout << "trying to write to client" << endl;
-      string update = this->readFromQueue();
-      cout << "trying to write to client also queue no empty " << endl;
+      //cout << "trying to write to client" << endl;
+      update = this->readFromQueue();
+      //cout << "trying to write to client also queue no empty " << endl;
       cout << update.c_str() << endl;
       cout << client_socket << endl;
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);
       cout << update.c_str() << endl;
       if (is_sent == -1) {
-        cout << update.c_str() << endl;
-        cout << "Error sending message" << endl;
+        //cout << update.c_str() << endl;
+        //cout << "Error sending message" << endl;
       } else {
-        cout << "message send to simulator" << endl;
+        //cout << "message send to simulator" << endl;
       }
-      cout << "success writing to client" << endl;
+      //cout << "success writing to client" << endl;
       symblTbl.g_updateLock.lock();
+      //cout<<"locked from, clinet comanr2"<<endl;
+
       queueState = !symblTbl.getQueue().empty();
       symblTbl.g_updateLock.unlock();
+      //cout<<"ulocked from, clinet comanr2"<<endl;
+
     }
   }
 }

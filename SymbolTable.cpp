@@ -18,6 +18,7 @@ void SymbolTable::updateTable(string name,
                               double value,
                               string calledFrom) {
   g_updateLock.lock();
+
   if(calledFrom.compare("server") == 0) {
     updateFromServer(name, sim, value);
   }
@@ -31,20 +32,24 @@ void SymbolTable::updateTable(string name,
   g_updateLock.unlock();
 }
 void SymbolTable::updateFromServer(string name, string sim, double value) {
-    string origName = this->getSimMap()[sim].first;
+    string origName = this->simMap[sim].first;
     this->nameMap.insert({origName, make_pair(sim, value)});
     this->simMap.insert({sim, make_pair(origName, value)});
 }
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
-  string origName = this->getSimMap()[sim].first;
-  double origValue = this->getSimMap()[sim].second;
+  if(this->getSimMap().find(sim) == this->getSimMap().end())
+  {
+    cout<<"didnt find sim: " + sim<<endl;
+  }
+  string origName = this->simMap[sim].first;
+  double origValue = this->simMap[sim].second;
   this->nameMap.erase(origName);
   this->setNameMap(name, sim, origValue);
   this->nameMap.erase(sim);
   this->setSimMap(sim, name, origValue);
 }
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {
-  this->getNameMap()[name].second = value;
-  sim = this->getNameMap()[name].first;
-  this->getSimMap()[sim].second = value;
+  this->nameMap[name].second = value;
+  sim = this->nameMap[name].first;
+  this->simMap[sim].second = value;
 }

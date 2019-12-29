@@ -21,10 +21,10 @@ int SetVarCommand::exec(vector<string> params) {
 }
 
 void SetVarCommand::writeToQueue(string input) {
-  cout<<"trying to write to queue"<<endl;
+  //cout<<"trying to write to queue"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   symblTbl.g_updateLock.lock();
   symblTbl.pushToQueue(input);
   symblTbl.g_updateLock.unlock();
-  cout<<"success in writing to queue"<<endl;
+  //cout<<"success in writing to queue"<<endl;
 }
