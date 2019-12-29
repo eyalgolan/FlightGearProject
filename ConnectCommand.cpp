@@ -32,6 +32,8 @@ int ConnectCommand::exec(vector<string> params) {
 
   int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
   if(is_connect == 0) {
+    cerr<<address.sin_addr.s_addr<<endl;
+    cerr<<address.sin_port<<endl;
     cerr<<"Could not connect to host server"<<endl;
     return -2;
   }
@@ -60,9 +62,11 @@ void ConnectCommand::writeToClient(int client_socket) {
   if(!symblTbl.getQueue().empty()) {
     string update = this->readFromQueue();
     cout<<"trying to write to client also quee no empty "<<endl;
-
+    cout<<update.c_str()<<endl;
+    cout<<client_socket<<endl;
     int is_sent =
         send(client_socket, update.c_str(), strlen(update.c_str()), 0);
+    cout<<update.c_str()<<endl;
     if (is_sent == -1) {
       cout << update.c_str() << endl;
       cout << "Error sending message" << endl;

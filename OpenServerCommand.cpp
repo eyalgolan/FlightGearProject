@@ -72,6 +72,8 @@ int OpenServerCommand::exec(vector<string> params) {
   address.sin_port = htons((uint16_t)stoi(params[0]));
 
   if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
+    cerr<<address.sin_addr.s_addr<<endl;
+    cerr<<address.sin_port<<endl;
     cerr<<"Could not bind the socket to an IP"<<endl;
     return -2;
   }
@@ -93,7 +95,7 @@ int OpenServerCommand::exec(vector<string> params) {
 
   //check !!
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket, sims);
-  thread1.detach();
+  thread1.join();
   return this->numParams;
 }
 
@@ -116,10 +118,11 @@ void OpenServerCommand::readFromClient(int client_socket, string sims[36]) {
       index++;
 
       double value = stod(strValue);
-
+      cout<<"server trying to update symbltable"<<endl;
       symblTbl.updateTable("", sim, value, "server");
       strValue = "";
     }
+    cout<<"finished server part"<<endl;
     valread = read(client_socket, buffer, 1024);
   }
 

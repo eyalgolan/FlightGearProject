@@ -14,7 +14,7 @@ int SetVarCommand::exec(vector<string> params) {
   symblTbl.g_updateLock.lock();
   string sim = symblTbl.getNameMap()[name].first;
   symblTbl.g_updateLock.unlock();
-  string command = "set " + sim + " " + params[1];
+  string command = "set " + sim + " " + params[1] + "\r\n";
   symblTbl.updateTable(name, "", value, "setVar");
   writeToQueue(command);
   return numParams;
