@@ -5,6 +5,15 @@
 #ifndef FLIGHTGEARPROJECT_LOOPCOMMAND_H
 #define FLIGHTGEARPROJECT_LOOPCOMMAND_H
 
+#include "Command.h"
+#include "ConditionParser.h"
+#include "iostream"
 
+using namespace std;
+
+class LoopCommand: public ConditionParser {
+ public:
+  int exec(vector<string> params) override;
+};
 
 #endif //FLIGHTGEARPROJECT_LOOPCOMMAND_H

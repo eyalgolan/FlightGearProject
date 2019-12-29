@@ -11,6 +11,9 @@ int ConditionParser::exec(vector<string> params) {
 
   return this->numParams;
 }
+bool ConditionParser::getcontidion() {
+  return this->condition;
+}
 ConditionParser::ConditionParser(double var, string op, double value) {
   if(op == ">"){
     if(var > value) {

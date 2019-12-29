@@ -15,6 +15,7 @@ class ConditionParser: public Command {
   int numParams = 3;
   int exec(vector<string> params) override;
   ConditionParser(double var, string op, double value);
+  bool getcontidion();
   ~ConditionParser();
 };
 
