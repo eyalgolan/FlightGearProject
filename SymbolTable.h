@@ -10,6 +10,7 @@
 #import "Parser.h"
 #import "mutex"
 #import "queue"
+#import "string"
 
 using namespace std;
 
@@ -29,6 +30,9 @@ class SymbolTable {
   }
   queue<string> getQueue() {
     return this->commandsToSimulator;
+  }
+  void pushToQueue(string command) {
+    this->commandsToSimulator.push(command);
   }
   void setNameMap(string name, string sim, double value);
   void setSimMap(string sim, string name, double value);

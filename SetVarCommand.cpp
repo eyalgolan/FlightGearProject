@@ -24,7 +24,7 @@ void SetVarCommand::writeToQueue(string input) {
   cout<<"trying to write to queue"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   symblTbl.g_updateLock.lock();
-  symblTbl.getQueue().push(input);
+  symblTbl.pushToQueue(input);
   symblTbl.g_updateLock.unlock();
   cout<<"success in writing to queue"<<endl;
 }
