@@ -90,6 +90,12 @@ if (file.is_open()){
         afterlerx.replace(start_pos, 4, ",==,");
         start_pos += 4; // Handles case where 'to' is a substring of 'from'
     }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(" != ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 4, ",!=,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
+    }
   start_pos = 0;
   while ((start_pos = afterlerx.find("\"", start_pos)) != string::npos)
   {
