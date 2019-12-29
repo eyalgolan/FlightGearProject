@@ -49,10 +49,46 @@ if (file.is_open()){
         start_pos += 4; // Handles case where 'to' is a substring of 'from'
     }
     start_pos = 0;
-    while ((start_pos = afterlerx.find("=", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find("<=", start_pos)) != string::npos)
     {
-        afterlerx.replace(start_pos, 1, ",=,");
+        afterlerx.replace(start_pos, 2, ",<=,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(">=", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 2, ",<=,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find("==", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 2, ",==,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(" < ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 3, ",<,");
         start_pos += 3; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(" > ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 3, ",>,");
+        start_pos += 3; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(" = ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 3, ",<,");
+        start_pos += 3; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(" == ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 4, ",==,");
+        start_pos += 4; // Handles case where 'to' is a substring of 'from'
     }
   start_pos = 0;
   while ((start_pos = afterlerx.find("\"", start_pos)) != string::npos)
@@ -60,6 +96,25 @@ if (file.is_open()){
     afterlerx.replace(start_pos, 1, "");
     start_pos += 0; // Handles case where 'to' is a substring of 'from'
  }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find("while ", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 6, "while,");
+        start_pos += 6; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find("{", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 1, ",{");
+        start_pos += 2; // Handles case where 'to' is a substring of 'from'
+    }
+    start_pos = 0;
+    while ((start_pos = afterlerx.find(",,", start_pos)) != string::npos)
+    {
+        afterlerx.replace(start_pos, 2, ",");
+        start_pos += 1; // Handles case where 'to' is a substring of 'from'
+    }
+
 
     cout<<this->afterlerx<<endl;
   }
