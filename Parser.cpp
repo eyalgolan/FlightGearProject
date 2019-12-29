@@ -12,6 +12,11 @@
 #include <cstring>
 #include "SymbolTable.h"
 
+
+#include "chrono"
+#include "thread"
+
+
 using namespace std;
 
 /**
@@ -73,6 +78,7 @@ void Parser::runCommands() {
       cout<<commandName<<endl;
       index += c->exec(inputParams);
       inputParams.clear();
+      this_thread::sleep_for(chrono::milliseconds(10000));
     }
   }
 }

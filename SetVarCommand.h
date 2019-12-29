@@ -8,7 +8,7 @@
 #import "Command.h"
 class SetVarCommand : public Command{
  private:
-  int numParams = 2;
+  int numParams = 3;
  public:
   int exec(vector<string> params) override;
   void writeToQueue(string input);
