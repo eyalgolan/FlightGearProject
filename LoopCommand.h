@@ -12,8 +12,10 @@
 using namespace std;
 
 class LoopCommand: public ConditionParser {
- public:
-  int exec(vector<string> params) override;
+private:
+    int numParam = 0;
+public:
+    int exec(vector<string> params) override;
 };
 
 #endif //FLIGHTGEARPROJECT_LOOPCOMMAND_H
