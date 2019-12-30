@@ -12,7 +12,7 @@ int PrintCommand::exec(vector<string> params) {
   symblTbl.g_updateLock.lock();
   cout<<"i'm trying to print"<<endl;
   auto it = symblTbl.getNameMap().find(params[0]);
-  if(it != symblTbl.getNameMap().end()) {
+  if(symblTbl.isInNameMap(params[0])) {
     cout<<"i'm trying to print a value"<<endl;
     cout<<params[0]<<endl;
     cout<<symblTbl.getNameMap()[params[0]].first<<endl;

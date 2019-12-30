@@ -23,6 +23,12 @@ class SymbolTable {
     return instance;
   }
   bool isInNameMap (string name) {
+      if(this->nameMap.find(name) != this->nameMap.end()) {
+        cout << "name is " + name + " and result of search is true";
+      }
+      else {
+        cout << "name is " + name + " and result of search is false";
+      }
     if(this->nameMap.find(name) != this->nameMap.end()) {
       return true;
     }
