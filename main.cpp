@@ -19,7 +19,10 @@ int main() {
   vector<string> notspace;
   int i =0;
   while ( i < emulateLexerResulttest.size()){
-      if (emulateLexerResulttest[i].compare("print")==0){
+      string dammy=emulateLexerResulttest[i];
+      if (dammy.compare("Print")==0){
+          notspace.push_back(emulateLexerResulttest[i]);
+          i++;
           notspace.push_back(emulateLexerResulttest[i]);
           i++;
       }
