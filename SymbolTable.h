@@ -22,6 +22,12 @@ class SymbolTable {
     static SymbolTable instance;
     return instance;
   }
+  bool isInNameMap (string name) {
+    if(this->nameMap.find(name) != this->nameMap.end()) {
+      return true;
+    }
+    return false;
+  }
   map<string, pair<string, double>> getNameMap() {
     return this->nameMap;
   }

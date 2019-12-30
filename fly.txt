@@ -5,6 +5,8 @@ var rpm <- sim("/engines/engine/rpm")
 Print("waiting 2 minutes for gui")
 Sleep(5000)
 Print("let's start")
+Sleep(1000)
+Print("engine is warming...")
 Print(rpm)
 while rpm <= 750 {
 	Print(rpm)

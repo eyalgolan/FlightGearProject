@@ -9,15 +9,16 @@
 using namespace std;
 
 int ConditionParser::exec(vector<string> params) {
-  int i=1;
+  int i=0;
   string firstExp = params[i];
   string con=params[i+1];
   string secondExp = params[i+2];
   SymbolTable &symblTbl = SymbolTable::getInstance();
   double firstExpValue;
   symblTbl.g_updateLock.lock();
-  if(symblTbl.getNameMap().find(firstExp) != symblTbl.getNameMap().end()){
+  if(symblTbl.isInNameMap(firstExp)){
     firstExpValue = symblTbl.getNameMap()[firstExp].second;
+    cout<<firstExp + " value is " + to_string(firstExpValue)<<endl;
   }
   else {
     firstExpValue = stod(firstExp);
@@ -25,13 +26,13 @@ int ConditionParser::exec(vector<string> params) {
   symblTbl.g_updateLock.unlock();
   double secondExpValue;
   symblTbl.g_updateLock.lock();
-  if(symblTbl.getNameMap().find(firstExp) != symblTbl.getNameMap().end()){
+  if(symblTbl.isInNameMap(secondExp)){
     secondExpValue = symblTbl.getNameMap()[secondExp].second;
   }
   else {
     secondExpValue = stod(secondExp);
   }
-
+  symblTbl.g_updateLock.unlock();
   if(con == ">"){
     if(firstExpValue > secondExpValue) {
       this->condition = true;
