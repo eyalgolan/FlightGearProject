@@ -45,7 +45,6 @@ void Parser::runCommands() {
                         index++;
                         inputParams.push_back(inputVector[index]);
                     }
-                    inputParams.push_back(inputVector[index+1]);
                     index++;
                     index+=c->exec(inputParams);
                     inputParams.clear();
