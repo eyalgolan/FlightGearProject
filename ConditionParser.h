@@ -7,8 +7,16 @@
 
 #include "Command.h"
 
-class ConditionParser: public Command {
+using namespace std;
 
+class ConditionParser: public Command {
+ public:
+  bool condition;
+  int numParams = 3;
+  int exec(vector<string> params) override;
+  ConditionParser(double var, string op, double value);
+  bool getcontidion();
+  ~ConditionParser();
 };
 
 #endif //FLIGHTGEARPROJECT_CONDITIONPARSER_H
