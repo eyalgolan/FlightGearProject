@@ -28,7 +28,10 @@ void Parser::runCommands() {
     while(index < this->inputVector.size()) {
         Command* c;
         string commandName;
-        if(this->commandMap.find(this->inputVector[index]) != this->commandMap.end()) {
+        if(this->inputVector[index] == "}"){
+            break;
+        }
+        else if(this->commandMap.find(this->inputVector[index]) != this->commandMap.end()) {
             c = this->commandMap.find(this->inputVector[index])->second;
             commandName = this->inputVector[index];
             if (c != nullptr) {

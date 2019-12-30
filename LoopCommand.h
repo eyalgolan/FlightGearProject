@@ -7,6 +7,7 @@
 
 #include "Command.h"
 #include "ConditionParser.h"
+#include "Parser.h"
 #include "iostream"
 
 using namespace std;
@@ -14,8 +15,11 @@ using namespace std;
 class LoopCommand: public ConditionParser {
 private:
     int numParam = 0;
+
 public:
-    int exec(vector<string> params) override;
+  int exec(vector<string> params) override;
+  LoopCommand();
+  ~LoopCommand();
 };
 
 #endif //FLIGHTGEARPROJECT_LOOPCOMMAND_H
