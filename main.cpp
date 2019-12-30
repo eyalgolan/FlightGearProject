@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Lexer.h"
 #include "Parser.h"
+#include "SymbolTable.h"
 
 #include <sys/socket.h>
 #include <cstring>
@@ -18,14 +19,29 @@ int main() {
   vector<string> emulateLexerResulttest=l.getvecor();
   vector<string> notspace;
   int i =0;
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+
   while ( i < emulateLexerResulttest.size()){
+
       string dammy=emulateLexerResulttest[i];
-      if (dammy.compare("Print")==0){
+      string dammyp=emulateLexerResulttest[i+1];
+
+    if ((dammy.compare("Print")==0)&&(!symblTbl.isInNameMap(dammyp))){
           notspace.push_back(emulateLexerResulttest[i]);
           i++;
           notspace.push_back(emulateLexerResulttest[i]);
           i++;
       }
+    else if ((dammy.compare("Print")==0)&&(symblTbl.isInNameMap(dammyp))){
+      int start_pos = 0;
+      while ((start_pos = emulateLexerResulttest[i].find(" ", start_pos)) != string::npos)
+      {
+        emulateLexerResulttest[i].replace(start_pos, 1, "");
+        start_pos += 0; // Handles case where 'to' is a substring of 'from'
+      }
+      notspace.push_back(emulateLexerResulttest[i]);
+      i++;
+    }
       else if (emulateLexerResulttest[i].compare("print")!=0){
           int start_pos = 0;
           while ((start_pos = emulateLexerResulttest[i].find(" ", start_pos)) != string::npos)
