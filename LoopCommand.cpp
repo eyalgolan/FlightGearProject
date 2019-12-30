@@ -6,21 +6,16 @@
 #include "SymbolTable.h"
 
 int LoopCommand::exec(vector<string> params) {
-    SymbolTable &symblTbl = SymbolTable::getInstance();
     Parser loopParser(params);
     int i=1;
-    double varValue;
-    symblTbl.g_updateLock.lock();
-    if(symblTbl.getNameMap().find(params[i]) != symblTbl.getNameMap().end()){
-      varValue = symblTbl.getNameMap()[params[i]].second.first;
-    }
-    else {
-      varValue = stod(params[i]);
-    }
-    symblTbl.g_updateLock.unlock();
+    string firstExp = params[i];
     string con=params[i+1];
-    double value =stod(params[i+2]);
-    ConditionParser *cp = new ConditionParser(varValue, con, value);
+    string secondExp = params[i+2];
+    vector<string> conditionVector;
+    conditionVector.push_back(firstExp);
+    conditionVector.push_back(con);
+    conditionVector.push_back(secondExp);
+    ConditionParser *cp = new ConditionParser(conditionVector);
     while(cp->condition) {
       loopParser.runCommands();
     }
