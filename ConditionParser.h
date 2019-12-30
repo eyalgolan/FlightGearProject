@@ -14,9 +14,9 @@ class ConditionParser: public Command {
   bool condition;
   int numParams = 3;
   int exec(vector<string> params) override;
-  ConditionParser(vector<string> conditionVector);
+  //ConditionParser(vector<string> conditionVector);
   bool getcontidion();
-  ~ConditionParser();
+  //~ConditionParser();
 };
 
 #endif //FLIGHTGEARPROJECT_CONDITIONPARSER_H

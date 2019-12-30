@@ -1,5 +1,5 @@
 //
-// Created by eyal on 16/12/19.
+// Created by eyal on 30/12/19.
 //
 
 #ifndef FLIGHTGEARPROJECT_LOOPCOMMAND_H
@@ -7,19 +7,15 @@
 
 #include "Command.h"
 #include "ConditionParser.h"
-#include "Parser.h"
 #include "iostream"
 
 using namespace std;
 
-class LoopCommand: public ConditionParser {
-private:
-    int numParam = 0;
-
-public:
+class LoopCommand: public Command {
+ private:
+  int numParams = 0;
+ public:
   int exec(vector<string> params) override;
-  LoopCommand();
-  ~LoopCommand();
 };
 
 #endif //FLIGHTGEARPROJECT_LOOPCOMMAND_H

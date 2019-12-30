@@ -88,6 +88,6 @@ int ConditionParser::exec(vector<string> params) {
 bool ConditionParser::getcontidion() {
   return this->condition;
 }
-ConditionParser::ConditionParser(vector<string> conditionVector) {
-  this->exec(conditionVector);
-}
+//ConditionParser::ConditionParser(vector<string> conditionVector) {
+//  this->exec(conditionVector);
+//}
