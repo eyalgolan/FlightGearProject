@@ -11,8 +11,8 @@
 #include <stdio.h>
 #include <cstring>
 #include "SymbolTable.h"
-
-
+#include "ExpressionHandler.h"
+#include "Expression.h"
 #include "chrono"
 #include "thread"
 
@@ -28,7 +28,10 @@ void Parser::runCommands() {
 
     while(index < this->inputVector.size()) {
         Command* c;
+        Interpreter *in = new Interpreter();
+        Expression* exp = nullptr;
         string commandName;
+        string input;
         if(this->inputVector[index] == "}"){
             break;
         }
@@ -37,7 +40,10 @@ void Parser::runCommands() {
             commandName = this->inputVector[index];
             if (c != nullptr) {
                 if (commandName.compare("openDataServer") == 0) {
-                    inputParams.push_back(inputVector[index + 1]);
+                    exp = in->interpret(inputVector[index + 1]);
+                    input = to_string((int)exp->calculate());
+                    cout<<input<<endl;
+                    inputParams.push_back(input);
                     cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
