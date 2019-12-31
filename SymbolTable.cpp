@@ -33,11 +33,13 @@ void SymbolTable::updateTable(string name,
 }
 void SymbolTable::updateFromServer(string name, string sim, double value) {
     string origName = this->simMap[sim].first;
+    this->nameMap.erase(origName);
     this->nameMap.insert({origName, make_pair(sim, value)});
+    this->simMap.erase(sim);
     this->simMap.insert({sim, make_pair(origName, value)});
 }
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
-  if(this->getSimMap().find(sim) == this->getSimMap().end())
+  if(this->isInSimMap(sim))
   {
     cout<<"didnt find sim: " + sim<<endl;
   }
@@ -45,7 +47,7 @@ void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
   double origValue = this->simMap[sim].second;
   this->nameMap.erase(origName);
   this->setNameMap(name, sim, origValue);
-  this->nameMap.erase(sim);
+  this->simMap.erase(sim);
   this->setSimMap(sim, name, origValue);
 }
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {

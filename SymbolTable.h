@@ -23,17 +23,25 @@ class SymbolTable {
     return instance;
   }
   bool isInNameMap (string name) {
-      if(this->nameMap.find(name) != this->nameMap.end()) {
-        cout << "name is " + name + " and result of search is true";
-      }
-      else {
-        cout << "name is " + name + " and result of search is false";
-      }
+//      if(this->nameMap.find(name) != this->nameMap.end()) {
+//        cout << "name is " + name + " and result of search is true";
+//      }
+//      else {
+//        cout << "name is " + name + " and result of search is false";
+//      }
     if(this->nameMap.find(name) != this->nameMap.end()) {
       return true;
     }
     return false;
   }
+
+  bool isInSimMap (string sim) {
+    if(this->simMap.find(sim) != this->simMap.end()) {
+      return true;
+    }
+    return false;
+  }
+
   map<string, pair<string, double>> getNameMap() {
     return this->nameMap;
   }

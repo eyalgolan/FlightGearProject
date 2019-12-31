@@ -25,6 +25,7 @@ using namespace std;
 void Parser::runCommands() {
     int index = 0;
     vector<string> inputParams;
+
     while(index < this->inputVector.size()) {
         Command* c;
         string commandName;
