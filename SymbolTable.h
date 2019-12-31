@@ -22,6 +22,16 @@ class SymbolTable {
     static SymbolTable instance;
     return instance;
   }
+  string getSetExp() {
+    string toSet;
+    for(auto it = this->nameMap.begin(); it != this->nameMap.end() ; it++) {
+      toSet += it->first + "=" + to_string(it->second.second) + ";";
+    }
+    for(auto varIt = this->varMap.begin(); varIt != this->varMap.end() ; varIt++) {
+      toSet += varIt->first + "=" + to_string(varIt->second) + ";";
+    }
+    return toSet;
+  }
   bool isInNameMap (string name) {
 //      if(this->nameMap.find(name) != this->nameMap.end()) {
 //        cout << "name is " + name + " and result of search is true";

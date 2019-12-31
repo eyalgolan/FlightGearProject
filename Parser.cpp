@@ -28,8 +28,7 @@ void Parser::runCommands() {
 
     while(index < this->inputVector.size()) {
         Command* c;
-        Interpreter *in = new Interpreter();
-        Expression* exp = nullptr;
+
         string commandName;
         string input;
         if(this->inputVector[index] == "}"){
@@ -40,8 +39,10 @@ void Parser::runCommands() {
             commandName = this->inputVector[index];
             if (c != nullptr) {
                 if (commandName.compare("openDataServer") == 0) {
-                    exp = in->interpret(inputVector[index + 1]);
-                    input = to_string((int)exp->calculate());
+                    Interpreter *inOp = new Interpreter();
+                    Expression* expOp = nullptr;
+                    expOp = inOp->interpret(inputVector[index + 1]);
+                    input = to_string((int)expOp->calculate());
                     cout<<input<<endl;
                     inputParams.push_back(input);
                     cout << commandName << endl;
@@ -89,7 +90,11 @@ void Parser::runCommands() {
                     inputParams.clear();
                 }
                 else if (commandName.compare("Sleep") == 0) {
-                    inputParams.push_back(inputVector[index + 1]);
+                    Interpreter *inSleep = new Interpreter();
+                    Expression* expSleep = nullptr;
+                    expSleep = inSleep->interpret(inputVector[index + 1]);
+                    input = to_string(expSleep->calculate());
+                    inputParams.push_back(input);
                     cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
