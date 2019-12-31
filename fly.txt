@@ -24,7 +24,7 @@ var rpm <- sim("/engines/engine/rpm")
 Print("i will print the rpm")
 Print(rpm)
 Print("waiting 2 minutes for gui")
-Sleep(60000)
+Sleep(5000)
 Print("let's start")
 warp = 32000
 Sleep(1000)

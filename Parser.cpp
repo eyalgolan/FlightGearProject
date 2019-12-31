@@ -46,7 +46,7 @@ void Parser::runCommands() {
                         index++;
                         inputParams.push_back(inputVector[index]);
                     }
-                    index++;
+                    index+=2;
                     index+=c->exec(inputParams);
                     inputParams.clear();
                 } else if (commandName.compare("connectControlClient") == 0) {
@@ -71,7 +71,18 @@ void Parser::runCommands() {
                     index += c->exec(inputParams);
                     inputParams.clear();
                     //  cout<<"I'm in var command"<<endl;
-                } else if (commandName.compare("Sleep") == 0) {
+                }
+                else if(commandName.compare("var") == 0
+                    && inputVector[index + 2].compare("=") == 0) {
+                    inputParams.push_back(inputVector[index + 1]);
+                    inputParams.push_back(inputVector[index + 2]);
+                    inputParams.push_back(inputVector[index + 3]);
+                    cout << commandName << endl;
+                    c = this->commandMap.find("assignVar")->second;
+                    index += c->exec(inputParams);
+                    inputParams.clear();
+                }
+                else if (commandName.compare("Sleep") == 0) {
                     inputParams.push_back(inputVector[index + 1]);
                     cout << commandName << endl;
                     index += c->exec(inputParams);

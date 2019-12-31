@@ -34,7 +34,9 @@ class SymbolTable {
     }
     return false;
   }
-
+  void addToVarMap (string name, double value) {
+    this->varMap.insert(make_pair(name, value));
+  }
   bool isInSimMap (string sim) {
     if(this->simMap.find(sim) != this->simMap.end()) {
       return true;
@@ -132,6 +134,6 @@ class SymbolTable {
     queue<string> commandsToSimulator;
     map<string, pair<string, double>> nameMap;
     map<string, pair<string, double>> simMap;
-
+    map<string, double> varMap;
 };
 #endif //FLIGHTGEARPROJECT_SYMBOLTABLE_H

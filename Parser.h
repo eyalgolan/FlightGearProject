@@ -14,6 +14,7 @@
 #include "PrintCommand.h"
 #include "SleepCommand.h"
 #include "LoopCommand.h"
+#include "AssignVarCommand.h"
 #include "Lexer.h"
 #include "string"
 
@@ -31,6 +32,7 @@ class Parser {
   Command* printCommand;
   Command* sleepCommand;
   Command* loopCommand;
+  Command* assignVarCommand;
 
   Parser(vector<string> inputFromLexer){
     inputVector = inputFromLexer;
@@ -41,6 +43,7 @@ class Parser {
     printCommand = new PrintCommand;
     sleepCommand = new SleepCommand;
     loopCommand = new LoopCommand;
+    assignVarCommand = new AssignVarCommand;
 
     commandMap["openDataServer"] = openServerCommand;
     commandMap["connectControlClient"] = connectCommand;
@@ -49,6 +52,7 @@ class Parser {
     commandMap["Print"] = printCommand;
     commandMap["Sleep"] = sleepCommand;
     commandMap["while"] = loopCommand;
+    commandMap["assignVar"] = assignVarCommand;
   }
   ~Parser(){
     delete openServerCommand;

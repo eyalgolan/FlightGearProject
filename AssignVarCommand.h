@@ -9,7 +9,7 @@
 
 class AssignVarCommand : public Command{
  private:
-  int numParams = 2;
+  int numParams = 4;
  public:
   int exec(vector<string> params) override;
 };
