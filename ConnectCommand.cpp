@@ -71,7 +71,7 @@ void ConnectCommand::writeToClient(int client_socket) {
       symblTbl.g_updateLock.lock();
       update = this->readFromQueue();
       //cout << "trying to write to client also queue no empty " << endl;
-      //cout << update.c_str() << endl;
+      cout << update.c_str() << endl;
       //cout << client_socket << endl;
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);

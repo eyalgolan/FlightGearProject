@@ -7,7 +7,7 @@
 #include "Lexer.h"
 #include <algorithm>
 using namespace std;
-Lexer::Lexer(string filename)  {
+Lexer::Lexer(char *filename)  {
     ifstream file;
     file.open(filename); //object of fstream class
     string line;
