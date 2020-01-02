@@ -82,10 +82,13 @@ class SymbolTable {
     string buffer =
         "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36";
     string names[36] =
-        {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12",
-         "13",
-         "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
-         "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35"};
+        {"default1", "default2", "default3", "default4", "default5", "default6",
+         "default7", "default8", "default9", "default10", "default11",
+         "default12", "default13", "default14", "default15", "default16",
+         "default17", "default18", "default19", "default20", "default21",
+         "default22", "default23", "default24", "default25", "default26",
+         "default27", "default28", "default29", "default30", "default31",
+         "default32", "default33", "default34", "default35", "default36"};
 
     string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
                        "/sim/time/warp", "/controls/switches/magnetos",
