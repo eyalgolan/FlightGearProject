@@ -4,7 +4,7 @@
 
 #include "PrintCommand.h"
 #include "iostream"
-#import "SymbolTable.h"
+#include "SymbolTable.h"
 #include "ExpressionHandler.h"
 
 int PrintCommand::exec(vector<string> params) {

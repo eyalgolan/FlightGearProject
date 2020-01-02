@@ -5,7 +5,7 @@
 #ifndef FLIGHTGEARPROJECT_COMMAND_H
 #define FLIGHTGEARPROJECT_COMMAND_H
 
-#import "vector"
+#include "vector"
 #include "string"
 
 using namespace std;

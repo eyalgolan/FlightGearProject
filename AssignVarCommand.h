@@ -5,7 +5,7 @@
 #ifndef FLIGHTGEARPROJECT_ASSIGNVARCOMMAND_H
 #define FLIGHTGEARPROJECT_ASSIGNVARCOMMAND_H
 
-#import "Command.h"
+#include "Command.h"
 
 class AssignVarCommand : public Command{
  private:

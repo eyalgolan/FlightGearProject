@@ -5,12 +5,12 @@
 #ifndef FLIGHTGEARPROJECT_SYMBOLTABLE_H
 #define FLIGHTGEARPROJECT_SYMBOLTABLE_H
 
-#import "map"
-#import "string"
-#import "Parser.h"
-#import "mutex"
-#import "queue"
-#import "string"
+#include "map"
+#include "string"
+#include "Parser.h"
+#include "mutex"
+#include "queue"
+#include "string"
 
 using namespace std;
 

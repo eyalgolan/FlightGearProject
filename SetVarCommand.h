@@ -5,7 +5,7 @@
 #ifndef FLIGHTGEARPROJECT_SETVARCOMMAND_H
 #define FLIGHTGEARPROJECT_SETVARCOMMAND_H
 
-#import "Command.h"
+#include "Command.h"
 class SetVarCommand : public Command{
  private:
   int numParams = 3;

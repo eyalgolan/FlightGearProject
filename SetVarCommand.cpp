@@ -3,7 +3,7 @@
 //
 
 #include "SetVarCommand.h"
-#import "SymbolTable.h"
+#include "SymbolTable.h"
 #include "ConnectCommand.h"
 #include "ExpressionHandler.h"
 
