@@ -10,7 +10,6 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include "string"
-#include "Lock.h"
 #include "thread"
 #include "SymbolTable.h"
 

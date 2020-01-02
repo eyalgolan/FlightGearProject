@@ -15,7 +15,6 @@
 #include "SymbolTable.h"
 #include "cstring"
 #include "Parser.h"
-#include "Lock.h"
 #include "chrono"
 
 using namespace std;
