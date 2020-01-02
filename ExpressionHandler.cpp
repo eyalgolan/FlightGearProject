@@ -223,6 +223,12 @@ double Interpreter::infixtopostfix(string infix) {
         qu.pop();
       }
       else {
+        int start_pos = 0;
+        while ((start_pos = k.find(" ", start_pos)) != string::npos)
+        {
+          k.replace(start_pos, 1, "");
+          start_pos += 0; // Handles case where 'to' is a substring of 'from'
+        }
         if(this->mymap.find(k)==mymap.end()){
           throw("iligal math expresssion");
         }

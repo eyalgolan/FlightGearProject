@@ -17,7 +17,7 @@ int PrintCommand::exec(vector<string> params) {
     dammyp.replace(start_pos, 1, "");
     start_pos += 0; // Handles case where 'to' is a substring of 'from'
   }
-    if(symblTbl.isInNameMap(dammyp)){
+    if(symblTbl.isInNameMap(dammyp)||symblTbl.isInVarMap(dammyp)){
       int start_pos = 0;
       while ((start_pos = params[0].find(" ", start_pos)) != string::npos)
       {
@@ -25,6 +25,23 @@ int PrintCommand::exec(vector<string> params) {
         start_pos += 0; // Handles case where 'to' is a substring of 'from'
       }
     }
+  string inputd;
+  Interpreter *inPrintd = new Interpreter();
+  Expression* expPrintd = nullptr;
+  string toSetd = symblTbl.getSetExp();
+  inPrintd->setVariables(toSetd);
+  try {
+    expPrintd = inPrintd->interpret(dammyp);
+    int start_pos = 0;
+    while ((start_pos = params[0].find(" ", start_pos)) != string::npos)
+    {
+      params[0].replace(start_pos, 1, "");
+      start_pos += 0; // Handles case where 'to' is a substring of 'from'
+    }
+  }
+  catch (const char* e) {
+  }
+
     string input;
     Interpreter *inPrint = new Interpreter();
     Expression* expPrint = nullptr;
