@@ -292,28 +292,26 @@ void Interpreter::setVariables(string str)   {
     while(i<(int)str.length()){
         string damya;
         string damyb;
-        if ((isalpha(str[0])==0)){
-            throw ("illegal variable assignment!");
-        }
-        if (isalpha(str[i])==0){
-            throw ("illegal variable assignment!");
-        }
+//        if ((isalpha(str[0])==0)){
+//            throw ("illegal variable assignment!");
+//        }
+//        if (isalpha(str[i])==0){
+//            throw ("illegal variable assignment!");
+//        }
         if (isalpha(str[i])!=0) {
             while (str[i] != '=') {
-                if ((isalpha(str[i])==0)&&(str[i]!='_')){
-                    throw ("illegal variable assignment!");
-                }
+
                 damya += str[i];
                 i++;
             }
             if (str[i] == '=') {
                 i++;
-                if ((isdigit(str[i])==0)&&(str[i]!='-')){
-                    throw ("illegal variable assignment!");
+//                if ((isdigit(str[i])==0)&&(str[i]!='-')){
+//                    throw ("illegal variable assignment!");
 
                 }
             }
-        }
+
 
         while (isdigit(str[i])!=0||((str[i]=='-')&&isdigit(str[i+1])!=0)) {
             damyb += str[i];
