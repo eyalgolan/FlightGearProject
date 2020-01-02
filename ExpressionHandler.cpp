@@ -75,19 +75,19 @@ void Interpreter::setVariables (string input) {
       for (unsigned int j = 0; j < word.length(); j++) {
         if (word[j] == '=') {
           left = varName;
-          if(!varNameValidation(left)) {
-            throw "invalid input";
-          }
+//          if(!varNameValidation(left)) {
+//            throw "invalid input";
+//          }
           varName = "";
           isExp = true;
         }
         else if (isExp) {
-          if(!(isdigit(word[j]) || word[j] == '.')) {
-            throw "invalid input";
-          }
-          else {
+//          if(!(isdigit(word[j]) || word[j] == '.')) {
+//            throw "invalid input";
+//          }
+          //else {
             right = right + word[j];
-          }
+          //}
         }
         else {
           varName = varName + word[j];
@@ -106,19 +106,19 @@ void Interpreter::setVariables (string input) {
     for (unsigned int j = 0; j < word.length(); j++) {
       if (word[j] == '=') {
         left = varName;
-        if(!varNameValidation(left)) {
-          throw "invalid input";
-        }
+//        if(!varNameValidation(left)) {
+//          throw "invalid input";
+//        }
         varName = "";
         isExp = true;
       }
       else if (isExp) {
-        if(!(isdigit(word[j]) || word[j] == '.')) {
-          throw "invalid input";
-        }
-        else {
+//        if(!(isdigit(word[j]) || word[j] == '.')) {
+//          throw "invalid input";
+//        }
+        //else {
           right = right + word[j];
-        }
+        //}
       }
       else {
         varName = varName + word[j];
