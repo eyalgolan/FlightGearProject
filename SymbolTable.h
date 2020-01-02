@@ -44,6 +44,20 @@ class SymbolTable {
     }
     return false;
   }
+
+  bool isInVarMap (string name) {
+//      if(this->nameMap.find(name) != this->nameMap.end()) {
+//        cout << "name is " + name + " and result of search is true";
+//      }
+//      else {
+//        cout << "name is " + name + " and result of search is false";
+//      }
+    if(this->varMap.find(name) != this->varMap.end()) {
+      return true;
+    }
+    return false;
+  }
+
   void addToVarMap (string name, double value) {
     this->varMap.insert(make_pair(name, value));
   }
@@ -59,6 +73,9 @@ class SymbolTable {
   }
   map<string, pair<string, double>> getSimMap() {
     return this->simMap;
+  }
+  map<string, double> getVarMap() {
+    return this->varMap;
   }
   queue<string> getQueue() {
     return this->commandsToSimulator;
@@ -80,7 +97,7 @@ class SymbolTable {
   void updateFromSetVar(string name, string sim, double value);
   SymbolTable() {
     string buffer =
-        "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
+        "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
     string names[36] =
         {"default1", "default2", "default3", "default4", "default5", "default6",
          "default7", "default8", "default9", "default10", "default11",

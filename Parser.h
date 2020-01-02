@@ -14,12 +14,12 @@
 #include "PrintCommand.h"
 #include "SleepCommand.h"
 #include "LoopCommand.h"
+#include "IfCommand.h"
 #include "AssignVarCommand.h"
 #include "Lexer.h"
 #include "string"
 
 using namespace std;
-
 
 class Parser {
  public:
@@ -32,6 +32,7 @@ class Parser {
   Command* printCommand;
   Command* sleepCommand;
   Command* loopCommand;
+  Command* ifCommand;
   Command* assignVarCommand;
 
   Parser(vector<string> inputFromLexer){
@@ -43,6 +44,7 @@ class Parser {
     printCommand = new PrintCommand;
     sleepCommand = new SleepCommand;
     loopCommand = new LoopCommand;
+    ifCommand = new IfCommand;
     assignVarCommand = new AssignVarCommand;
 
     commandMap["openDataServer"] = openServerCommand;
@@ -53,6 +55,7 @@ class Parser {
     commandMap["Sleep"] = sleepCommand;
     commandMap["while"] = loopCommand;
     commandMap["assignVar"] = assignVarCommand;
+    commandMap["if"] = ifCommand;
   }
   ~Parser(){
     delete openServerCommand;
@@ -62,6 +65,7 @@ class Parser {
     delete printCommand;
     delete sleepCommand;
     delete loopCommand;
+    delete ifCommand;
   }
   void runCommands();
 };

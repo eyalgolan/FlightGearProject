@@ -5,6 +5,7 @@
 #include "PrintCommand.h"
 #include "iostream"
 #import "SymbolTable.h"
+#include "ExpressionHandler.h"
 
 int PrintCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
@@ -24,19 +25,35 @@ int PrintCommand::exec(vector<string> params) {
         start_pos += 0; // Handles case where 'to' is a substring of 'from'
       }
     }
-  //cout<<"i'm trying to print"<<endl;
-  symblTbl.g_updateLock.lock();
-  auto it = symblTbl.getNameMap().find(params[0]);
-  if(symblTbl.isInNameMap(params[0])) {
-    //cout<<"i'm trying to print a value"<<endl;
-    //cout<<params[0]<<endl;
-    //cout<<symblTbl.getNameMap()[params[0]].first<<endl;
-    cout<<symblTbl.getNameMap()[params[0]].second<<endl;
-  }
-  else {
-    //cout<<"im trying to print a plaint text"<<endl;
-    cout<<params[0]<<endl;
-  }
-  symblTbl.g_updateLock.unlock();
+    string input;
+    Interpreter *inPrint = new Interpreter();
+    Expression* expPrint = nullptr;
+    string toSet = symblTbl.getSetExp();
+    inPrint->setVariables(toSet);
+    try {
+      expPrint = inPrint->interpret(params[0]);
+      input = to_string((int) expPrint->calculate());
+      cout<<input<<endl;
+    }
+    catch (const char* e) {
+      cout<<params[0]<<endl;
+    }
+//  //cout<<"i'm trying to print"<<endl;
+//  //symblTbl.g_updateLock.lock();
+//  auto it = symblTbl.getNameMap().find(params[0]);
+//  if(symblTbl.isInNameMap(params[0])) {
+//    //cout<<"i'm trying to print a value"<<endl;
+//    //cout<<params[0]<<endl;
+//    //cout<<symblTbl.getNameMap()[params[0]].first<<endl;
+//    cout<<symblTbl.getNameMap()[params[0]].second<<endl;
+//  }
+//  else if(symblTbl.isInVarMap(params[0])) {
+//    cout<<to_string(symblTbl.getVarMap()[params[0]])<<endl;
+//  }
+//  else {
+//    //cout<<"im trying to print a plaint text"<<endl;
+//    cout<<params[0]<<endl;
+//  }
+  //symblTbl.g_updateLock.unlock();
   return this->numParams;
 }

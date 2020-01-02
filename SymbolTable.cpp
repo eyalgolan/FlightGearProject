@@ -17,7 +17,7 @@ void SymbolTable::updateTable(string name,
                               string sim,
                               double value,
                               string calledFrom) {
-  g_updateLock.lock();
+  //g_updateLock.lock();
 
   if(calledFrom.compare("server") == 0) {
     updateFromServer(name, sim, value);
@@ -29,16 +29,19 @@ void SymbolTable::updateTable(string name,
   else if(calledFrom.compare("setVar") == 0) {
     updateFromSetVar(name, sim, value);
   }
-  g_updateLock.unlock();
+  //g_updateLock.unlock();
 }
 void SymbolTable::updateFromServer(string name, string sim, double value) {
+    g_updateLock.lock();
     string origName = this->simMap[sim].first;
     this->nameMap.erase(origName);
     this->nameMap.insert({origName, make_pair(sim, value)});
     this->simMap.erase(sim);
     this->simMap.insert({sim, make_pair(origName, value)});
+    g_updateLock.unlock();
 }
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
+  //g_updateLock.lock();
   if(this->isInSimMap(sim))
   {
     //cout<<"didnt find sim: " + sim<<endl;
@@ -49,9 +52,12 @@ void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
   this->setNameMap(name, sim, origValue);
   this->simMap.erase(sim);
   this->setSimMap(sim, name, origValue);
+  //g_updateLock.unlock();
 }
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {
+  //g_updateLock.lock();
   this->nameMap[name].second = value;
   sim = this->nameMap[name].first;
   this->simMap[sim].second = value;
+  //g_updateLock.unlock();
 }

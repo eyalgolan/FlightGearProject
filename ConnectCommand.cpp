@@ -51,10 +51,10 @@ int ConnectCommand::exec(vector<string> params) {
 string ConnectCommand::readFromQueue() {
   //cout<<"trying to read from queue"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  symblTbl.g_updateLock.lock();
+  //symblTbl.g_updateLock.lock();
   string update = symblTbl.getQueue().front();
   symblTbl.popFromQueue();
-  symblTbl.g_updateLock.unlock();
+  //symblTbl.g_updateLock.unlock();
   //cout<<"success reading from queue"<<endl;
   return update;
 }
@@ -64,11 +64,12 @@ void ConnectCommand::writeToClient(int client_socket) {
   string update;
   while (true) {
 
-    symblTbl.g_updateLock.lock();
+    //symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.getQueue().empty();
-    symblTbl.g_updateLock.unlock();
+    //symblTbl.g_updateLock.unlock();
     while (queueState) {
       //cout << "trying to write to client" << endl;
+      symblTbl.g_updateLock.lock();
       update = this->readFromQueue();
       //cout << "trying to write to client also queue no empty " << endl;
       //cout << update.c_str() << endl;
@@ -83,11 +84,12 @@ void ConnectCommand::writeToClient(int client_socket) {
         //cout << "message send to simulator" << endl;
       }
       //cout << "success writing to client" << endl;
-      symblTbl.g_updateLock.lock();
+      //symblTbl.g_updateLock.lock();
       //cout<<"locked from, clinet comanr2"<<endl;
 
       queueState = !symblTbl.getQueue().empty();
       symblTbl.g_updateLock.unlock();
+      //symblTbl.g_updateLock.unlock();
       //cout<<"ulocked from, clinet comanr2"<<endl;
     }
   }

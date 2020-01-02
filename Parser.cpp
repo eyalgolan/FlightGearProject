@@ -56,9 +56,23 @@ void Parser::runCommands() {
                     index+=2;
                     index+=c->exec(inputParams);
                     inputParams.clear();
+                } else if (commandName.compare("if") == 0) {
+                    while (inputVector[index+1]!="}") {
+                        index++;
+                        inputParams.push_back(inputVector[index]);
+                    }
+                    index+=2;
+                    index+=c->exec(inputParams);
+                    inputParams.clear();
                 } else if (commandName.compare("connectControlClient") == 0) {
                     inputParams.push_back(inputVector[index + 1]);
-                    inputParams.push_back(inputVector[index + 2]);
+
+                    Interpreter *inCon = new Interpreter();
+                    Expression* expCon = nullptr;
+                    expCon = inCon->interpret(inputVector[index + 2]);
+                    input = to_string((int)expCon->calculate());
+                    cout<<input<<endl;
+                    inputParams.push_back(input);
                     //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
@@ -90,6 +104,9 @@ void Parser::runCommands() {
                 else if (commandName.compare("Sleep") == 0) {
                     Interpreter *inSleep = new Interpreter();
                     Expression* expSleep = nullptr;
+                    SymbolTable &symblTbl = SymbolTable::getInstance();
+                    string toSet = symblTbl.getSetExp();
+                    inSleep->setVariables(toSet);
                     expSleep = inSleep->interpret(inputVector[index + 1]);
                     input = to_string(expSleep->calculate());
                     inputParams.push_back(input);
@@ -109,7 +126,7 @@ void Parser::runCommands() {
             //cout<<commandName<<endl;
             index += c->exec(inputParams);
             inputParams.clear();
-            this_thread::sleep_for(chrono::milliseconds(7000));
+            this_thread::sleep_for(chrono::milliseconds(500));
         }
     }
 }

@@ -223,7 +223,9 @@ double Interpreter::infixtopostfix(string infix) {
         qu.pop();
       }
       else {
-
+        if(this->mymap.find(k)==mymap.end()){
+          throw("iligal math expresssion");
+        }
         ev.push(this->mymap[k]);
         qu.pop();
       }
