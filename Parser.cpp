@@ -43,9 +43,9 @@ void Parser::runCommands() {
                     Expression* expOp = nullptr;
                     expOp = inOp->interpret(inputVector[index + 1]);
                     input = to_string((int)expOp->calculate());
-                    cout<<input<<endl;
+                    //cout<<input<<endl;
                     inputParams.push_back(input);
-                    cout << commandName << endl;
+                    //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
                 } else if (commandName.compare("while") == 0) {
@@ -59,22 +59,20 @@ void Parser::runCommands() {
                 } else if (commandName.compare("connectControlClient") == 0) {
                     inputParams.push_back(inputVector[index + 1]);
                     inputParams.push_back(inputVector[index + 2]);
-                    cout << commandName << endl;
+                    //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
                 } else if (commandName.compare("Print") == 0) {
-                    cout << "try print command" << endl;
+                    //cout << "try print command" << endl;
                     inputParams.push_back(inputVector[index + 1]);
-                    cout << commandName << endl;
+                    //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
                 } else if (commandName.compare("var") == 0
                            && inputVector[index + 2].compare("=") != 0) {
                     inputParams.push_back(inputVector[index + 1]);
-                    inputParams.push_back(inputVector[index + 2]);
-                    inputParams.push_back(inputVector[index + 3]);
-                    inputParams.push_back(inputVector[index + 4]);
-                    cout << commandName << endl;
+                    inputParams.push_back(inputVector[index + 5]);
+                    //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
                     //  cout<<"I'm in var command"<<endl;
@@ -84,7 +82,7 @@ void Parser::runCommands() {
                     inputParams.push_back(inputVector[index + 1]);
                     inputParams.push_back(inputVector[index + 2]);
                     inputParams.push_back(inputVector[index + 3]);
-                    cout << commandName << endl;
+                    //cout << commandName << endl;
                     c = this->commandMap.find("assignVar")->second;
                     index += c->exec(inputParams);
                     inputParams.clear();
@@ -95,7 +93,7 @@ void Parser::runCommands() {
                     expSleep = inSleep->interpret(inputVector[index + 1]);
                     input = to_string(expSleep->calculate());
                     inputParams.push_back(input);
-                    cout << commandName << endl;
+                    //cout << commandName << endl;
                     index += c->exec(inputParams);
                     inputParams.clear();
                 }
@@ -103,15 +101,15 @@ void Parser::runCommands() {
         }
         else {
             commandName = this->inputVector[index];
-            cout<<"didn't identify command"<<endl;
-            cout<<commandName<<endl;
+            //cout<<"didn't identify command"<<endl;
+            //cout<<commandName<<endl;
             c = this->commandMap.find("setVarCommand")->second;
             inputParams.push_back(inputVector[index]);
             inputParams.push_back(inputVector[index+2]);
-            cout<<commandName<<endl;
+            //cout<<commandName<<endl;
             index += c->exec(inputParams);
             inputParams.clear();
-            this_thread::sleep_for(chrono::milliseconds(10000));
+            this_thread::sleep_for(chrono::milliseconds(7000));
         }
     }
 }

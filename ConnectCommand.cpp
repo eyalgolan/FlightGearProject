@@ -71,11 +71,11 @@ void ConnectCommand::writeToClient(int client_socket) {
       //cout << "trying to write to client" << endl;
       update = this->readFromQueue();
       //cout << "trying to write to client also queue no empty " << endl;
-      cout << update.c_str() << endl;
-      cout << client_socket << endl;
+      //cout << update.c_str() << endl;
+      //cout << client_socket << endl;
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);
-      cout << update.c_str() << endl;
+      //cout << update.c_str() << endl;
       if (is_sent == -1) {
         //cout << update.c_str() << endl;
         //cout << "Error sending message" << endl;
@@ -89,7 +89,6 @@ void ConnectCommand::writeToClient(int client_socket) {
       queueState = !symblTbl.getQueue().empty();
       symblTbl.g_updateLock.unlock();
       //cout<<"ulocked from, clinet comanr2"<<endl;
-
     }
   }
 }

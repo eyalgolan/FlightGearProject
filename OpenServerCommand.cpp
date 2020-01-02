@@ -16,6 +16,7 @@
 #include "cstring"
 #include "Parser.h"
 #include "Lock.h"
+#include "chrono"
 
 using namespace std;
 
@@ -126,6 +127,7 @@ void OpenServerCommand::readFromClient(int client_socket) {
     }
     //cout<<"finished server part"<<endl;
     valread = read(client_socket, buffer, 1024);
+    //this_thread::sleep_for(chrono::milliseconds(2000));
   }
 
 }

@@ -80,7 +80,7 @@ class SymbolTable {
   void updateFromSetVar(string name, string sim, double value);
   SymbolTable() {
     string buffer =
-        "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36";
+        "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
     string names[36] =
         {"default1", "default2", "default3", "default4", "default5", "default6",
          "default7", "default8", "default9", "default10", "default11",

@@ -1,6 +1,9 @@
 //
-// Created by eyal on 07/11/19.
+// Created by yair on 30/12/2019.
 //
+#include <iostream>
+#include "Expression.h"
+#include "map"
 
 using namespace std;
 #ifndef FLIGHTGEARPROJECT_EXPRESSIONHANDLER_H
@@ -8,120 +11,96 @@ using namespace std;
 
 
 
-#include "Expression.h"
-#include "string"
-#include <map>
-#include <queue>
-#include <stack>
+class ex1 {
 
-class Interpreter {
- private:
-  map<string, string> inputs;
-  int precidense (string);
-  Expression* buildExp(deque <string>);
-  bool isOperator(string);
-  bool checkBrackets(string);
-  bool checkOperators(string input);
-  bool varValidation(string input);
-  bool varNameValidation(string var);
- public:
-  Interpreter(){};
-  ~Interpreter(){};
-  void setVariables (string input);
-  Expression* interpret (string input);
+};
+class Value : public virtual Expression{
+ private:  double  v;
+ public: Value(double val);
+  double calculate();
+};
+class BinaryOperator : public virtual Expression{
+ protected:   Expression* left;
+ protected:   Expression* right;
+ public: BinaryOperator(Expression* l ,Expression* r);
+};
+class UnaryOperator : public  virtual  Expression{
+ protected:Expression* one;
+ public:  UnaryOperator(Expression* k);
+};
+class UPlus: public UnaryOperator{
+//public: UnaryOperator u;
+ public: UPlus(Expression *k);
+
+  double calculate();
+
+};
+class UMinus: public UnaryOperator{
+ public:   UMinus(Expression *k);
+  double calculate();
+
+};
+class Plus: public BinaryOperator{
+//protected:Expression* right;
+//protected:Expression* left;
+ public: Plus(Expression *l, Expression *r);
+  double calculate();
+
 };
 
-class Value : public Expression{
- private:
-  double number;
- public:
-  explicit Value(double n) : number(n){}
-  virtual ~Value(){}
-  double calculate() override;
-};
+class Minus: public BinaryOperator{
+//protected:Expression* right;
+//protected:Expression* left;
+ public: Minus(Expression* l,Expression* r);
+  double calculate();
 
-class Variable : public Expression {
- private:
-  string name;
-  double value;
- public:
-  Variable(string n, double v) : name(n), value(v) {}
-  virtual ~Variable(){}
-  double calculate() override;
-  Variable& operator++();
-  Variable& operator--();
-  Variable& operator+=(const Variable& toAdd);
-  Variable& operator-=(const Variable& toReduce);
-  //todo check if this works
-  Variable& operator++(int);
-  //todo check if this works
-  Variable& operator--(int);
 };
+class Mul: public BinaryOperator{
+//protected:Expression* right;
+//protected:Expression* left;
+ public:   Mul(Expression* l,Expression* r);
+  double calculate();
 
-class UnaryOperation : public Expression {
- protected:
-  Expression* exp {nullptr};
- public:
-  explicit UnaryOperation(Expression* e) : exp(e) {}
-  virtual ~UnaryOperation(){}
-  Expression* getExp();
-  void setExp(Expression* e);
 };
+class Div: public BinaryOperator{
+//protected:Expression* right;
+//protected:Expression* left;
+ public:   Div(Expression* l,Expression* r);
+  double calculate();
 
-class UPlus : public UnaryOperation {
- public:
-  explicit UPlus(Expression* e) : UnaryOperation(e) {}
-  virtual ~UPlus(){}
-  double calculate() override;
 };
+class Variable:public  virtual Expression{
+ private: string name;
+ private: double va;
+ public: Variable(string na, double v);
 
-class UMinus : public UnaryOperation {
- public:
-  explicit UMinus(Expression* e) : UnaryOperation(e) {}
-  virtual ~UMinus(){}
-  double calculate() override;
+ public: Variable& operator++();
+ public: Variable& operator--();
+ public: Variable& operator+=(double num);
+ public: Variable& operator-=(double num);
+ public: Variable& operator++(int);
+ public: Variable& operator--(int);
+
+  double calculate();
 };
+class Interpreter{
+ public: string st;
+ public: map<string,double >mymap;
+ public: Interpreter();
+ public:Expression* interpret(string s);
 
-class BinaryOperation : public Expression {
- protected:
-  Expression* left {nullptr};
-  Expression* right {nullptr};
+ public: void setVariables(string str);
+ public: bool isoperator(char c);
+ public: bool isoperator(string c);
+
+ public:bool isoperant(char c);
+ public:bool isoperant(string c);
+
+ public:int compare(char a,char b);
 
  public:
-  BinaryOperation(Expression* l, Expression* r) : left(l), right(r) {}
-  virtual ~BinaryOperation(){}
-  Expression* getRight();
-  Expression* getLeft();
-  void setRight(Expression* r);
-  void setLeft(Expression* l);
+  double infixtopostfix(string infix);
 };
 
-class Plus : public BinaryOperation{
- public:
-  Plus(Expression* l, Expression* r) : BinaryOperation(l, r){}
-  virtual ~Plus(){}
-  double calculate() override;
-};
-
-class Minus : public BinaryOperation{
- public:
-  Minus(Expression* l, Expression* r) : BinaryOperation(l, r){}
-  virtual ~Minus(){}
-  double calculate() override;
-};
-
-class Mul : public BinaryOperation{
- public:
-  Mul(Expression* l, Expression* r) : BinaryOperation(l, r){}
-  virtual ~Mul(){}
-  double calculate() override;
-};
-
-class Div : public BinaryOperation{
- public:
-  Div(Expression* l, Expression* r) : BinaryOperation(l, r){}
-  virtual ~Div(){}
-  double calculate() override;
-};
 
 #endif //FLIGHTGEARPROJECT_EXPRESSIONHANDLER_H

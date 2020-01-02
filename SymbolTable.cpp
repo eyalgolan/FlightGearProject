@@ -24,7 +24,7 @@ void SymbolTable::updateTable(string name,
   }
   else if(calledFrom.compare("defineVar") == 0) {
     updateFromDefineVar(name, sim, value);
-    cout<<this->simMap[sim].first<<endl;
+    //cout<<this->simMap[sim].first<<endl;
   }
   else if(calledFrom.compare("setVar") == 0) {
     updateFromSetVar(name, sim, value);
@@ -41,7 +41,7 @@ void SymbolTable::updateFromServer(string name, string sim, double value) {
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
   if(this->isInSimMap(sim))
   {
-    cout<<"didnt find sim: " + sim<<endl;
+    //cout<<"didnt find sim: " + sim<<endl;
   }
   string origName = this->simMap[sim].first;
   double origValue = this->simMap[sim].second;

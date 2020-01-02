@@ -10,7 +10,7 @@ using namespace std;
 
 class DefineVarCommand : public Command {
  private:
-  int numParams = 5;
+  int numParams = 6;
  public:
   int exec(vector<string> params) override;
 };

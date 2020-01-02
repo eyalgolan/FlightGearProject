@@ -9,7 +9,7 @@ int LoopCommand::exec(vector<string> params) {
     vector<string> whileParams;
     for(int j = 4; j < params.size() ; j++) {
         whileParams.push_back(params[j]);
-        cout<<"getting " + params[j] + " to while parser"<<endl;
+        //cout<<"getting " + params[j] + " to while parser"<<endl;
     }
     Parser loopParser(whileParams);
     int i=0;
@@ -24,6 +24,7 @@ int LoopCommand::exec(vector<string> params) {
     cp->exec(conditionVector);
     while(cp->condition) {
       loopParser.runCommands();
+      cp->exec(conditionVector);
     }
     return 0;
 }

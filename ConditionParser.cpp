@@ -13,12 +13,13 @@ int ConditionParser::exec(vector<string> params) {
   string firstExp = params[i];
   string con=params[i+1];
   string secondExp = params[i+2];
+  //cout<<"firstExp: " + firstExp + " , secondExp: " + secondExp<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   double firstExpValue;
   symblTbl.g_updateLock.lock();
   if(symblTbl.isInNameMap(firstExp)){
     firstExpValue = symblTbl.getNameMap()[firstExp].second;
-    cout<<firstExp + " value is " + to_string(firstExpValue)<<endl;
+    //cout<<firstExp + " value is " + to_string(firstExpValue)<<endl;
   }
   else {
     firstExpValue = stod(firstExp);
@@ -82,7 +83,7 @@ int ConditionParser::exec(vector<string> params) {
     }
   }
   else{
-    cout<<"didnt find condition"<<endl;
+    //cout<<"didnt find condition"<<endl;
   }
   return this->numParams;
 }
