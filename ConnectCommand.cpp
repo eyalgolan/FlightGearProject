@@ -64,7 +64,9 @@ void ConnectCommand::writeToClient(int client_socket) {
   while (true) {
 
     //symblTbl.g_updateLock.lock();
+    symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.getQueue().empty();
+    symblTbl.g_updateLock.unlock();
     //symblTbl.g_updateLock.unlock();
     while (queueState) {
       //cout << "trying to write to client" << endl;
@@ -76,12 +78,12 @@ void ConnectCommand::writeToClient(int client_socket) {
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);
       //cout << update.c_str() << endl;
-      if (is_sent == -1) {
+      //if (is_sent == -1) {
         //cout << update.c_str() << endl;
         //cout << "Error sending message" << endl;
-      } else {
+      //} else {
         //cout << "message send to simulator" << endl;
-      }
+      //}
       //cout << "success writing to client" << endl;
       //symblTbl.g_updateLock.lock();
       //cout<<"locked from, clinet comanr2"<<endl;

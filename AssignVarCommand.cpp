@@ -25,15 +25,5 @@ int AssignVarCommand::exec(vector<string> params) {
   symblTbl.g_updateLock.lock();
   symblTbl.addToVarMap(name, value);
   symblTbl.g_updateLock.unlock();
-//  symblTbl.g_updateLock.lock();
-//  if(symblTbl.isInNameMap(params[2])) {
-//    value = symblTbl.getNameMap()[name].second;
-//  }
-//  else {
-//    exp = in->interpret(params[2]);
-//    value = stod(to_string(exp->calculate()));
-//  }
-//  symblTbl.addToVarMap(name, value);
-//  symblTbl.g_updateLock.unlock();
   return numParams;
 }
