@@ -26,9 +26,9 @@ string SymbolTable::getSetExp() {
 }
 
 /*
-   * Function: isInNameMap
-   * Receives a string input and returns if it's a key in the nameMap
-   */
+* Function: isInNameMap
+* Receives a string input and returns if it's a key in the nameMap
+*/
 bool SymbolTable::isInNameMap(string name) {
   if (this->nameMap.find(name) != this->nameMap.end()) {
     return true;
@@ -148,7 +148,6 @@ void SymbolTable::updateTable(string name,
     updateFromServer(name, sim, value);
   } else if (calledFrom.compare("defineVar") == 0) {
     updateFromDefineVar(name, sim, value);
-    //cout<<this->simMap[sim].first<<endl;
   } else if (calledFrom.compare("setVar") == 0) {
     updateFromSetVar(name, sim, value);
   }
@@ -156,34 +155,44 @@ void SymbolTable::updateTable(string name,
 
 /*
  * Function: updateFromServer
- *
+ * Updates the name & sim maps according to data received from the simulator
+ * Locks the symbol table's lock while updating
  */
 void SymbolTable::updateFromServer(string name, string sim, double value) {
   g_updateLock.lock();
-  string origName = this->simMap[sim].first;
+
+  // erases old entries in the maps and creates new ones with updated data
+  string origName = this->simMap[sim].first; //gets the original name
   this->nameMap.erase(origName);
   this->nameMap.insert({origName, make_pair(sim, value)});
   this->simMap.erase(sim);
   this->simMap.insert({sim, make_pair(origName, value)});
+
   g_updateLock.unlock();
 }
+
+/*
+ * Function: updateFromDefineVar
+ * Updates the name & sim maps with a new var name
+ */
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
-  //g_updateLock.lock();
-  if (this->isInSimMap(sim)) {
-    //cout<<"didnt find sim: " + sim<<endl;
-  }
-  string origName = this->simMap[sim].first;
-  double origValue = this->simMap[sim].second;
+
+  string origName = this->simMap[sim].first; //gets the original name
+  double origValue = this->simMap[sim].second; //gets the original value
+
+  // erases old entries in the maps and creates new ones with updated var name
   this->nameMap.erase(origName);
   this->insertToNameMap(name, sim, origValue);
   this->simMap.erase(sim);
   this->insertToSimMap(sim, name, origValue);
-  //g_updateLock.unlock();
 }
+
+/*
+ * Function: updateFromSetVar
+ * Updates the name & sim maps with a new value
+ */
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {
-  //g_updateLock.lock();
   this->nameMap[name].second = value;
   sim = this->nameMap[name].first;
   this->simMap[sim].second = value;
-  //g_updateLock.unlock();
 }
