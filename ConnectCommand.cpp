@@ -21,6 +21,7 @@ int ConnectCommand::exec(vector<string> params) {
     cout<<"Could not create a socket"<<endl;
     return -1;
   }
+
   sockaddr_in address;
   int  length = params[0].size();
   char ip[length+1];

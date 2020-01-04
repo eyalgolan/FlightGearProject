@@ -19,7 +19,7 @@
 using namespace std;
 
 /**
- * runCommands: Runs each command in the input vector and exec it
+ * runCommands: Runs each command in the input vector and execute it
  */
 void Parser::runCommands() {
 
@@ -170,7 +170,7 @@ void Parser::runCommands() {
     else {
       commandName = this->inputVector[index];
       c = this->commandMap.find("setVarCommand")->second;
-      //executes Print with it's parameter
+      //executes SetVar with it's parameter
       inputParams.push_back(inputVector[index]);
       inputParams.push_back(inputVector[index + 2]);
       index += c->exec(inputParams);

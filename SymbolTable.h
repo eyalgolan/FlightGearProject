@@ -25,7 +25,7 @@ class SymbolTable {
 
   //Public functions
 
-  /*
+  /**
    * Function: getInstance
    * Returns the singleton instance of the SymbolTable class
    */

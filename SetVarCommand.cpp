@@ -9,34 +9,31 @@
 
 /**
  * Function: exec
- *
- * @param params
+ * sets a new value to a var, updates the symbol table and simulator
+ * @param params: a vector containing the var name and new value
  * @return how much to advance in the Parser's input vector
  */
 int SetVarCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
 
-
+  //interprets the input parameter
   string name = params[0];
   double value;
   Interpreter *in = new Interpreter();
   Expression* exp = nullptr;
-  //symblTbl.g_updateLock.lock();
   string toSet = symblTbl.getSetExp();
-  //symblTbl.g_updateLock.unlock();
   in->setVariables(toSet);
   exp = in->interpret(params[1]);
   value = exp->calculate();
 
-  //string name = params[0];
-  //double value = stod(params[1]);
-  //symblTbl.g_updateLock.lock();
-  //string sim = symblTbl.getNameMap()[name].first;
+  /*builds the command, updates the symbol table and write the command to the
+   * command queue
+   */
   string sim = symblTbl.getNameMapSim(name);
-  //symblTbl.g_updateLock.unlock();
   string command = "set " + sim + " " + to_string(value) + "\r\n";
   symblTbl.updateTable(name, "", value, "setVar");
   writeToQueue(command);
+
   return numParams;
 }
 

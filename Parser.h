@@ -41,7 +41,8 @@ class Parser {
 
   /**
    * Parser's constructor
-   * @param inputFromLexer
+   * builds the parser's map of commands and gets the input vector
+   * @param inputFromLexer: the input vector recieved from the lexer
    */
   Parser(vector<string> inputFromLexer){
     inputVector = inputFromLexer;

@@ -9,9 +9,10 @@
 using namespace std;
 
 /**
- *
- * @param params
- * @return
+ * Function: exec
+ * Add a new var (with name and sim) to the name & sim maps of the symbol table
+ * @param params: a vector containing the name and simPath of a new var
+ * @return how much to advance in the Parser's input vector
  */
 int DefineVarCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
