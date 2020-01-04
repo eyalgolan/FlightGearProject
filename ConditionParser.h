@@ -11,12 +11,9 @@ using namespace std;
 
 class ConditionParser: public Command {
  public:
-  bool condition;
-  int numParams = 3;
+  bool condition;     // indicates if the condition is met or not
+  int numParams = 3;  //how much to advance in the Parser's input vector
   int exec(vector<string> params) override;
-  //ConditionParser(vector<string> conditionVector);
-  bool getcontidion();
-  //~ConditionParser();
 };
 
 #endif //FLIGHTGEARPROJECT_CONDITIONPARSER_H

@@ -86,6 +86,15 @@ double SymbolTable::getNameMapValue(string name) {
 }
 
 /**
+ * Function: getVarMapValue
+ * Receives a name in the name map and returns it's value
+ */
+double SymbolTable::getVarMapValue(string name) {
+  double value = this->varMap[name];
+  return value;
+}
+
+/**
  * Function: isQueueEmpty
  * Returns if the Command queue is empty
  */

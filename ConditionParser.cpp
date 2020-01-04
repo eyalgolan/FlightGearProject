@@ -8,40 +8,69 @@
 
 using namespace std;
 
+/**
+ * Function: exec
+ * @param params
+ * @return
+ */
 int ConditionParser::exec(vector<string> params) {
-  int i=0;
-  string firstExp = params[i];
-  string con=params[i+1];
-  string secondExp = params[i+2];
-  //cout<<"firstExp: " + firstExp + " , secondExp: " + secondExp<<endl;
+
+  //receive params
+  string firstExp = params[0];
+  string con=params[1];
+  string secondExp = params[2];
+
+  //check if the first expression is in the name map or var map
   SymbolTable &symblTbl = SymbolTable::getInstance();
   double firstExpValue;
   symblTbl.g_updateLock.lock();
   bool isFirstExpInNameMap = symblTbl.isInNameMap(firstExp);
+  bool isFirstExpInVarMap = symblTbl.isInVarMap(firstExp);
   symblTbl.g_updateLock.unlock();
+
   if(isFirstExpInNameMap){
+    //if it's in the name map, get its value from the name map
     symblTbl.g_updateLock.lock();
     firstExpValue = symblTbl.getNameMapValue(firstExp);
     symblTbl.g_updateLock.unlock();
-    //firstExpValue = symblTbl.getNameMap()[firstExp].second;
-    //cout<<firstExp + " value is " + to_string(firstExpValue)<<endl;
+  }
+  else if(isFirstExpInVarMap) {
+    //otherwise if its in the var map, get its value from the var map
+    symblTbl.g_updateLock.lock();
+    firstExpValue = symblTbl.getVarMapValue(firstExp);
+    symblTbl.g_updateLock.unlock();
   }
   else {
+    //otherwise it's a number
     firstExpValue = stod(firstExp);
   }
+
+  //check if the second expression is in the name map or var map
   double secondExpValue;
   symblTbl.g_updateLock.lock();
   bool isSecondExpInNameMap = symblTbl.isInNameMap(secondExp);
+  bool isSecondExpInVarMap = symblTbl.isInVarMap(secondExp);
   symblTbl.g_updateLock.unlock();
   if(isSecondExpInNameMap){
+    //if it's in the name map, get its value from the name map
     symblTbl.g_updateLock.lock();
     secondExpValue = symblTbl.getNameMapValue(secondExp);
     symblTbl.g_updateLock.unlock();
-    //secondExpValue = symblTbl.getNameMap()[secondExp].second;
+  }
+  else if(isSecondExpInVarMap) {
+    //otherwise if its in the var map, get its value from the var map
+    symblTbl.g_updateLock.lock();
+    secondExpValue = symblTbl.getVarMapValue(secondExp);
+    symblTbl.g_updateLock.unlock();
   }
   else {
+    //otherwise it's a number
     secondExpValue = stod(secondExp);
   }
+
+  /*
+   * check if the condition is met and set the condition accordingly
+   */
   if(con == ">"){
     if(firstExpValue > secondExpValue) {
       this->condition = true;
@@ -90,14 +119,5 @@ int ConditionParser::exec(vector<string> params) {
       this->condition = false;
     }
   }
-  else{
-    //cout<<"didnt find condition"<<endl;
-  }
   return this->numParams;
 }
-bool ConditionParser::getcontidion() {
-  return this->condition;
-}
-//ConditionParser::ConditionParser(vector<string> conditionVector) {
-//  this->exec(conditionVector);
-//}

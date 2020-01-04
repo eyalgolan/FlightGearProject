@@ -41,6 +41,7 @@ class SymbolTable {
   void addToVarMap(string name, double value);
   string getNameMapSim (string);
   double getNameMapValue(string);
+  double getVarMapValue(string);
   bool isQueueEmpty();
   string getFirstInQueue();
   void pushToQueue(string command);
