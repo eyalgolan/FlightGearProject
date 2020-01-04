@@ -45,12 +45,13 @@ while rpm + 5555 <=     750 +5555 {
 while starter  !=  1  {
 	Print(starter)
 }
-while primer+ autostart == 5 {
+if primer+ autostart == primer  + autostart {
 	Print(primer)
 }
-Sleep(5000)
+Sleep(4995+5-rpm+rpm)
 Print("let's fly")
 var h0 =         heading
+var h7755 = h0 +0.0
 breaks = 0
 throttle = 1
 while alt < 1000 {
