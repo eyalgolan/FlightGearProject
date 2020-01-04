@@ -16,117 +16,167 @@
 #include "chrono"
 #include "thread"
 
-
 using namespace std;
 
 /**
- * runCommands: Runs each command in the input vector
+ * runCommands: Runs each command in the input vector and exec it
  */
 void Parser::runCommands() {
-    int index = 0;
-    vector<string> inputParams;
 
-    while(index < this->inputVector.size()) {
-        Command* c;
+  int index = 0; // variable used to go over the inputVector
+  vector<string> inputParams;
 
-        string commandName;
-        string input;
-        if(this->inputVector[index] == "}"){
-            break;
-        }
-        else if(this->commandMap.find(this->inputVector[index]) != this->commandMap.end()) {
-            c = this->commandMap.find(this->inputVector[index])->second;
-            commandName = this->inputVector[index];
-            if (c != nullptr) {
-                if (commandName.compare("openDataServer") == 0) {
-                    Interpreter *inOp = new Interpreter();
-                    Expression* expOp = nullptr;
-                    expOp = inOp->interpret(inputVector[index + 1]);
-                    input = to_string((int)expOp->calculate());
-                    //cout<<input<<endl;
-                    inputParams.push_back(input);
-                    //cout << commandName << endl;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                } else if (commandName.compare("while") == 0) {
-                    while (inputVector[index+1]!="}") {
-                        index++;
-                        inputParams.push_back(inputVector[index]);
-                    }
-                    index+=2;
-                    index+=c->exec(inputParams);
-                    inputParams.clear();
-                } else if (commandName.compare("if") == 0) {
-                    while (inputVector[index+1]!="}") {
-                        index++;
-                        inputParams.push_back(inputVector[index]);
-                    }
-                    index+=2;
-                    index+=c->exec(inputParams);
-                    inputParams.clear();
-                } else if (commandName.compare("connectControlClient") == 0) {
-                    inputParams.push_back(inputVector[index + 1]);
+  // goes over each command
+  while (index < this->inputVector.size()) {
+    Command *c;
 
-                    Interpreter *inCon = new Interpreter();
-                    Expression* expCon = nullptr;
-                    expCon = inCon->interpret(inputVector[index + 2]);
-                    input = to_string((int)expCon->calculate());
-                    cout<<input<<endl;
-                    inputParams.push_back(input);
-                    //cout << commandName << endl;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                } else if (commandName.compare("Print") == 0) {
-                    //cout << "try print command" << endl;
-                    inputParams.push_back(inputVector[index + 1]);
-                    //cout << commandName << endl;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                } else if (commandName.compare("var") == 0
-                           && inputVector[index + 2].compare("=") != 0) {
-                    inputParams.push_back(inputVector[index + 1]);
-                    inputParams.push_back(inputVector[index + 5]);
-                    //cout << commandName << endl;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                    //  cout<<"I'm in var command"<<endl;
-                }
-                else if(commandName.compare("var") == 0
-                    && inputVector[index + 2].compare("=") == 0) {
-                    inputParams.push_back(inputVector[index + 1]);
-                    inputParams.push_back(inputVector[index + 2]);
-                    inputParams.push_back(inputVector[index + 3]);
-                    //cout << commandName << endl;
-                    c = this->commandMap.find("assignVar")->second;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                }
-                else if (commandName.compare("Sleep") == 0) {
-                    Interpreter *inSleep = new Interpreter();
-                    Expression* expSleep = nullptr;
-                    SymbolTable &symblTbl = SymbolTable::getInstance();
-                    string toSet = symblTbl.getSetExp();
-                    inSleep->setVariables(toSet);
-                    expSleep = inSleep->interpret(inputVector[index + 1]);
-                    input = to_string(expSleep->calculate());
-                    inputParams.push_back(input);
-                    //cout << commandName << endl;
-                    index += c->exec(inputParams);
-                    inputParams.clear();
-                }
-            }
-        }
-        else {
-            commandName = this->inputVector[index];
-            //cout<<"didn't identify command"<<endl;
-            //cout<<commandName<<endl;
-            c = this->commandMap.find("setVarCommand")->second;
-            inputParams.push_back(inputVector[index]);
-            inputParams.push_back(inputVector[index+2]);
-            //cout<<commandName<<endl;
-            index += c->exec(inputParams);
-            inputParams.clear();
-            this_thread::sleep_for(chrono::milliseconds(500));
-        }
+    string commandName;
+    string input;
+
+    /*
+     * condition for while & if parser, checks if reached end of segment and
+     * if so, breaks
+     */
+    if (this->inputVector[index] == "}") {
+      break;
     }
+
+    //otherwise, checks if the command is in the command map
+    else if (this->commandMap.find(this->inputVector[index])
+        != this->commandMap.end()) {
+
+      //if so, gets the command object from the command map
+      c = this->commandMap.find(this->inputVector[index])->second;
+      commandName = this->inputVector[index];
+
+      if (c != nullptr) {
+        //if the command is openDataServer
+        if (commandName.compare("openDataServer") == 0) {
+
+          //interprets the input parameters
+          Interpreter *inOp = new Interpreter();
+          Expression *expOp = nullptr;
+          expOp = inOp->interpret(inputVector[index + 1]);
+          input = to_string((int) expOp->calculate());
+
+          //executes OpenServerCommand with the interpreted parameters
+          inputParams.push_back(input);
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        //otherwise, if the command is while
+        else if (commandName.compare("while") == 0) {
+
+          //gets all the commands in the while segment
+          while (inputVector[index + 1] != "}") {
+            index++;
+            inputParams.push_back(inputVector[index]);
+          }
+          index += 2;
+
+          //executes the while command
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        //otherwise, if the command is if
+        else if (commandName.compare("if") == 0) {
+
+          //gets all the commands in the if segment
+          while (inputVector[index + 1] != "}") {
+            index++;
+            inputParams.push_back(inputVector[index]);
+          }
+          index += 2;
+
+          //executes the if command
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        // otherwise, if the command is connectControlClient
+        else if (commandName.compare("connectControlClient") == 0) {
+          inputParams.push_back(inputVector[index + 1]);
+
+          //interprets the input parameters
+          Interpreter *inCon = new Interpreter();
+          Expression *expCon = nullptr;
+          expCon = inCon->interpret(inputVector[index + 2]);
+          input = to_string((int) expCon->calculate());
+          inputParams.push_back(input);
+
+          //executes connectControlClient with the interpreted parameters
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        // otherwise, if the command is Print
+        else if (commandName.compare("Print") == 0) {
+          //executes Print with it's parameter
+          inputParams.push_back(inputVector[index + 1]);
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        // otherwise, if the command is a DefineVar command
+        else if (commandName.compare("var") == 0
+            && inputVector[index + 2].compare("=") != 0) {
+
+          //executes DefineVar with it's parameters
+          inputParams.push_back(inputVector[index + 1]);
+          inputParams.push_back(inputVector[index + 5]);
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        // otherwise, if the command is a AssignVar command
+        else if (commandName.compare("var") == 0
+            && inputVector[index + 2].compare("=") == 0) {
+
+          //executes AssignVar with it's parameters
+          inputParams.push_back(inputVector[index + 1]);
+          inputParams.push_back(inputVector[index + 2]);
+          inputParams.push_back(inputVector[index + 3]);
+          c = this->commandMap.find("assignVar")->second;
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+
+        // otherwise, if the command is a Sleep command
+        else if (commandName.compare("Sleep") == 0) {
+
+          /*
+           * interprets the input parameters
+           */
+          Interpreter *inSleep = new Interpreter();
+          Expression *expSleep = nullptr;
+          //in case command was sleep(rudder)
+          SymbolTable &symblTbl = SymbolTable::getInstance();
+          string toSet = symblTbl.getSetExp();
+          inSleep->setVariables(toSet);
+          expSleep = inSleep->interpret(inputVector[index + 1]);
+          input = to_string(expSleep->calculate());
+
+          //executes Sleep with the interpreted parameters
+          inputParams.push_back(input);
+          index += c->exec(inputParams);
+          inputParams.clear();
+        }
+      }
+    }
+
+    // otherwise, the command is a setVar command
+    else {
+      commandName = this->inputVector[index];
+      c = this->commandMap.find("setVarCommand")->second;
+      //executes Print with it's parameter
+      inputParams.push_back(inputVector[index]);
+      inputParams.push_back(inputVector[index + 2]);
+      index += c->exec(inputParams);
+      inputParams.clear();
+      //sleep between setVar commands to help the plane fly
+      this_thread::sleep_for(chrono::milliseconds(500));
+    }
+  }
 }

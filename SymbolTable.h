@@ -66,7 +66,8 @@ class SymbolTable {
 
   SymbolTable() {
 
-    /* creating the symbolTable with default names and values.
+    /*
+     * creating the symbolTable with default names and values.
      * sims are from the generic_small.xml
      */
     string buffer =
