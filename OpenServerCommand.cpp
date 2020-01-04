@@ -20,10 +20,18 @@
 using namespace std;
 
 
-
+/**
+ *
+ * @param params
+ * @return
+ */
 int OpenServerCommand::exec(vector<string> params) {
-  cout<<"I'm trying to be a server"<<endl;
 
+  /*
+   * server setup
+   */
+
+  //opening a socket
   int socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if(socketfd == -1) {
     cerr << "Could not create a socket" << endl;
@@ -36,6 +44,7 @@ int OpenServerCommand::exec(vector<string> params) {
   address.sin_addr.s_addr = INADDR_ANY;
   address.sin_port = htons((uint16_t)stoi(params[0]));
 
+  //binding the socket to the requested address
   if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
     cerr<<address.sin_addr.s_addr<<endl;
     cerr<<address.sin_port<<endl;
@@ -43,10 +52,13 @@ int OpenServerCommand::exec(vector<string> params) {
     return -2;
   }
 
+  //waiting for the simulator to approach the server to make a connection
   if(listen(socketfd,1) == -1) {
     cerr<<"Error during listening command"<<endl;
     return -3;
   }
+
+  //accepting a client
   socklen_t addrlen = sizeof(sockaddr_in);
   int client_socket = accept(socketfd, (struct sockaddr *)&address, &addrlen);
 
@@ -55,6 +67,7 @@ int OpenServerCommand::exec(vector<string> params) {
     return -4;
   }
 
+  //closing the listening socket
   close(socketfd);
 
   //check !!
@@ -63,6 +76,10 @@ int OpenServerCommand::exec(vector<string> params) {
   return this->numParams;
 }
 
+/**
+ *
+ * @param client_socket
+ */
 void OpenServerCommand::readFromClient(int client_socket) {
   string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
                      "/sim/time/warp", "/controls/switches/magnetos",

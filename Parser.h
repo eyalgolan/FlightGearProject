@@ -22,7 +22,9 @@
 using namespace std;
 
 class Parser {
- public:
+ private:
+
+  //Data members
   vector<string> inputVector;
   map<string, Command*> commandMap;
   Command* openServerCommand;
@@ -35,8 +37,16 @@ class Parser {
   Command* ifCommand;
   Command* assignVarCommand;
 
+ public:
+
+  /**
+   * Parser's constructor
+   * @param inputFromLexer
+   */
   Parser(vector<string> inputFromLexer){
     inputVector = inputFromLexer;
+
+    //build the command map
     openServerCommand = new OpenServerCommand;
     connectCommand = new ConnectCommand;
     defineVarCommand = new DefineVarCommand;
@@ -57,6 +67,9 @@ class Parser {
     commandMap["assignVar"] = assignVarCommand;
     commandMap["if"] = ifCommand;
   }
+  /**
+   * Parser's deconstructor
+   */
   ~Parser(){
     delete openServerCommand;
     delete connectCommand;
