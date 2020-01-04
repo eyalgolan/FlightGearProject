@@ -17,23 +17,31 @@ int ConditionParser::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   double firstExpValue;
   symblTbl.g_updateLock.lock();
-  if(symblTbl.isInNameMap(firstExp)){
-    firstExpValue = symblTbl.getNameMap()[firstExp].second;
+  bool isFirstExpInNameMap = symblTbl.isInNameMap(firstExp);
+  symblTbl.g_updateLock.unlock();
+  if(isFirstExpInNameMap){
+    symblTbl.g_updateLock.lock();
+    firstExpValue = symblTbl.getNameMapValue(firstExp);
+    symblTbl.g_updateLock.unlock();
+    //firstExpValue = symblTbl.getNameMap()[firstExp].second;
     //cout<<firstExp + " value is " + to_string(firstExpValue)<<endl;
   }
   else {
     firstExpValue = stod(firstExp);
   }
-  symblTbl.g_updateLock.unlock();
   double secondExpValue;
   symblTbl.g_updateLock.lock();
-  if(symblTbl.isInNameMap(secondExp)){
-    secondExpValue = symblTbl.getNameMap()[secondExp].second;
+  bool isSecondExpInNameMap = symblTbl.isInNameMap(secondExp);
+  symblTbl.g_updateLock.unlock();
+  if(isSecondExpInNameMap){
+    symblTbl.g_updateLock.lock();
+    secondExpValue = symblTbl.getNameMapValue(secondExp);
+    symblTbl.g_updateLock.unlock();
+    //secondExpValue = symblTbl.getNameMap()[secondExp].second;
   }
   else {
     secondExpValue = stod(secondExp);
   }
-  symblTbl.g_updateLock.unlock();
   if(con == ">"){
     if(firstExpValue > secondExpValue) {
       this->condition = true;

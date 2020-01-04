@@ -126,7 +126,7 @@ void Parser::runCommands() {
             //cout<<commandName<<endl;
             index += c->exec(inputParams);
             inputParams.clear();
-            this_thread::sleep_for(chrono::milliseconds(3000));
+            this_thread::sleep_for(chrono::milliseconds(500));
         }
     }
 }
