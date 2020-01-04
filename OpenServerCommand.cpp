@@ -19,11 +19,12 @@
 
 using namespace std;
 
-
 /**
- *
- * @param params
- * @return
+ * Function: exec
+ * Opens a thread that runs a server.
+ * The server thread reads the data sent from the simulator
+ * @param params: recieves the server port
+ * @return how much to advance in the input vector
  */
 int OpenServerCommand::exec(vector<string> params) {
 
@@ -33,54 +34,55 @@ int OpenServerCommand::exec(vector<string> params) {
 
   //opening a socket
   int socketfd = socket(AF_INET, SOCK_STREAM, 0);
-  if(socketfd == -1) {
+  if (socketfd == -1) {
     cerr << "Could not create a socket" << endl;
     return -1;
-    
+
   }
 
   sockaddr_in address;
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = INADDR_ANY;
-  address.sin_port = htons((uint16_t)stoi(params[0]));
+  address.sin_port = htons((uint16_t) stoi(params[0]));
 
   //binding the socket to the requested address
-  if(bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
-    cerr<<address.sin_addr.s_addr<<endl;
-    cerr<<address.sin_port<<endl;
-    cerr<<"Could not bind the socket to an IP"<<endl;
+  if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
+    cerr << address.sin_addr.s_addr << endl;
+    cerr << address.sin_port << endl;
+    cerr << "Could not bind the socket to an IP" << endl;
     return -2;
   }
 
   //waiting for the simulator to approach the server to make a connection
-  if(listen(socketfd,1) == -1) {
-    cerr<<"Error during listening command"<<endl;
+  if (listen(socketfd, 1) == -1) {
+    cerr << "Error during listening command" << endl;
     return -3;
   }
 
   //accepting a client
   socklen_t addrlen = sizeof(sockaddr_in);
-  int client_socket = accept(socketfd, (struct sockaddr *)&address, &addrlen);
+  int client_socket = accept(socketfd, (struct sockaddr *) &address, &addrlen);
 
-  if(client_socket == -1) {
-    cerr<<"Error accepting client"<<endl;
+  if (client_socket == -1) {
+    cerr << "Error accepting client" << endl;
     return -4;
   }
 
   //closing the listening socket
   close(socketfd);
 
-  //check !!
+  //opening a detached thread that receives data from the simulator
   thread thread1(&OpenServerCommand::readFromClient, this, client_socket);
   thread1.detach();
   return this->numParams;
 }
 
 /**
- *
+ * Function: readFromClient
  * @param client_socket
  */
 void OpenServerCommand::readFromClient(int client_socket) {
+  //hard coded sim values from generic_small.xml
   string sims[36] = {"/instrumentation/airspeed-indicator/indicated-speed-kt",
                      "/sim/time/warp", "/controls/switches/magnetos",
                      "/instrumentation/heading-indicator/offset-deg",
@@ -117,34 +119,31 @@ void OpenServerCommand::readFromClient(int client_socket) {
                      "/controls/switches/master-alt",
                      "/engines/engine/rpm"};
 
-  cout<<"Im in server"<<endl;
-  char buffer[1024]={0};
+  char buffer[1024] = {0};
   ssize_t valread = read(client_socket, buffer, 1024);
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  while(buffer[0] != '\n') {
-    //cout<<buffer<<endl;
+
+  //reading received data from the simulator line-by-line
+  while (buffer[0] != '\n') {
     string strValue;
-    int index=0;
-    for(int i = 0; i<36 ; i++) {
-      // check !!
+    int index = 0;
+
+    //getting each of the values received in the current line
+    for (int i = 0; i < 36; i++) {
       string sim;
-      //cout<<"sim in " + to_string(i) + " location is: " + sims[i]<<endl;
       sim = sims[i];
-      while(buffer[index] != ',' && buffer[index] != '\0') {
+      while (buffer[index] != ',' && buffer[index] != '\0') {
         strValue += buffer[index];
         index++;
       }
       index++;
 
+      //updating the symbol table with the received data
       double value = stod(strValue);
-      //cout<<"server trying to update symbltable with place " + to_string(i) + " ,sim is " + sim + " value is " + to_string(value)<<endl;
       symblTbl.updateTable("", sim, value, "server");
       strValue = "";
     }
-    //cout<<"finished server part"<<endl;
     valread = read(client_socket, buffer, 1024);
-    //this_thread::sleep_for(chrono::milliseconds(2000));
   }
-
 }
 
