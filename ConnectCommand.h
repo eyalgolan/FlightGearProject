@@ -12,7 +12,7 @@ using namespace std;
 
 class ConnectCommand : public Command {
  private:
-  int numParams = 3;
+  int numParams = 3;//how much to advance in the Parser's input vector
  public:
   string readFromQueue();
   int exec(vector<string> params) override;

@@ -12,87 +12,79 @@
 #include "string"
 #include "thread"
 #include "SymbolTable.h"
-
+/**
+ * Function name : ConnectCommand
+ * Opens a thread that runs a client .
+ * The client thread send the data to the server.
+ * @param params: recieves the server port an the ip
+ * @return how much to advance in the input vector
+ */
 using namespace std;
 int ConnectCommand::exec(vector<string> params) {
-
+  //client socket
   int client_socket = socket(AF_INET, SOCK_STREAM, 0);
+ // returning -1 if we Could not create a socket
   if(client_socket == -1) {
     cout<<"Could not create a socket"<<endl;
     return -1;
   }
-
+  // we need create sockaddr obj to hold adreeses of server
   sockaddr_in address;
   int  length = params[0].size();
   char ip[length+1];
   strcpy(ip, params[0].c_str());
   cout<<ip<<endl;
   address.sin_family = AF_INET;
-  address.sin_addr.s_addr = inet_addr(ip);
+  address.sin_addr.s_addr = inet_addr(ip);// the localhost address
   address.sin_port = htons(stoi(params[1]));
-
+ // requsting a conaction
   int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
-
+ // if "Could not connect to host server
   if(is_connect == -1) {
     cerr<<"Could not connect to host server"<<endl;
     return -2;
   }
 
   else {
-    cout<< is_connect <<endl;
-    cout<<"Client is now connected to server"<<endl;
+      cout<<"client is now connect to server"<<endl;
+      // if we connect
+    // run the thread
     thread thread2(&ConnectCommand::writeToClient, this, client_socket);
     thread2.detach();
   }
-
+// how much to advance in the input vector
   return this->numParams;
 }
-
+// the funk that give as the ability read from the queue
 string ConnectCommand::readFromQueue() {
-  //cout<<"trying to read from queue"<<endl;
+
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  //symblTbl.g_updateLock.lock();
   string update = symblTbl.getFirstInQueue();
   symblTbl.popFromQueue();
-  //symblTbl.g_updateLock.unlock();
-  //cout<<"success reading from queue"<<endl;
+
   return update;
 }
+/** the writing to client
+ * we update the server from the client that hold a queuue commands
+ *
+ * @param client_socket
+ */
 void ConnectCommand::writeToClient(int client_socket) {
-  //cout<<"i am in writing client before whiles"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
   string update;
   while (true) {
-
-    //symblTbl.g_updateLock.lock();
     symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.isQueueEmpty();
     symblTbl.g_updateLock.unlock();
-    //symblTbl.g_updateLock.unlock();
     while (queueState) {
-      //cout << "trying to write to client" << endl;
       symblTbl.g_updateLock.lock();
       update = this->readFromQueue();
-      //cout << "trying to write to client also queue no empty " << endl;
       cout << update.c_str() << endl;
-      //cout << client_socket << endl;
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);
-      //cout << update.c_str() << endl;
-      //if (is_sent == -1) {
-        //cout << update.c_str() << endl;
-        //cout << "Error sending message" << endl;
-      //} else {
-        //cout << "message send to simulator" << endl;
-      //}
-      //cout << "success writing to client" << endl;
-      //symblTbl.g_updateLock.lock();
-      //cout<<"locked from, clinet comanr2"<<endl;
-
       queueState = !symblTbl.isQueueEmpty();
       symblTbl.g_updateLock.unlock();
-      //symblTbl.g_updateLock.unlock();
-      //cout<<"ulocked from, clinet comanr2"<<endl;
+
     }
   }
 }

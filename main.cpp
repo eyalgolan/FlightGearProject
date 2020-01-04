@@ -9,18 +9,32 @@
 #include <unistd.h>
 
 using namespace std;
-
+/**
+ * @param argc
+ * @param argv  we get the file name that containe txt file that we want to
+ * use for the project.
+ * @return  int.
+ */
 int main(int argc, char **argv) {
-
-  char *input_file = argv[1];
-  Lexer l(input_file);
+/**
+ * sendind the file to the lexer that give us a vector
+ * in this project we also  need to "compile" new programing languish
+ * so we get the txt file send it to the lexer and then send the givven
+ * vector from the lexer to thr parser.
+ * but because we have free space syntax we need handel the "print"
+ * that need have a space in some case
+ * before we send it to the parser command;
+ */
+  char *input_file = argv[1];// get the filename
+  Lexer l(input_file);//send it to the lexer
   vector<string> emulateLexerResulttest=l.getvecor();
   vector<string> notspace;
   int i = 0;
   SymbolTable &symblTbl = SymbolTable::getInstance();
-
   while ( i < emulateLexerResulttest.size()){
-
+/**
+ * we delete all aspace from all the vector if they dont gave print command before;
+ */
       string toLex=emulateLexerResulttest[i];
       if (toLex.compare("Print")==0){
           notspace.push_back(emulateLexerResulttest[i]);
@@ -40,8 +54,9 @@ int main(int argc, char **argv) {
       }
 
   }
-
+// sending the vector to the parsser
   Parser p(notspace);
+  // run the command
   p.runCommands();
 
   return 0;

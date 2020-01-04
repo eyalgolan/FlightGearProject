@@ -9,11 +9,13 @@
 #include "thread"
 
 using namespace std;
-
+/**
+ * set sleep that give us from the param;
+ * @param params
+ * @return how much to advance in the input vector
+ */
 int SleepCommand::exec(vector<string> params) {
   int time = stoi(params[0]);
-  //cout<<"trying to sleep"<<endl;
   this_thread::sleep_for(chrono::milliseconds(time));
-  //cout<<"after sleep"<<endl;
   return numParams;
 }
