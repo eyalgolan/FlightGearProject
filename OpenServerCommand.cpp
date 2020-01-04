@@ -79,6 +79,8 @@ int OpenServerCommand::exec(vector<string> params) {
 
 /**
  * Function: readFromClient
+ * reading received data from the simulator line-by-line and updating the
+ * symbol table accordingly
  * @param client_socket
  */
 void OpenServerCommand::readFromClient(int client_socket) {

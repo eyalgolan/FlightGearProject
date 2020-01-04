@@ -8,6 +8,11 @@
 
 using namespace std;
 
+/**
+ *
+ * @param params
+ * @return
+ */
 int DefineVarCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
 

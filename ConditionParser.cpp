@@ -10,8 +10,9 @@ using namespace std;
 
 /**
  * Function: exec
- * @param params
- * @return
+ * checks if the condition is satisfied and updates this->condition accordingly
+ * @param params the condition's arguments
+ * @return how much to advance in the Parser's input vector
  */
 int ConditionParser::exec(vector<string> params) {
 
