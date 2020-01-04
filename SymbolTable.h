@@ -86,19 +86,30 @@ class SymbolTable {
   }
 
   /*
-   * FUnction:
+   * FUnction: getNameMapSim
+   * Receives a name in the name map and returns it's sim
    */
   string getNameMapSim (const string name) {
     string sim = this->nameMap[name].first;
     return sim;
   }
+
+  /*
+   * FUnction: getNameMapValue
+   * Receives a name in the name map and returns it's value
+   */
   double getNameMapValue(const string name) {
     double value = this->nameMap[name].second;
     return value;
   }
-  queue<string> getQueue() {
-    return this->commandsToSimulator;
+  bool isQueueEmpty() {
+    return this->commandsToSimulator.empty();
   }
+
+  string getFirstInQueue() {
+    return this->commandsToSimulator.front();
+  }
+
   void pushToQueue(string command) {
     this->commandsToSimulator.push(command);
   }
@@ -114,7 +125,12 @@ class SymbolTable {
   void updateFromServer(string name, string sim, double value);
   void updateFromDefineVar(string name, string sim, double value);
   void updateFromSetVar(string name, string sim, double value);
+
   SymbolTable() {
+
+    /* creating the symbolTable with default names and values.
+     * sims are from the generic_small.xml
+     */
     string buffer =
         "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1";
     string names[36] =
