@@ -19,109 +19,47 @@ using namespace std;
  */
 class SymbolTable {
  public:
+
+  // Public data member
   mutex g_updateLock;
+
+  //Public functions
+
+  /*
+   * Function: getInstance
+   * Returns the singleton instance of the SymbolTable class
+   */
   static SymbolTable &getInstance() {
     static SymbolTable instance;
     return instance;
   }
 
-  /*
-   * Function name: getSetExp
-   * Function generates a string in the format: "key=value;" of all the
-   * variables that are currently saved by the SymbolTable.
-   * The function's output is later used as input for ExpressionHandler's SetVar
-   */
-  string getSetExp() {
-    string toSet;
-    for (auto it = this->nameMap.begin(); it != this->nameMap.end(); it++) {
-      toSet += it->first + "=" + to_string(it->second.second) + ";";
-    }
-    for (auto varIt = this->varMap.begin(); varIt != this->varMap.end();
-         varIt++) {
-      toSet += varIt->first + "=" + to_string(varIt->second) + ";";
-    }
-    return toSet;
-  }
-
-  /*
-   * Function: isInNameMap
-   * Receives a string input and returns if it's a key in the nameMap
-   */
-  bool isInNameMap(const string name) {
-    if (this->nameMap.find(name) != this->nameMap.end()) {
-      return true;
-    }
-    return false;
-  }
-
-  /*
-   * Function: isInSimMap
-   * Receives a string input and returns if it's a key in the simMap
-   */
-  bool isInSimMap(const string sim) {
-    if (this->simMap.find(sim) != this->simMap.end()) {
-      return true;
-    }
-    return false;
-  }
-
-  /*
-   * Function: isInVarMap
-   * Receives a string input and returns if it's a key in the varMap
-   */
-  bool isInVarMap(const string name) {
-
-    if (this->varMap.find(name) != this->varMap.end()) {
-      return true;
-    }
-    return false;
-  }
-
-  /*
-   * Function: addToVarMap
-   * Receives a string, double input and adds it as key, value to the varMap
-   */
-  void addToVarMap(string name, double value) {
-    this->varMap.insert(make_pair(name, value));
-  }
-
-  /*
-   * FUnction: getNameMapSim
-   * Receives a name in the name map and returns it's sim
-   */
-  string getNameMapSim (const string name) {
-    string sim = this->nameMap[name].first;
-    return sim;
-  }
-
-  /*
-   * FUnction: getNameMapValue
-   * Receives a name in the name map and returns it's value
-   */
-  double getNameMapValue(const string name) {
-    double value = this->nameMap[name].second;
-    return value;
-  }
-  bool isQueueEmpty() {
-    return this->commandsToSimulator.empty();
-  }
-
-  string getFirstInQueue() {
-    return this->commandsToSimulator.front();
-  }
-
-  void pushToQueue(string command) {
-    this->commandsToSimulator.push(command);
-  }
-  void popFromQueue() {
-    this->commandsToSimulator.pop();
-  }
-  void setNameMap(string name, string sim, double value);
-  void setSimMap(string sim, string name, double value);
+  string getSetExp();
+  bool isInNameMap(string);
+  bool isInSimMap(string);
+  bool isInVarMap(string);
+  void addToVarMap(string name, double value);
+  string getNameMapSim (string);
+  double getNameMapValue(string);
+  bool isQueueEmpty();
+  string getFirstInQueue();
+  void pushToQueue(string command);
+  void popFromQueue();
+  void insertToNameMap(string name, string sim, double value);
+  void insertToSimMap(string sim, string name, double value);
   void updateTable(string name, string sim, double value, string calledFrom);
   SymbolTable(SymbolTable const &) = delete;
   void operator=(SymbolTable const &) = delete;
+
  private:
+
+  // Private data members
+  queue<string> commandsToSimulator;
+  map<string, pair<string, double>> nameMap;
+  map<string, pair<string, double>> simMap;
+  map<string, double> varMap;
+
+  // Private functions
   void updateFromServer(string name, string sim, double value);
   void updateFromDefineVar(string name, string sim, double value);
   void updateFromSetVar(string name, string sim, double value);
@@ -180,25 +118,26 @@ class SymbolTable {
 
     string strValue;
     int index = 0;
+
+    //build the name and sim maps
     for (int i = 0; i < 36; i++) {
-      // check !!
+
       string name = names[i];
       string sim = sims[i];
+
+      //go over buffer and get values
       while (buffer[index] != ',' && buffer[index] != '\0') {
         strValue += buffer[index];
         index++;
       }
       index++;
 
+      //populate name and sim maps
       double value = stod(strValue);
-      this->setNameMap(name, sim, value);
-      this->setSimMap(sim, name, value);
+      this->insertToNameMap(name, sim, value);
+      this->insertToSimMap(sim, name, value);
       strValue = "";
     }
   }
-  queue<string> commandsToSimulator;
-  map<string, pair<string, double>> nameMap;
-  map<string, pair<string, double>> simMap;
-  map<string, double> varMap;
 };
 #endif //FLIGHTGEARPROJECT_SYMBOLTABLE_H
