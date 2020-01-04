@@ -10,7 +10,7 @@ using namespace std;
 
 class DefineVarCommand : public Command {
  private:
-  int numParams = 6;
+  int numParams = 6; //how much to advance in the Parser's input vector
  public:
   int exec(vector<string> params) override;
 };
