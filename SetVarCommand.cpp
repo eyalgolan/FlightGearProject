@@ -7,8 +7,15 @@
 #include "ConnectCommand.h"
 #include "ExpressionHandler.h"
 
+/**
+ * Function: exec
+ *
+ * @param params
+ * @return how much to advance in the Parser's input vector
+ */
 int SetVarCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
+
 
   string name = params[0];
   double value;
@@ -33,11 +40,12 @@ int SetVarCommand::exec(vector<string> params) {
   return numParams;
 }
 
+/**
+ * Function: writeToQueue
+ * Writes commands to Symbol table's command queue
+ * @param input: a command to push to the command queue
+ */
 void SetVarCommand::writeToQueue(string input) {
-  //cout<<"trying to write to queue"<<endl;
   SymbolTable &symblTbl = SymbolTable::getInstance();
-  //symblTbl.g_updateLock.lock();
   symblTbl.pushToQueue(input);
-  //symblTbl.g_updateLock.unlock();
-  //cout<<"success in writing to queue"<<endl;
 }

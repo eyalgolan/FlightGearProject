@@ -5,6 +5,7 @@
 #include "ConditionParser.h"
 #include "iostream"
 #include "SymbolTable.h"
+#include "ExpressionHandler.h"
 
 using namespace std;
 
@@ -17,57 +18,26 @@ using namespace std;
 int ConditionParser::exec(vector<string> params) {
 
   //receive params
-  string firstExp = params[0];
+  string firstStr = params[0];
   string con=params[1];
-  string secondExp = params[2];
+  string secondStr = params[2];
 
-  //check if the first expression is in the name map or var map
-  SymbolTable &symblTbl = SymbolTable::getInstance();
+
+  /*
+  * interprets the condition's expressions
+  */
+  Interpreter *inCondition = new Interpreter();
+  Expression *firstExp = nullptr;
+  Expression *secondExp = nullptr;
   double firstExpValue;
-  symblTbl.g_updateLock.lock();
-  bool isFirstExpInNameMap = symblTbl.isInNameMap(firstExp);
-  bool isFirstExpInVarMap = symblTbl.isInVarMap(firstExp);
-  symblTbl.g_updateLock.unlock();
-
-  if(isFirstExpInNameMap){
-    //if it's in the name map, get its value from the name map
-    symblTbl.g_updateLock.lock();
-    firstExpValue = symblTbl.getNameMapValue(firstExp);
-    symblTbl.g_updateLock.unlock();
-  }
-  else if(isFirstExpInVarMap) {
-    //otherwise if its in the var map, get its value from the var map
-    symblTbl.g_updateLock.lock();
-    firstExpValue = symblTbl.getVarMapValue(firstExp);
-    symblTbl.g_updateLock.unlock();
-  }
-  else {
-    //otherwise it's a number
-    firstExpValue = stod(firstExp);
-  }
-
-  //check if the second expression is in the name map or var map
   double secondExpValue;
-  symblTbl.g_updateLock.lock();
-  bool isSecondExpInNameMap = symblTbl.isInNameMap(secondExp);
-  bool isSecondExpInVarMap = symblTbl.isInVarMap(secondExp);
-  symblTbl.g_updateLock.unlock();
-  if(isSecondExpInNameMap){
-    //if it's in the name map, get its value from the name map
-    symblTbl.g_updateLock.lock();
-    secondExpValue = symblTbl.getNameMapValue(secondExp);
-    symblTbl.g_updateLock.unlock();
-  }
-  else if(isSecondExpInVarMap) {
-    //otherwise if its in the var map, get its value from the var map
-    symblTbl.g_updateLock.lock();
-    secondExpValue = symblTbl.getVarMapValue(secondExp);
-    symblTbl.g_updateLock.unlock();
-  }
-  else {
-    //otherwise it's a number
-    secondExpValue = stod(secondExp);
-  }
+  SymbolTable &symblTbl = SymbolTable::getInstance();
+  string toSet = symblTbl.getSetExp();
+  inCondition->setVariables(toSet);
+  firstExp = inCondition->interpret(firstStr);
+  firstExpValue = firstExp->calculate();
+  secondExp = inCondition->interpret(secondStr);
+  secondExpValue = secondExp->calculate();
 
   /*
    * check if the condition is met and set the condition accordingly
