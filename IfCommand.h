@@ -13,6 +13,7 @@ using namespace std;
 
 class IfCommand: public ConditionParser {
  public:
+  int numParams = 0; //how much to advance in the Parser's input vector
   int exec(vector<string> params) override;
 };
 

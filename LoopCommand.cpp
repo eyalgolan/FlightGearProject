@@ -38,5 +38,5 @@ int LoopCommand::exec(vector<string> params) {
     loopParser.runCommands();
     cp->exec(conditionVector); //evaluate if the loop condition is met
   }
-  return 0;
+  return this->numParams;
 }

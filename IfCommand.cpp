@@ -13,10 +13,9 @@ int IfCommand::exec(vector<string> params) {
     //cout<<"getting " + params[j] + " to while parser"<<endl;
   }
   Parser ifParser(ifParams);
-  int i=0;
-  string firstExp = params[i];
-  string con=params[i+1];
-  string secondExp = params[i+2];
+  string firstExp = params[0];
+  string con=params[1];
+  string secondExp = params[2];
   vector<string> conditionVector;
   conditionVector.push_back(firstExp);
   conditionVector.push_back(con);
@@ -26,5 +25,5 @@ int IfCommand::exec(vector<string> params) {
   if(cp->condition) {
     ifParser.runCommands();
   }
-  return 0;
+  return this->numParams;
 }

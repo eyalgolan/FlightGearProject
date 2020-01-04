@@ -38,12 +38,15 @@ starter = 1
 autostart = 1
 Print("engine is warming...")
 Print(rpm)
-while rpm + 30/2   <=     750 + 30/2 +5*0 {
+while rpm + 5555 <=     750 +5555 {
 	Print(rpm)
+	Print(starter)
 }
-
-if rpm > 750 {
-	Print("If is working")
+while starter  !=  1  {
+	Print(starter)
+}
+while primer+ autostart == 5 {
+	Print(primer)
 }
 Sleep(5000)
 Print("let's fly")
