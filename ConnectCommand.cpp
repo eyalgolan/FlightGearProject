@@ -44,7 +44,7 @@ int ConnectCommand::exec(vector<string> params) {
     cerr << "Could not connect to host server" << endl;
     return -2;
   } else {
-    cout << "client is now connect to server" << endl;
+    cout << "client is now connect to simulator" << endl;
     // if we connect - run the thread
     thread thread2(&ConnectCommand::writeToClient, this, client_socket);
     thread2.detach();
