@@ -61,7 +61,13 @@ int PrintCommand::exec(vector<string> params) {
       cout<<input<<endl;
     }
     catch (const char* e) {
-      cout<<params[0]<<endl;
+//      if(params[0] == "done") {
+//        cout<<params[0]<<endl;
+//        delete &symblTbl;
+//      }
+//      else {
+        cout << params[0] << endl;
+      //}
     }
 
   return this->numParams;

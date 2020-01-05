@@ -11,6 +11,7 @@
 #include "mutex"
 #include "queue"
 #include "string"
+#include "thread"
 
 using namespace std;
 
@@ -20,8 +21,10 @@ using namespace std;
 class SymbolTable {
  public:
 
-  // Public data member
+  // Global data member
   mutex g_updateLock;
+  //thread g_serverThread;
+  //thread g_clientThread;
 
   //Public functions
 
@@ -141,5 +144,11 @@ class SymbolTable {
       strValue = "";
     }
   }
+ //public:
+//  ~SymbolTable() {
+//    g_clientThread.join();
+//    g_serverThread.join();
+//    terminate();
+//  }
 };
 #endif //FLIGHTGEARPROJECT_SYMBOLTABLE_H

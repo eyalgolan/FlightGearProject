@@ -33,7 +33,6 @@ int ConnectCommand::exec(vector<string> params) {
   int length = params[0].size();
   char ip[length + 1];
   strcpy(ip, params[0].c_str());
-  cout << ip << endl;
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = inet_addr(ip);// the localhost address
   address.sin_port = htons(stoi(params[1]));
