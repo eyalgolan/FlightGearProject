@@ -233,7 +233,7 @@ Lexer::Lexer(char *filename) {
     this->vect.push_back(cop);
     cop = strtok(NULL, ",");
   }
-
+  file.close();
 }
 vector<string> Lexer::getvecor() {
   return this->vect;
