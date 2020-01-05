@@ -25,11 +25,11 @@ var alt <- sim("/instrumentation/altimeter/indicated-altitude-ft")
 var rpm <- sim("/engines/engine/rpm")
 var blc -> sim("/controls/gear/brake-right")
 Print("waiting 2 minutes for gui")
-Sleep(      (5000))
+Sleep(      (5000.5))
 Print("let's ->  (start)")
 warp =                               32000
 Print(				warp + 20 /10)
-Sleep((((1000)))))
+Sleep((((1000.4)+52))+2/1.1))
 magnetos = 3
 throttle =       0.2
 if throttle == 0.9 - 0.7{
@@ -51,7 +51,7 @@ starter = 1
 autostart = 1
 Print("engine, is warming...")
 Print(rpm)
-while rpm <= 750 {
+while (rpm+7) <= (750.2-5) {
   Print(rpm)
 }
 Sleep(5000)
@@ -59,7 +59,7 @@ Print("let's = fly")
 var h0 = heading
 breaks = 0
 throttle = 1
-while alt < 1000 + 5/ 2 - 5/	2 +(5-5) {
+while (alt) < 1000 + ((5/ 2)) - 5/	2 +(5-5) {
   rudder = (h0 - heading)/80
   aileron = -roll / 70
   Print(aileron)

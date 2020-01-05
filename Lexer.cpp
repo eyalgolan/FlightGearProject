@@ -26,10 +26,6 @@ Lexer::Lexer(char *filename)  {
     }
     int i;
     int j=0;
-    // relace all ')' chars to space
-    // replace(this->afterlerx.begin(),this->afterlerx.end(),')',' ');
-    // relace all ')' chars to
-    //  replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
     size_t start_pos = 0;
     // add a comma in relevant place
     while ((start_pos = afterlerx.find("openDataServer", start_pos)) != string::npos)
@@ -185,14 +181,6 @@ Lexer::Lexer(char *filename)  {
       afterlerx.replace(start_pos, 4, ",!=,");
       start_pos += 4;
     }
-
-    start_pos = 0;        // add a comma in relevant place
-
-//        while ((start_pos = afterlerx.find("\"", start_pos)) != string::npos)
-//        {
-//            afterlerx.replace(start_pos, 1, "");
-//            start_pos += 0;
-//        }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("while ", start_pos)) != string::npos)
@@ -265,7 +253,6 @@ Lexer::Lexer(char *filename)  {
     }
 
 
-    cout<<this->afterlerx<<endl;
   }
   // push all the string with the comma token yo the vector
   char *ve;

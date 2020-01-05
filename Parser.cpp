@@ -108,7 +108,7 @@ void Parser::runCommands() {
           }
           start_pos = 0;
           // add a comma in relevant place
-          while ((start_pos =  inputParams[0].find("\"", start_pos))
+          while ((start_pos = inputParams[0].find("\"", start_pos))
               != string::npos) {
             inputParams[0].replace(start_pos, 1, "");
             start_pos += 0;
@@ -117,7 +117,6 @@ void Parser::runCommands() {
           Interpreter *inCon = new Interpreter();
           Expression *expCon = nullptr;
           start_pos = 0;
-           start_pos = 0;
           // add a comma in relevant place
           while ((start_pos = inputVector[index + 2].find(")", start_pos))
               != string::npos) {
@@ -148,7 +147,7 @@ void Parser::runCommands() {
             && inputVector[index + 2].compare("=") != 0) {
           size_t start_pos = 0;
           // add a comma in relevant place
-          while ((start_pos = inputVector[index+5].find('(', start_pos))
+          while ((start_pos = inputVector[index + 5].find('(', start_pos))
               != string::npos) {
             inputVector[index + 5].replace(start_pos, 1, "");
             start_pos += 0;

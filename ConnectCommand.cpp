@@ -28,7 +28,7 @@ int ConnectCommand::exec(vector<string> params) {
     cout << "Could not create a socket" << endl;
     return -1;
   }
-  // we need create sockaddr obj to hold adreeses of server
+  // we need create sockaddr obj to hold address of the server
   sockaddr_in address;
   int length = params[0].size();
   char ip[length + 1];
@@ -45,15 +45,14 @@ int ConnectCommand::exec(vector<string> params) {
     return -2;
   } else {
     cout << "client is now connect to server" << endl;
-    // if we connect
-    // run the thread
+    // if we connect - run the thread
     thread thread2(&ConnectCommand::writeToClient, this, client_socket);
     thread2.detach();
   }
 // how much to advance in the input vector
   return this->numParams;
 }
-// the funk that give as the ability read from the queue
+// the func that give as the ability read from the queue
 string ConnectCommand::readFromQueue() {
 
   SymbolTable &symblTbl = SymbolTable::getInstance();
@@ -77,7 +76,6 @@ void ConnectCommand::writeToClient(int client_socket) {
     while (queueState) {
       symblTbl.g_updateLock.lock();
       update = this->readFromQueue();
-      cout << update.c_str() << endl;
       int is_sent =
           send(client_socket, update.c_str(), strlen(update.c_str()), 0);
       queueState = !symblTbl.isQueueEmpty();

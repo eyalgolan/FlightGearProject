@@ -66,8 +66,9 @@ int OpenServerCommand::exec(vector<string> params) {
   if (client_socket == -1) {
     cerr << "Error accepting client" << endl;
     return -4;
+  } else {
+    cout << "Simulator connected to server" << endl;
   }
-
   //closing the listening socket
   close(socketfd);
 
