@@ -118,15 +118,15 @@ The script we interpret can contain `if` condition and `while` loops:
 
 ### Program architecture
 The program contains the following classes:
-1. Lexer: The lexer gets a filename. The script in the file is written in a new 
+1. **Lexer**: The lexer gets a filename. The script in the file is written in a new 
           programing language that we need to interpret.
           The role of the lexer is to seperate the code by commas and build then into a
           vector.
-2. Parser: Runs each command in the input vector and executes it.
-5. SymbolTable: A singelton class. The symbol table maintains the current state 
+2. **Parser**: Runs each command in the input vector and executes it.
+5. **SymbolTable**: A singelton class. The symbol table maintains the current state 
 of the plane, the current values of all the variables defined in the program, 
 and a mutex used for controlling the threads access to the symbol table.
-3. Command: A parent class, containing a virtual `exec` function. 
+3. **Command**: A parent class, containing a virtual `exec` function. 
 
 	Each of the following inheriting classes implement their own version of the
 	 `exec` function:
@@ -139,8 +139,8 @@ and a mutex used for controlling the threads access to the symbol table.
 	* LoopCommand
 	* SleepCommand
 	* PrintCommand
-4. ConditionParser: Used by the `IfCommand` and `LoopCommand` to checks if a 
+4. **ConditionParser**: Used by the `IfCommand` and `LoopCommand` to checks if a 
 	provided condition is satisfied and updates accordingly.
-5. ExpressionHandler: Interprets nested mathematical expressions that include 
+5. **ExpressionHandler**: Interprets nested mathematical expressions that include 
 	variables and evaluate them.
 
