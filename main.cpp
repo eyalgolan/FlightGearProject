@@ -38,32 +38,32 @@ int main(int argc, char **argv) {
  */
     string toLex = emulateLexerResulttest[i];
     if (toLex.compare("Print") == 0) {
+      notspace.push_back(emulateLexerResulttest[i]);
+      i++;
+      size_t n = count(emulateLexerResulttest[i].begin(), emulateLexerResulttest[i].end(), '\"');
+      if (n==2) {
         notspace.push_back(emulateLexerResulttest[i]);
         i++;
-        size_t n = count(emulateLexerResulttest[i].begin(), emulateLexerResulttest[i].end(), '\"');
-        if (n==2) {
-            notspace.push_back(emulateLexerResulttest[i]);
-            i++;
-        }
-        else if (n==1) {
+      }
+      else if (n==1) {
 
-            string chaining="";
-            while (n!=2){
-                chaining += emulateLexerResulttest[i];
-                i++;
-                n=n+count(emulateLexerResulttest[i].begin(), emulateLexerResulttest[i].end(), '\"');
+        string chaining="";
+        while (n!=2){
+          chaining += emulateLexerResulttest[i];
+          i++;
+          n=n+count(emulateLexerResulttest[i].begin(), emulateLexerResulttest[i].end(), '\"');
 
-            }
-            chaining += emulateLexerResulttest[i];
-            notspace.push_back(chaining);
-            i++;
         }
-        else if (n==0){
-            notspace.push_back(emulateLexerResulttest[i]);
-            i++;
-            notspace.push_back(emulateLexerResulttest[i]);
-            i++;
-        }
+        chaining += emulateLexerResulttest[i];
+        notspace.push_back(chaining);
+        i++;
+      }
+      else if (n==0){
+        notspace.push_back(emulateLexerResulttest[i]);
+        i++;
+        notspace.push_back(emulateLexerResulttest[i]);
+        i++;
+      }
     } else if (emulateLexerResulttest[i].compare("print") != 0) {
       int start_pos = 0;
       while ((start_pos = emulateLexerResulttest[i].find(" ", start_pos))
