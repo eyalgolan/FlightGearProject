@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
       }
 
   }
-// sending the vector to the parsser
+  // sending the vector to the parser
   Parser p(notspace);
   // run the command
   p.runCommands();

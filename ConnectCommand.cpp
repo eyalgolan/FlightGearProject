@@ -23,31 +23,30 @@ using namespace std;
 int ConnectCommand::exec(vector<string> params) {
   //client socket
   int client_socket = socket(AF_INET, SOCK_STREAM, 0);
- // returning -1 if we Could not create a socket
-  if(client_socket == -1) {
-    cout<<"Could not create a socket"<<endl;
+  // returning -1 if we Could not create a socket
+  if (client_socket == -1) {
+    cout << "Could not create a socket" << endl;
     return -1;
   }
   // we need create sockaddr obj to hold adreeses of server
   sockaddr_in address;
-  int  length = params[0].size();
-  char ip[length+1];
+  int length = params[0].size();
+  char ip[length + 1];
   strcpy(ip, params[0].c_str());
-  cout<<ip<<endl;
+  cout << ip << endl;
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = inet_addr(ip);// the localhost address
   address.sin_port = htons(stoi(params[1]));
- // requsting a conaction
-  int is_connect = connect(client_socket, (struct sockaddr *)&address, sizeof(address));
- // if "Could not connect to host server
-  if(is_connect == -1) {
-    cerr<<"Could not connect to host server"<<endl;
+  // requesting a connection
+  int is_connect =
+      connect(client_socket, (struct sockaddr *) &address, sizeof(address));
+  // if "Could not connect to host server
+  if (is_connect == -1) {
+    cerr << "Could not connect to host server" << endl;
     return -2;
-  }
-
-  else {
-      cout<<"client is now connect to server"<<endl;
-      // if we connect
+  } else {
+    cout << "client is now connect to server" << endl;
+    // if we connect
     // run the thread
     thread thread2(&ConnectCommand::writeToClient, this, client_socket);
     thread2.detach();
