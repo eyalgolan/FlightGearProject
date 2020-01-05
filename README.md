@@ -8,6 +8,13 @@ The program gets a script as an argument which contains different commands and
 interprets the commands. First, the program lexes the input file, then it parses 
 it and finally it executes the commands.
 
+This project includes the following elements:
+* Design Patters
+* Client-Server architecture
+* Usage of data structures
+* Working with files
+* Working with threads
+
 ## Setup
 First, in order to set the FlightGear simulator to connect to our server and 
 accept a connection from our client, go to `Settings` -> `Additional Settings` 
@@ -80,8 +87,34 @@ console.
 	Will print `5000` to the console.
 
 ### Working with variables
-
+We work with variables in the following ways:
+1. Defining a new variable: A new var can be set with:
+	* A value, for example:
+		```
+		var rudder = 0
+		```
+	* A simulator path with a side indicator:
+		```
+		var heading <- sim("/instrumentation/heading-indicator/offset-deg")
+		```
+	* Another existing variable:
+		```
+		var h0 = heading
+		```
+2. Setting an existing variable with a value, by value or by variable:
+	```
+	magnetos = 3
+	```
+	Or:
+	```
+	magnetos = rudder
+	```
 ### Conditions and Loops
+The script we interpret can contain `if` condition and `while` loops:
+* In the case of an `if` condition, the program will execute the commands in the
+ `if`'s scope, if it's condition is met.
+* In the case of a `while` loop, the program will loop over the commands in the
+ `while`'s scope, while it's condition is met.
 
 ### Program architecture
 
