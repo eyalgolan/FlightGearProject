@@ -160,6 +160,13 @@ void Parser::runCommands() {
             inputVector[index + 5].replace(start_pos, 1, "");
             start_pos += 0;
           }
+          start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos = inputVector[index + 5].find('\"', start_pos))
+              != string::npos) {
+            inputVector[index + 5].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
           //executes DefineVar with it's parameters
           inputParams.push_back(inputVector[index + 1]);
           inputParams.push_back(inputVector[index + 5]);

@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
       else if (n==0){
         notspace.push_back(emulateLexerResulttest[i]);
         i++;
-        notspace.push_back(emulateLexerResulttest[i]);
-        i++;
+//        notspace.push_back(emulateLexerResulttest[i]);
+//        i++;
       }
     } else if (emulateLexerResulttest[i].compare("print") != 0) {
       int start_pos = 0;

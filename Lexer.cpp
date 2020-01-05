@@ -22,7 +22,7 @@ Lexer::Lexer(char *filename)  {
   if (file.is_open()){
     while (getline(file,line)){
       this->afterlerx+=line;
-      this->afterlerx+="`";
+      this->afterlerx+=",";
     }
     int i;
     int j=0;
@@ -34,27 +34,27 @@ Lexer::Lexer(char *filename)  {
     // add a comma in relevant place
     while ((start_pos = afterlerx.find("openDataServer", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 14, "openDataServer`");
+      afterlerx.replace(start_pos, 14, "openDataServer,");
       start_pos += 15;
     }
     start_pos = 0;
     // add a comma in relevant place
     while ((start_pos = afterlerx.find("connectControlClient", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 20, "connectControlClient`");
+      afterlerx.replace(start_pos, 20, "connectControlClient,");
       start_pos += 21;
     }
     start_pos = 0;
 
     while ((start_pos = afterlerx.find("var", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 3, "var`");
+      afterlerx.replace(start_pos, 3, "var,");
       start_pos += 4;
     }
     start_pos = 0;
     while ((start_pos = afterlerx.find("Sleep", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 5, "Sleep`");
+      afterlerx.replace(start_pos, 5, "Sleep,");
       start_pos += 6;
     }
 
@@ -62,14 +62,14 @@ Lexer::Lexer(char *filename)  {
 
     while ((start_pos = afterlerx.find("sim(", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 4, "sim`");
+      afterlerx.replace(start_pos, 4, "sim,");
       start_pos += 4;
     }
     start_pos = 0;
 
     while ((start_pos = afterlerx.find("Print", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 5, "Print`");
+      afterlerx.replace(start_pos, 5, "Print,");
       start_pos += 6;
     }
     // add a comma in relevant place
@@ -77,14 +77,14 @@ Lexer::Lexer(char *filename)  {
 
     while ((start_pos = afterlerx.find("->", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`->`");
+      afterlerx.replace(start_pos, 2, ",->,");
       start_pos += 4;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("!=", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`!=`");
+      afterlerx.replace(start_pos, 2, ",!=,");
       start_pos += 4;
     }
     // remove tabs
@@ -98,91 +98,91 @@ Lexer::Lexer(char *filename)  {
     // add a comma in relevant place
     while ((start_pos = afterlerx.find("<-", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`<-`");
+      afterlerx.replace(start_pos, 2, ",<-,");
       start_pos += 4;
     }
     // add a comma in relevant place
     start_pos = 0;
     while ((start_pos = afterlerx.find("<=", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`<=`");
+      afterlerx.replace(start_pos, 2, ",<=,");
       start_pos += 4;
     }
     // add a comma in relevant place
     start_pos = 0;
     while ((start_pos = afterlerx.find(">=", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`>=`");
+      afterlerx.replace(start_pos, 2, ",>=,");
       start_pos += 4;
     }
     // add a comma in relevant place
     start_pos = 0;
     while ((start_pos = afterlerx.find("==", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`==`");
+      afterlerx.replace(start_pos, 2, ",==,");
       start_pos += 4;
     }
     // add a comma in relevant place
     start_pos = 0;
     while ((start_pos = afterlerx.find(" < ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 3, "`<`");
+      afterlerx.replace(start_pos, 3, ",<,");
       start_pos += 3;
     }
     // add a comma in relevant place
     start_pos = 0;
     while ((start_pos = afterlerx.find(" > ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 3, "`>`");
+      afterlerx.replace(start_pos, 3, ",>,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find(" = ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 3, "`=`");
+      afterlerx.replace(start_pos, 3, ",=,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("=", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 1, "`=`");
+      afterlerx.replace(start_pos, 1, ",=,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("<", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 1, "`<`");
+      afterlerx.replace(start_pos, 1, ",<,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find(">", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 1, "`>`");
+      afterlerx.replace(start_pos, 1, ",>,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find(" == ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 4, "`==`");
+      afterlerx.replace(start_pos, 4, ",==,");
       start_pos += 4;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("!=", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`!=`");
+      afterlerx.replace(start_pos, 2, ",!=,");
       start_pos += 4;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find(" != ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 4, "`!=`");
+      afterlerx.replace(start_pos, 4, ",!=,");
       start_pos += 4;
     }
 
@@ -197,28 +197,28 @@ Lexer::Lexer(char *filename)  {
 
     while ((start_pos = afterlerx.find("while ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 6, "while`");
+      afterlerx.replace(start_pos, 6, "while,");
       start_pos += 6;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("while", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 5, "while`");
+      afterlerx.replace(start_pos, 5, "while,");
       start_pos += 6;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("if", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "if`");
+      afterlerx.replace(start_pos, 2, "if,");
       start_pos += 3;
     }
     start_pos = 0;        // add a comma in relevant place
 
     while ((start_pos = afterlerx.find("if ", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 3, "if`");
+      afterlerx.replace(start_pos, 3, "if,");
       start_pos += 3;
     }
     start_pos = 0; // add a comma in relevant place
@@ -228,9 +228,9 @@ Lexer::Lexer(char *filename)  {
       start_pos += 2;
     }
     start_pos = 0; // add a comma in relevant place
-    while ((start_pos = afterlerx.find("``", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find(",,", start_pos)) != string::npos)
     {
-      afterlerx.replace(start_pos, 2, "`");
+      afterlerx.replace(start_pos, 2, ",");
       start_pos += 1;
     }
     start_pos = 0; // add a comma in relevant place
@@ -240,25 +240,25 @@ Lexer::Lexer(char *filename)  {
       start_pos += 0;
     }
     start_pos = 0; // add a comma in relevant place
-    while ((start_pos = afterlerx.find("<`=", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find("<,=", start_pos)) != string::npos)
     {
       afterlerx.replace(start_pos, 3, "<=");
       start_pos += 2;
     }
     start_pos = 0; // add a comma in relevant place
-    while ((start_pos = afterlerx.find(">`=", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find(">,=", start_pos)) != string::npos)
     {
       afterlerx.replace(start_pos, 3, ">=");
       start_pos += 2;
     }
     start_pos = 0; // add a comma in relevant place
-    while ((start_pos = afterlerx.find("=`=", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find("=,=", start_pos)) != string::npos)
     {
       afterlerx.replace(start_pos, 3, "==");
       start_pos += 2;
     }
     start_pos = 0; // add a comma in relevant place
-    while ((start_pos = afterlerx.find("!`=", start_pos)) != string::npos)
+    while ((start_pos = afterlerx.find("!,=", start_pos)) != string::npos)
     {
       afterlerx.replace(start_pos, 3, "!=");
       start_pos += 2;
@@ -270,12 +270,13 @@ Lexer::Lexer(char *filename)  {
   // push all the string with the comma token yo the vector
   char *ve;
   char *cop;
+  string after="";
   ve= new char[this->afterlerx.size()+1];
   strcpy(ve,this->afterlerx.c_str());
-  cop=strtok(ve,"`");
+  cop=strtok(ve,",");
   while (cop){
     this->vect.push_back(cop);
-    cop=strtok(NULL,"`");
+    cop=strtok(NULL,",");
   }
 
 
