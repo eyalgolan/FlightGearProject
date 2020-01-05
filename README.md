@@ -141,5 +141,6 @@ and a mutex used for controlling the threads access to the symbol table.
 	* PrintCommand
 4. ConditionParser: Used by the `IfCommand` and `LoopCommand` to checks if a 
 	provided condition is satisfied and updates accordingly.
-5. ExpressionHandler:
+5. ExpressionHandler: Interprets nested mathematical expressions that include 
+	variables and evaluate them.
 
