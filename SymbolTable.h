@@ -40,7 +40,7 @@ class SymbolTable {
   bool isInSimMap(string);
   bool isInVarMap(string);
   void addToVarMap(string name, double value);
-  string getNameMapSim (string);
+  string getNameMapSim(string);
   double getNameMapValue(string);
   double getVarMapValue(string);
   bool isQueueEmpty();
@@ -67,7 +67,8 @@ class SymbolTable {
   void updateFromSetVar(string name, string sim, double value);
 
   /**
-   * SymbolTable constructor
+   * SymbolTable constructor, creating the symbolTable with default names and
+   * values. sims are from the generic_small.xml.
    */
   SymbolTable() {
 

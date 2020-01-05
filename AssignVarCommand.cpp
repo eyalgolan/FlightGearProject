@@ -10,7 +10,7 @@
 using namespace std;
 /**
  * AssignVarCommand
- * in this funk we use the interpreter to evaluate given expression
+ * in this func we use the interpreter to evaluate given expression
  * and add it to our var map.
  * @param params
  * @return  how much to advance in the input vector
@@ -21,7 +21,7 @@ int AssignVarCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   double value;
   Interpreter *in = new Interpreter();
-  Expression* exp = nullptr;
+  Expression *exp = nullptr;
   symblTbl.g_updateLock.lock();
   string toSet = symblTbl.getSetExp();
   symblTbl.g_updateLock.unlock();

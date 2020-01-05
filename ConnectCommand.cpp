@@ -62,7 +62,7 @@ string ConnectCommand::readFromQueue() {
   return update;
 }
 /** the writing to client
- * we update the server from the client that hold a queuue commands
+ * we update the server from the client that hold a queue commands
  *
  * @param client_socket
  */
@@ -73,11 +73,18 @@ void ConnectCommand::writeToClient(int client_socket) {
     symblTbl.g_updateLock.lock();
     bool queueState = !symblTbl.isQueueEmpty();
     symblTbl.g_updateLock.unlock();
+    /*
+     * while the queue is not empty we need send all the data command to the
+     * simulator
+     */
     while (queueState) {
       symblTbl.g_updateLock.lock();
       update = this->readFromQueue();
       int is_sent =
-          send(client_socket, update.c_str(), strlen(update.c_str()), 0);
+          send(client_socket,
+               update.c_str(),
+               strlen(update.c_str()),
+               0); //the sending
       queueState = !symblTbl.isQueueEmpty();
       symblTbl.g_updateLock.unlock();
 

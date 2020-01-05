@@ -20,7 +20,7 @@ int SetVarCommand::exec(vector<string> params) {
   string name = params[0];
   double value;
   Interpreter *in = new Interpreter();
-  Expression* exp = nullptr;
+  Expression *exp = nullptr;
   symblTbl.g_updateLock.lock();
   string toSet = symblTbl.getSetExp();
   symblTbl.g_updateLock.unlock();
@@ -28,7 +28,8 @@ int SetVarCommand::exec(vector<string> params) {
   exp = in->interpret(params[1]);
   value = exp->calculate();
 
-  /*builds the command, updates the symbol table and write the command to the
+  /*
+   * builds the command, updates the symbol table and write the command to the
    * command queue
    */
   symblTbl.g_updateLock.lock();

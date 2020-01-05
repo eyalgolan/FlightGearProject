@@ -18,65 +18,37 @@ int PrintCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   int start_pos = 0;
   string testInput = params[0];
-
+  //check if we have \" char in the print command
   if ((start_pos = testInput.find("\"", start_pos)) != string::npos) {
     start_pos = 0;
     while ((start_pos = params[0].find("(", start_pos))
-          != string::npos) {
-        params[0].replace(start_pos, 1, "");
-        start_pos += 0;
-      }
-      start_pos = 0;
-      // add a comma in relevant place
-      while ((start_pos = params[0].find(")", start_pos))
-          != string::npos) {
-        params[0].replace(start_pos, 1, "");
-        start_pos += 0;
-      }
+        != string::npos) {
+      params[0].replace(start_pos, 1, "");
+      start_pos += 0;
+    }
     start_pos = 0;
-    // add a comma in relevant place
+    // replace the ")" char to  ""
+    while ((start_pos = params[0].find(")", start_pos))
+        != string::npos) {
+      params[0].replace(start_pos, 1, "");
+      start_pos += 0;
+    }
+    start_pos = 0;
+    // replace the /" char to  ""
     while ((start_pos = params[0].find("\"", start_pos))
         != string::npos) {
       params[0].replace(start_pos, 1, "");
       start_pos += 0;
     }
-    cout<<params[0]<<endl;
-  }
-  else {
+    cout << params[0] << endl;
+  } else {
+    // if we not have " in the print scope
     int start_pos = 0;
     while ((start_pos = params[0].find(" ", start_pos)) != string::npos) {
       params[0].replace(start_pos, 1, "");
-      start_pos += 0; // Handles case where 'to' is a substring of 'from'
+      start_pos += 0;
     }
-//    //removing all the space;
-//    while ((start_pos = testInput.find(" ", start_pos)) != string::npos) {
-//      testInput.replace(start_pos, 1, "");
-//      start_pos += 0;
-//    }
-//
-//    // check if input is in name or var maps
-//    if (symblTbl.isInNameMap(testInput) || symblTbl.isInVarMap(testInput)) {
-//      int start_pos = 0;
-//      while ((start_pos = params[0].find(" ", start_pos)) != string::npos) {
-//        params[0].replace(start_pos, 1, "");
-//        start_pos += 0;
-//      }
-//    }
-    // check if the input is calcable
-//    string inputd;
-//    Interpreter *inPrintd = new Interpreter();
-//    Expression *expPrintd = nullptr;
-//    symblTbl.g_updateLock.lock();
-//    string toSetd = symblTbl.getSetExp();
-//    symblTbl.g_updateLock.unlock();
-//    inPrintd->setVariables(toSetd);
-//    try {
-//      expPrintd = inPrintd->interpret(testInput);
-//
-//    }
-//
-//    catch (const char *e) {
-//    }
+    // set the Interpreter
     double input;
     Interpreter *inPrint = new Interpreter();
     Expression *expPrint = nullptr;
@@ -85,27 +57,13 @@ int PrintCommand::exec(vector<string> params) {
     symblTbl.g_updateLock.unlock();
     inPrint->setVariables(toSet);
     try {
+      //evaluate
       expPrint = inPrint->interpret(params[0]);
       input = expPrint->calculate();
       cout << input << endl;
     }
     catch (const char *e) {
-//      size_t start_pos = 0;
-//      // add a comma in relevant place
-//      while ((start_pos = params[0].find("(", start_pos))
-//          != string::npos) {
-//        params[0].replace(start_pos, 1, "");
-//        start_pos += 0;
-//      }
-//      start_pos = 0;
-//      // add a comma in relevant place
-//      while ((start_pos = params[0].find(")", start_pos))
-//          != string::npos) {
-//        params[0].replace(start_pos, 1, "");
-//        start_pos += 0;
-//      }
-//      cout << params[0] << endl;
-   }
+    }
   }
   return this->numParams;
 }

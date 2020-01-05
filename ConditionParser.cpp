@@ -19,7 +19,7 @@ int ConditionParser::exec(vector<string> params) {
 
   //receive params
   string firstStr = params[0];
-  string con=params[1];
+  string con = params[1];
   string secondStr = params[2];
 
 
@@ -44,51 +44,40 @@ int ConditionParser::exec(vector<string> params) {
   /*
    * check if the condition is met and set the condition accordingly
    */
-  if(con == ">"){
-    if(firstExpValue > secondExpValue) {
+  if (con == ">") {
+    if (firstExpValue > secondExpValue) {
       this->condition = true;
-    }
-    else{
+    } else {
       this->condition = false;
     }
-  }
-  else if(con == ">="){
-    if(firstExpValue >= secondExpValue) {
+  } else if (con == ">=") {
+    if (firstExpValue >= secondExpValue) {
       this->condition = true;
-    }
-    else{
+    } else {
       this->condition = false;
     }
-  }
-  else if(con == "<"){
-    if(firstExpValue < secondExpValue) {
+  } else if (con == "<") {
+    if (firstExpValue < secondExpValue) {
       this->condition = true;
-    }
-    else {
+    } else {
       this->condition = false;
     }
-  }
-  else if(con == "<="){
-    if(firstExpValue <= secondExpValue) {
+  } else if (con == "<=") {
+    if (firstExpValue <= secondExpValue) {
       this->condition = true;
-    }
-    else {
+    } else {
       this->condition = false;
     }
-  }
-  else if(con == "=="){
-    if(firstExpValue == secondExpValue) {
+  } else if (con == "==") {
+    if (firstExpValue == secondExpValue) {
       this->condition = true;
-    }
-    else{
+    } else {
       this->condition = false;
     }
-  }
-  else if(con == "!="){
-    if(firstExpValue != secondExpValue) {
+  } else if (con == "!=") {
+    if (firstExpValue != secondExpValue) {
       this->condition = true;
-    }
-    else {
+    } else {
       this->condition = false;
     }
   }

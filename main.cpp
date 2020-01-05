@@ -49,7 +49,8 @@ int main(int argc, char **argv) {
 
         string chaining = "";   // if the number of " is not 2
         while (n != 2) {
-          chaining += emulateLexerResulttest[i];  // chaining all the chars between " " chars
+          chaining +=
+              emulateLexerResulttest[i];  // chaining all the chars between " " chars
           i++;
           n = n + count(emulateLexerResulttest[i].begin(),
                         emulateLexerResulttest[i].end(),
@@ -58,7 +59,8 @@ int main(int argc, char **argv) {
         chaining += emulateLexerResulttest[i];
         notspace.push_back(chaining);
         i++;
-      } else if (n == 0) { // if its have no "" so we need all the string between the commas
+      } else if (n
+          == 0) { // if its have no "" so we need all the string between the commas
         notspace.push_back(emulateLexerResulttest[i]);
         i++;
       }

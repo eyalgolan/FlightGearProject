@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class ConditionParser: public Command {
+class ConditionParser : public Command {
  public:
   bool condition;     // indicates if the condition is met or not
   int numParams = 3;  //how much to advance in the Parser's input vector

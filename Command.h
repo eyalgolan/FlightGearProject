@@ -12,7 +12,7 @@ using namespace std;
 
 class Command {
  public:
-  virtual int exec(vector<string> params){}
+  virtual int exec(vector<string> params) {}
 };
 
 #endif //FLIGHTGEARPROJECT_COMMAND_H

@@ -10,7 +10,7 @@
 
 using namespace std;
 /**
- * set sleep that give us from the param;
+ * Pauses the program from executing new commands from the script
  * @param params
  * @return how much to advance in the input vector
  */

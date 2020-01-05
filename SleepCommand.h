@@ -7,7 +7,7 @@
 #include "Command.h"
 class SleepCommand : public Command{
  private:
-  int numParams = 2;
+  int numParams = 2; //how much to advance in the Parser's input vector
  public:
   int exec(vector<string> params) override;
 };
