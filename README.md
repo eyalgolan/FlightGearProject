@@ -2,7 +2,7 @@
 
 ## Preview
 An interpreter that runs an autopilot for the **FlightGear** simulator
- (You can learn more about FlightGear [here](https://www.flightgear.org/ "FlightGear Homepage")).
+ (You can learn more about FlightGear [**here**](https://www.flightgear.org/ "FlightGear Homepage")).
 
 The program gets a script as an argument which contains different commands and
 interprets the commands. 
