@@ -21,7 +21,9 @@ int SetVarCommand::exec(vector<string> params) {
   double value;
   Interpreter *in = new Interpreter();
   Expression* exp = nullptr;
+  symblTbl.g_updateLock.lock();
   string toSet = symblTbl.getSetExp();
+  symblTbl.g_updateLock.unlock();
   in->setVariables(toSet);
   exp = in->interpret(params[1]);
   value = exp->calculate();
@@ -29,7 +31,9 @@ int SetVarCommand::exec(vector<string> params) {
   /*builds the command, updates the symbol table and write the command to the
    * command queue
    */
+  symblTbl.g_updateLock.lock();
   string sim = symblTbl.getNameMapSim(name);
+  symblTbl.g_updateLock.unlock();
   string command = "set " + sim + " " + to_string(value) + "\r\n";
   symblTbl.updateTable(name, "", value, "setVar");
   writeToQueue(command);
@@ -44,5 +48,7 @@ int SetVarCommand::exec(vector<string> params) {
  */
 void SetVarCommand::writeToQueue(string input) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
+  symblTbl.g_updateLock.lock();
   symblTbl.pushToQueue(input);
+  symblTbl.g_updateLock.unlock();
 }

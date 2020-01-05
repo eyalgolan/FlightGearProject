@@ -10,6 +10,7 @@
 #include <string>
 #include <stdio.h>
 #include <cstring>
+#include <algorithm>
 #include "SymbolTable.h"
 #include "ExpressionHandler.h"
 #include "Expression.h"
@@ -41,7 +42,7 @@ void Parser::runCommands() {
       break;
     }
 
-    //otherwise, checks if the command is in the command map
+      //otherwise, checks if the command is in the command map
     else if (this->commandMap.find(this->inputVector[index])
         != this->commandMap.end()) {
 
@@ -65,7 +66,7 @@ void Parser::runCommands() {
           inputParams.clear();
         }
 
-        //otherwise, if the command is while
+          //otherwise, if the command is while
         else if (commandName.compare("while") == 0) {
 
           //gets all the commands in the while segment
@@ -80,7 +81,7 @@ void Parser::runCommands() {
           inputParams.clear();
         }
 
-        //otherwise, if the command is if
+          //otherwise, if the command is if
         else if (commandName.compare("if") == 0) {
 
           //gets all the commands in the if segment
@@ -95,23 +96,46 @@ void Parser::runCommands() {
           inputParams.clear();
         }
 
-        // otherwise, if the command is connectControlClient
+          // otherwise, if the command is connectControlClient
         else if (commandName.compare("connectControlClient") == 0) {
           inputParams.push_back(inputVector[index + 1]);
-
+          size_t start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos = inputParams[0].find("(", start_pos))
+              != string::npos) {
+            inputParams[0].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
+          start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos =  inputParams[0].find("\"", start_pos))
+              != string::npos) {
+            inputParams[0].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
           //interprets the input parameters
           Interpreter *inCon = new Interpreter();
           Expression *expCon = nullptr;
+          start_pos = 0;
+           start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos = inputVector[index + 2].find(")", start_pos))
+              != string::npos) {
+            inputVector[index + 2].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
           expCon = inCon->interpret(inputVector[index + 2]);
           input = to_string((int) expCon->calculate());
           inputParams.push_back(input);
+
+
 
           //executes connectControlClient with the interpreted parameters
           index += c->exec(inputParams);
           inputParams.clear();
         }
 
-        // otherwise, if the command is Print
+          // otherwise, if the command is Print
         else if (commandName.compare("Print") == 0) {
           //executes Print with it's parameter
           inputParams.push_back(inputVector[index + 1]);
@@ -119,18 +143,32 @@ void Parser::runCommands() {
           inputParams.clear();
         }
 
-        // otherwise, if the command is a DefineVar command
+          // otherwise, if the command is a DefineVar command
         else if (commandName.compare("var") == 0
             && inputVector[index + 2].compare("=") != 0) {
-
+          size_t start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos = inputVector[index+5].find('(', start_pos))
+              != string::npos) {
+            inputVector[index + 5].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
+          start_pos = 0;
+          // add a comma in relevant place
+          while ((start_pos = inputVector[index + 5].find(')', start_pos))
+              != string::npos) {
+            inputVector[index + 5].replace(start_pos, 1, "");
+            start_pos += 0;
+          }
           //executes DefineVar with it's parameters
           inputParams.push_back(inputVector[index + 1]);
           inputParams.push_back(inputVector[index + 5]);
+
           index += c->exec(inputParams);
           inputParams.clear();
         }
 
-        // otherwise, if the command is a AssignVar command
+          // otherwise, if the command is a AssignVar command
         else if (commandName.compare("var") == 0
             && inputVector[index + 2].compare("=") == 0) {
 
@@ -143,7 +181,7 @@ void Parser::runCommands() {
           inputParams.clear();
         }
 
-        // otherwise, if the command is a Sleep command
+          // otherwise, if the command is a Sleep command
         else if (commandName.compare("Sleep") == 0) {
 
           /*
@@ -166,7 +204,7 @@ void Parser::runCommands() {
       }
     }
 
-    // otherwise, the command is a setVar command
+      // otherwise, the command is a setVar command
     else {
       commandName = this->inputVector[index];
       c = this->commandMap.find("setVarCommand")->second;

@@ -27,23 +27,66 @@ Lexer::Lexer(char *filename)  {
         int i;
         int j=0;
         // relace all ')' chars to space
-        replace(this->afterlerx.begin(),this->afterlerx.end(),')',' ');
+       // replace(this->afterlerx.begin(),this->afterlerx.end(),')',' ');
         // relace all ')' chars to
-        replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
+      //  replace(this->afterlerx.begin(),this->afterlerx.end(),'(',',');
         size_t start_pos = 0;
         // add a comma in relevant place
-        while ((start_pos = afterlerx.find("var", start_pos)) != string::npos)
+        while ((start_pos = afterlerx.find("openDataServer", start_pos)) != string::npos)
         {
-            afterlerx.replace(start_pos, 3, "var,");
-            start_pos += 4;
+            afterlerx.replace(start_pos, 14, "openDataServer,");
+            start_pos += 15;
         }
+        start_pos = 0;
+      // add a comma in relevant place
+      while ((start_pos = afterlerx.find("connectControlClient", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 20, "connectControlClient,");
+        start_pos += 21;
+      }
+      start_pos = 0;
+
+      while ((start_pos = afterlerx.find("var", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 3, "var,");
+        start_pos += 4;
+      }
+      start_pos = 0;
+      while ((start_pos = afterlerx.find("Sleep", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 5, "Sleep,");
+        start_pos += 6;
+      }
+
+      start_pos = 0;
+
+      while ((start_pos = afterlerx.find("sim(", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 4, "sim,");
+        start_pos += 4;
+      }
+      start_pos = 0;
+
+      while ((start_pos = afterlerx.find("Print", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 5, "Print,");
+        start_pos += 6;
+      }
         // add a comma in relevant place
         start_pos = 0;
+
         while ((start_pos = afterlerx.find("->", start_pos)) != string::npos)
         {
             afterlerx.replace(start_pos, 2, ",->,");
             start_pos += 4;
         }
+      start_pos = 0;        // add a comma in relevant place
+
+      while ((start_pos = afterlerx.find("!=", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 2, ",!=,");
+        start_pos += 4;
+      }
         // remove tabs
         start_pos = 0;
         while ((start_pos = afterlerx.find('\t', start_pos)) != string::npos)
@@ -128,6 +171,13 @@ Lexer::Lexer(char *filename)  {
             afterlerx.replace(start_pos, 4, ",==,");
             start_pos += 4;
         }
+      start_pos = 0;        // add a comma in relevant place
+
+      while ((start_pos = afterlerx.find("!=", start_pos)) != string::npos)
+      {
+        afterlerx.replace(start_pos, 2, ",!=,");
+        start_pos += 4;
+      }
         start_pos = 0;        // add a comma in relevant place
 
         while ((start_pos = afterlerx.find(" != ", start_pos)) != string::npos)
@@ -135,13 +185,14 @@ Lexer::Lexer(char *filename)  {
             afterlerx.replace(start_pos, 4, ",!=,");
             start_pos += 4;
         }
+
         start_pos = 0;        // add a comma in relevant place
 
-        while ((start_pos = afterlerx.find("\"", start_pos)) != string::npos)
-        {
-            afterlerx.replace(start_pos, 1, "");
-            start_pos += 0;
-        }
+//        while ((start_pos = afterlerx.find("\"", start_pos)) != string::npos)
+//        {
+//            afterlerx.replace(start_pos, 1, "");
+//            start_pos += 0;
+//        }
         start_pos = 0;        // add a comma in relevant place
 
         while ((start_pos = afterlerx.find("while ", start_pos)) != string::npos)

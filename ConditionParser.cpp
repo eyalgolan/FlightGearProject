@@ -32,7 +32,9 @@ int ConditionParser::exec(vector<string> params) {
   double firstExpValue;
   double secondExpValue;
   SymbolTable &symblTbl = SymbolTable::getInstance();
+  symblTbl.g_updateLock.lock();
   string toSet = symblTbl.getSetExp();
+  symblTbl.g_updateLock.unlock();
   inCondition->setVariables(toSet);
   firstExp = inCondition->interpret(firstStr);
   firstExpValue = firstExp->calculate();

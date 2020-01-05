@@ -185,7 +185,7 @@ void SymbolTable::updateFromServer(string name, string sim, double value) {
  * Updates the name & sim maps with a new var name
  */
 void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
-
+  g_updateLock.lock();
   string origName = this->simMap[sim].first; //gets the original name
   double origValue = this->simMap[sim].second; //gets the original value
 
@@ -194,6 +194,7 @@ void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
   this->insertToNameMap(name, sim, origValue);
   this->simMap.erase(sim);
   this->insertToSimMap(sim, name, origValue);
+  g_updateLock.unlock();
 }
 
 /**
@@ -201,7 +202,9 @@ void SymbolTable::updateFromDefineVar(string name, string sim, double value) {
  * Updates the name & sim maps with a new value
  */
 void SymbolTable::updateFromSetVar(string name, string sim, double value) {
+  g_updateLock.lock();
   this->nameMap[name].second = value;
   sim = this->nameMap[name].first;
   this->simMap[sim].second = value;
+  g_updateLock.unlock();
 }

@@ -17,58 +17,95 @@
 int PrintCommand::exec(vector<string> params) {
   SymbolTable &symblTbl = SymbolTable::getInstance();
   int start_pos = 0;
-  string dammyp=params[0];
-  //removing all the space;
-  while ((start_pos = dammyp.find(" ", start_pos)) != string::npos)
-  {
-    dammyp.replace(start_pos, 1, "");
-    start_pos += 0;
-  }
-    if(symblTbl.isInNameMap(dammyp)||symblTbl.isInVarMap(dammyp)){
-      int start_pos = 0;
-      while ((start_pos = params[0].find(" ", start_pos)) != string::npos)
-      {
+  string testInput = params[0];
+
+  if ((start_pos = testInput.find("\"", start_pos)) != string::npos) {
+    start_pos = 0;
+    while ((start_pos = params[0].find("(", start_pos))
+          != string::npos) {
         params[0].replace(start_pos, 1, "");
         start_pos += 0;
       }
+      start_pos = 0;
+      // add a comma in relevant place
+      while ((start_pos = params[0].find(")", start_pos))
+          != string::npos) {
+        params[0].replace(start_pos, 1, "");
+        start_pos += 0;
+      }
+    start_pos = 0;
+    // add a comma in relevant place
+    while ((start_pos = params[0].find("\"", start_pos))
+        != string::npos) {
+      params[0].replace(start_pos, 1, "");
+      start_pos += 0;
     }
-    // using the interpreter to evaluate the parm
-  string inputd;
-  Interpreter *inPrintd = new Interpreter();
-  Expression* expPrintd = nullptr;
-  string toSetd = symblTbl.getSetExp();
-  inPrintd->setVariables(toSetd);
-  try {
-    expPrintd = inPrintd->interpret(dammyp);
+    cout<<params[0]<<endl;
+  }
+  else {
     int start_pos = 0;
-    while ((start_pos = params[0].find(" ", start_pos)) != string::npos)
-    {
+    while ((start_pos = params[0].find(" ", start_pos)) != string::npos) {
       params[0].replace(start_pos, 1, "");
       start_pos += 0; // Handles case where 'to' is a substring of 'from'
     }
-  }
-  catch (const char* e) {
-  }
-
-    string input;
+//    //removing all the space;
+//    while ((start_pos = testInput.find(" ", start_pos)) != string::npos) {
+//      testInput.replace(start_pos, 1, "");
+//      start_pos += 0;
+//    }
+//
+//    // check if input is in name or var maps
+//    if (symblTbl.isInNameMap(testInput) || symblTbl.isInVarMap(testInput)) {
+//      int start_pos = 0;
+//      while ((start_pos = params[0].find(" ", start_pos)) != string::npos) {
+//        params[0].replace(start_pos, 1, "");
+//        start_pos += 0;
+//      }
+//    }
+    // check if the input is calcable
+//    string inputd;
+//    Interpreter *inPrintd = new Interpreter();
+//    Expression *expPrintd = nullptr;
+//    symblTbl.g_updateLock.lock();
+//    string toSetd = symblTbl.getSetExp();
+//    symblTbl.g_updateLock.unlock();
+//    inPrintd->setVariables(toSetd);
+//    try {
+//      expPrintd = inPrintd->interpret(testInput);
+//
+//    }
+//
+//    catch (const char *e) {
+//    }
+    double input;
     Interpreter *inPrint = new Interpreter();
-    Expression* expPrint = nullptr;
+    Expression *expPrint = nullptr;
+    symblTbl.g_updateLock.lock();
     string toSet = symblTbl.getSetExp();
+    symblTbl.g_updateLock.unlock();
     inPrint->setVariables(toSet);
     try {
       expPrint = inPrint->interpret(params[0]);
-      input = to_string((int) expPrint->calculate());
-      cout<<input<<endl;
+      input = expPrint->calculate();
+      cout << input << endl;
     }
-    catch (const char* e) {
-//      if(params[0] == "done") {
-//        cout<<params[0]<<endl;
-//        delete &symblTbl;
+    catch (const char *e) {
+//      size_t start_pos = 0;
+//      // add a comma in relevant place
+//      while ((start_pos = params[0].find("(", start_pos))
+//          != string::npos) {
+//        params[0].replace(start_pos, 1, "");
+//        start_pos += 0;
 //      }
-//      else {
-        cout << params[0] << endl;
-      //}
-    }
-
+//      start_pos = 0;
+//      // add a comma in relevant place
+//      while ((start_pos = params[0].find(")", start_pos))
+//          != string::npos) {
+//        params[0].replace(start_pos, 1, "");
+//        start_pos += 0;
+//      }
+//      cout << params[0] << endl;
+   }
+  }
   return this->numParams;
 }
