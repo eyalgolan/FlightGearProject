@@ -8,10 +8,10 @@
 #include <algorithm>
 using namespace std;
 /**
- The lexer get filaname that represent new programing language ,
- we want to The role of the lexer is to separate the text file into commas
- and insert a locator that the parser can know and separate in future
- commands and parameters.
+ The lexer gets a filename. The script in the file is written in a new
+ programing language that we need to interpret.
+ The role of the lexer is to seperate the code by commas and build then into a
+ vector.
  */
 Lexer::Lexer(char *filename)  {
   ifstream file;

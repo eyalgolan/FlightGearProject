@@ -66,6 +66,9 @@ class SymbolTable {
   void updateFromDefineVar(string name, string sim, double value);
   void updateFromSetVar(string name, string sim, double value);
 
+  /**
+   * SymbolTable constructor
+   */
   SymbolTable() {
 
     /*
