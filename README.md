@@ -117,5 +117,20 @@ The script we interpret can contain `if` condition and `while` loops:
  `while`'s scope, while it's condition is met.
 
 ### Program architecture
-
+The program contains the following classes:
+1. Lexer: 
+2. Parser:
+5. SymbolTable: 
+3. Command:
+	* OpenServerCommand:
+	* ConnectCommand:
+	* DefineVarCommand:
+	* setVarCommand:
+	* AssignVarCommand:
+	* IfCommand:
+	* LoopCommand:
+	* SleepCommand:
+	* PrintCommand:
+4. ConditionParser:
+5. ExpressionHandler:
 
