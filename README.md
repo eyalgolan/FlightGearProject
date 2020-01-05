@@ -86,6 +86,17 @@ console.
 	```
 	Will print `5000` to the console.
 
+### Sending and receiving data
+We receive flight data from the simulator using the thread created by the 
+`OpenDataServer`.
+
+We send data to the simulator using the client thread opened by 
+`connectControlClient`, in the following format: `set <simPath> <Value>`, for
+example:
+```
+set /controls/gear/brake-right 1.000000
+```
+
 ### Working with variables
 We work with variables in the following ways:
 1. Defining a new variable: A new var can be set with:
